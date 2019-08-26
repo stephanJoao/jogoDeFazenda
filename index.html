@@ -15,8 +15,26 @@
         canvas.height = 480;
         var ctx = canvas.getContext("2d");
 
+        var cena1 = new Scene({ctx: ctx, w: canvas.width, h: canvas.height});
         var pc = new Sprite();
-        pc.desenhar(ctx);
+        cena1.adicionar(pc);
+        cena1.adicionar(new Sprite({x:160,y:150, w: 15, color:"red"}));
+        cena1.adicionar(new Sprite({x: 60,y:250, h: 20, color:"red"}));
+        cena1.desenhar();
+
+
+        function passo(t) {
+            dt = (t-anterior)/1000;
+            cena1.limpar();
+            cena1.mover(dt);
+            cena1.desenhar();
+            anterior = t;
+            requestAnimationFrame(passo);
+        }
+
+        var dt, anterior = 0;
+        requestAnimationFrame(passo);
+        
 
     </script>
 </body>
