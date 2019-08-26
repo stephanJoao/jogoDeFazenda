@@ -14,9 +14,15 @@
         canvas.width = 600;
         canvas.height = 480;
         var ctx = canvas.getContext("2d");
+        var teclas ={
+            esquerda: 0,
+            cima: 0,
+            direita: 0,
+            baixo: 0,
+        }
 
         var cena1 = new Scene({ctx: ctx, w: canvas.width, h: canvas.height});
-        var pc = new Sprite();
+        var pc = new Sprite({comportar: porTeclasDirecionais(teclas)});
         cena1.adicionar(pc);
         cena1.adicionar(new Sprite({x:160,y:150, w: 15, color:"red", comportar: persegue(pc)}));
         cena1.adicionar(new Sprite({x: 60,y:250, h: 20, color:"red", comportar: persegue(pc)}));
