@@ -18,16 +18,19 @@
         var cena1 = new Scene({ctx: ctx, w: canvas.width, h: canvas.height});
         var pc = new Sprite();
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({x:160,y:150, w: 15, color:"red"}));
-        cena1.adicionar(new Sprite({x: 60,y:250, h: 20, color:"red"}));
-        cena1.desenhar();
+        cena1.adicionar(new Sprite({x:160,y:150, w: 15, color:"red", comportar: persegue(pc)}));
+        cena1.adicionar(new Sprite({x: 60,y:250, h: 20, color:"red", comportar: persegue(pc)}));
 
+        function persegue(alvo) {
+            return function(){
+                this.vx = 20*Math.sign(alvo.x - this.x);
+                this.vy = 20*Math.sign(alvo.y - this.y);
+            }
+        }
 
         function passo(t) {
             dt = (t-anterior)/1000;
-            cena1.limpar();
-            cena1.mover(dt);
-            cena1.desenhar();
+            cena1.passo(dt);
             anterior = t;
             requestAnimationFrame(passo);
         }

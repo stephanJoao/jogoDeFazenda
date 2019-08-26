@@ -27,6 +27,22 @@ Scene.prototype.mover = function(dt){
     }  
 };
 
+Scene.prototype.comportar = function(){
+    for(var i = 0; i<this.sprites.length; i++){
+        if(this.sprites[i].comportar){
+            this.sprites[i].comportar();
+        }
+    }  
+};
+
+
 Scene.prototype.limpar = function(){
     this.ctx.clearRect(0,0, this.w, this.h);
+}
+
+Scene.prototype.passo = function(dt){
+    this.limpar();
+    this.comportar();
+    this.mover(dt);
+    this.desenhar();
 }
