@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="Sprite.js"></script>
     <script src="Scene.js"></script>
 </head>
+
 <body>
     <canvas></canvas>
     <script>
@@ -14,28 +16,72 @@
         canvas.width = 600;
         canvas.height = 480;
         var ctx = canvas.getContext("2d");
-        var teclas ={
+        var teclas = {
             esquerda: 0,
             cima: 0,
             direita: 0,
             baixo: 0,
         }
 
-        var cena1 = new Scene({ctx: ctx, w: canvas.width, h: canvas.height});
-        var pc = new Sprite({comportar: porTeclasDirecionais(teclas)});
+        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
+        var pc = new Sprite({ comportar: porTeclasDirecionais(teclas) });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({x:160,y:150, w: 15, color:"red", comportar: persegue(pc)}));
-        cena1.adicionar(new Sprite({x: 60,y:250, h: 20, color:"red", comportar: persegue(pc)}));
+        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, color: "red", comportar: persegue(pc) }));
+        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, color: "red", comportar: persegue(pc) }));
 
         function persegue(alvo) {
-            return function(){
-                this.vx = 20*Math.sign(alvo.x - this.x);
-                this.vy = 20*Math.sign(alvo.y - this.y);
+            return function () {
+                this.vx = 20 * Math.sign(alvo.x - this.x);
+                this.vy = 20 * Math.sign(alvo.y - this.y);
             }
         }
 
+        function porTeclasDirecionais(teclas) {
+            return function () {
+                if (teclas.esquerda) { this.vx = -120; }
+                if (teclas.direita) { this.vx = +120; }
+                if (teclas.esquerda === teclas.direita) { this.vx = 0; }
+
+                if (teclas.cima) { this.vy = -120; }
+                if (teclas.baixo) { this.vy = +120; }
+                if (teclas.cima === teclas.baixo) { this.vy = 0; }
+            }
+        }
+        addEventListener("keydown", function (e) {
+            switch (e.keyCode) {
+                case 37:
+                    teclas.esquerda = 1;
+                    break;
+                case 38:
+                    teclas.cima = 1;
+                    break;
+                case 39:
+                    teclas.direita = 1;
+                    break;
+                case 40:
+                    teclas.baixo = 1;
+                    break;
+            }
+        });
+        addEventListener("keyup", function (e) {
+            switch (e.keyCode) {
+                case 37:
+                    teclas.esquerda = 0;
+                    break;
+                case 38:
+                    teclas.cima = 0;
+                    break;
+                case 39:
+                    teclas.direita = 0;
+                    break;
+                case 40:
+                    teclas.baixo = 0;
+                    break;
+            }
+        });
+
         function passo(t) {
-            dt = (t-anterior)/1000;
+            dt = (t - anterior) / 1000;
             cena1.passo(dt);
             anterior = t;
             requestAnimationFrame(passo);
@@ -43,8 +89,9 @@
 
         var dt, anterior = 0;
         requestAnimationFrame(passo);
-        
+
 
     </script>
 </body>
+
 </html>
