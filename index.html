@@ -24,10 +24,10 @@
         }
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
-        var pc = new Sprite({ comportar: porTeclasDirecionais(teclas) });
+        var pc = new Sprite({ x:150, y:150, comportar: porTeclasDirecionais(teclas) });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, va:2, color: "red", comportar: persegue(pc) }));
-        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va:-16, color: "red", comportar: persegue(pc) }));
+        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, va:2, vm:30, color: "red", comportar: persegue(pc) }));
+        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va:-8, vm:360, color: "red", comportar: persegue(pc) }));
 
         function persegue(alvo) {
             return function () {
@@ -38,13 +38,13 @@
 
         function porTeclasDirecionais(teclas) {
             return function () {
-                if (teclas.esquerda) { this.vx = -120; }
-                if (teclas.direita) { this.vx = +120; }
-                if (teclas.esquerda === teclas.direita) { this.vx = 0; }
+                if (teclas.esquerda) { this.va = -2; }
+                if (teclas.direita) { this.va = +2; }
+                if (teclas.esquerda === teclas.direita) { this.va = 0; }
 
-                if (teclas.cima) { this.vy = -120; }
-                if (teclas.baixo) { this.vy = +120; }
-                if (teclas.cima === teclas.baixo) { this.vy = 0; }
+                if (teclas.cima) { this.vm = +120; }
+                if (teclas.baixo) { this.vm = -120; }
+                if (teclas.cima === teclas.baixo) { this.vm = 0; }
             }
         }
         addEventListener("keydown", function (e) {
