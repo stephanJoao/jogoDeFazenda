@@ -26,8 +26,8 @@
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
         var pc = new Sprite({ comportar: porTeclasDirecionais(teclas) });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, color: "red", comportar: persegue(pc) }));
-        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, color: "red", comportar: persegue(pc) }));
+        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, va:2, color: "red", comportar: persegue(pc) }));
+        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va:-16, color: "red", comportar: persegue(pc) }));
 
         function persegue(alvo) {
             return function () {

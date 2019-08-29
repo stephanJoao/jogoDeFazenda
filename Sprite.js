@@ -6,6 +6,8 @@ function Sprite(params = {}) {
         vy: 0,
         h: 10,
         w: 10,
+        a: 0,
+        va: 0,
         color: "blue",
         imune: 0,
         atirando: 0,
@@ -17,14 +19,28 @@ Sprite.prototype = new Sprite();
 Sprite.prototype.constructor = Sprite;
 
 Sprite.prototype.desenhar = function(ctx) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.a);
     ctx.fillStyle = this.color;
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
-    ctx.fillRect(this.x, this.y, this.w, this.h);
-    ctx.strokeRect(this.x, this.y, this.w, this.h);
+
+//    ctx.strokeRect(-this.w/2, -this.h/2, this.w, this.h);
+
+    ctx.beginPath();
+    ctx.moveTo(-this.w/2, -this.h/2);
+    ctx.lineTo(-this.w/2, +this.h/2);
+    ctx.lineTo(+this.w/2, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.restore();
 };
 
 Sprite.prototype.mover = function (dt) {
     this.x = this.x + this.vx*dt;
     this.y = this.y + this.vy*dt;
+    this.a = this.a + this.va*dt;
 }
