@@ -13,6 +13,7 @@ Scene.prototype.constructor = Scene;
 
 Scene.prototype.adicionar = function(sprite){
     this.sprites.push(sprite);
+    sprite.scene = this;
 };
 
 Scene.prototype.desenhar = function(){

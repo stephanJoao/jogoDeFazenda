@@ -9,10 +9,12 @@ function Sprite(params = {}) {
         a: 0,
         va: 0,
         vm: 0,
+        cooldown: 0,
         color: "blue",
         imune: 0,
         atirando: 0,
-        comportar: undefined
+        comportar: undefined,
+        scene: undefined
     }
     Object.assign(this, exemplo, params);
 }
@@ -49,4 +51,6 @@ Sprite.prototype.mover = function (dt) {
 
     this.x = this.x + this.vx*dt;
     this.y = this.y + this.vy*dt;
+
+    this.cooldown = this.cooldown -dt;
 }
