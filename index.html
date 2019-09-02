@@ -27,9 +27,18 @@
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
         var pc = new Sprite({ x:150, y:150, comportar: porTeclasDirecionais(teclas), props:{tipo:"pc"} });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 460, y: 150, w: 15, va:2, vm:30, color: "red", comportar: persegue2(pc), props:{tipo:"npc"} }));
-        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va:-8, vm:40, color: "red", comportar: persegue2(pc) , props:{tipo:"npc"}}));
-
+        cena1.adicionar(new Sprite({ x: 460, y: 150, w: 15, va:2, vm:30, color: "green", comportar: persegueSpawn(pc), props:{tipo:"npc", spawn:0} }));
+        for (var k = 0; k < 10; k++) {
+          
+            cena1.adicionar(new Sprite({
+                x: 300*Math.random(), 
+                y: 400*Math.random(), 
+                h: 20, 
+                va:2*Math.random(), 
+                vm:40*Math.random(),
+                color: "red", comportar: persegue2(pc) , props:{tipo:"npc"}}));
+            
+        }
         function persegue(alvo) {
             return function () {
                 this.vx = 20 * Math.sign(alvo.x - this.x);
@@ -51,6 +60,31 @@
             }
         }
 
+        function persegueSpawn(alvo) {
+            return function () {
+                var dx = alvo.x - this.x;
+                var dy = alvo.y - this.y;
+                var da = Math.sqrt(dx*dx + dy*dy);
+                var adj = 1.5; 
+                var prod = (dx/da)*Math.cos(this.a +adj) +
+                (dy/da)*Math.sin(this.a +adj);
+
+                this.va = 2*(prod-0);
+                this.props.spawn -= (1/60);
+                if(this.props.spawn<=0){
+                    this.props.spawn = 2;
+                    var novo = new Sprite({
+                        x : this.x, y: this.y,
+                        vm: 100*Math.random(),
+                        props: {tipo: "npc"},
+                        comportar: persegue2(alvo) 
+                    });
+                    this.scene.adicionar(novo);
+                }
+                //this.vm = 30;
+            }
+        }
+        
 
         function porTeclasDirecionais(teclas) {
             return function () {
@@ -117,6 +151,7 @@
             dt = (t - anterior) / 1000;
             cena1.passo(dt);
             anterior = t;
+            ctx.fillText(1/dt, 10,20);
             requestAnimationFrame(passo);
         }
 
