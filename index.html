@@ -27,8 +27,8 @@
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
         var pc = new Sprite({ x:150, y:150, comportar: porTeclasDirecionais(teclas) });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, va:2, vm:30, color: "red", comportar: persegue2(pc) }));
-        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va:-8, vm:360, color: "red", comportar: persegue2(pc) }));
+        cena1.adicionar(new Sprite({ x: 460, y: 150, w: 15, va:2, vm:30, color: "red", comportar: persegue2(pc) }));
+        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va:-8, vm:40, color: "red", comportar: persegue2(pc) }));
 
         function persegue(alvo) {
             return function () {
@@ -47,7 +47,7 @@
                 (dy/da)*Math.sin(this.a +adj);
 
                 this.va = 2*(prod-0);
-                this.vm = 30;
+                //this.vm = 30;
             }
         }
 

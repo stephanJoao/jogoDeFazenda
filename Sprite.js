@@ -54,3 +54,13 @@ Sprite.prototype.mover = function (dt) {
 
     this.cooldown = this.cooldown -dt;
 }
+
+Sprite.prototype.colidiuCom = function(alvo){
+    if(alvo.x+alvo.w/2 < this.x-this.w/2) return false;
+    if(alvo.x-alvo.w/2 > this.x+this.w/2) return false;
+
+    if(alvo.y+alvo.h/2 < this.y-this.h/2) return false;
+    if(alvo.y-alvo.h/2 > this.y+this.h/2) return false;
+
+    return true;
+}

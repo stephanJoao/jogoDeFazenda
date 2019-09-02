@@ -1,6 +1,7 @@
 function Scene(params) {
     var exemplo ={
         sprites: [],
+        toRemove: [],
         ctx: null,
         w: 300,
         h: 300
@@ -41,9 +42,31 @@ Scene.prototype.limpar = function(){
     this.ctx.clearRect(0,0, this.w, this.h);
 }
 
+Scene.prototype.checaColisao = function(){
+    for(var i = 0; i<this.sprites.length; i++){
+        for(var j = i+1; j<this.sprites.length; j++){
+            if(this.sprites[i].colidiuCom(this.sprites[j])){
+                this.toRemove.push(this.sprites[j]);
+            }
+        }
+    }  
+};
+
+Scene.prototype.removeSprites = function () {
+    for (var i = 0; i < this.toRemove.length; i++) {
+        var idx = this.sprites.indexOf(this.toRemove[i]);
+        if(idx>=0){
+            this.sprites.splice(idx,1);
+        }
+    }
+    this.toRemove = [];
+};
+
 Scene.prototype.passo = function(dt){
     this.limpar();
     this.comportar();
     this.mover(dt);
     this.desenhar();
+    this.checaColisao();
+    this.removeSprites();
 }
