@@ -9,6 +9,7 @@ function Sprite(params = {}) {
         a: 0,
         va: 0,
         vm: 0,
+        props : {},
         cooldown: 0,
         color: "blue",
         imune: 0,

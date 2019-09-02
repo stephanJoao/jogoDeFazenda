@@ -25,10 +25,10 @@
         }
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
-        var pc = new Sprite({ x:150, y:150, comportar: porTeclasDirecionais(teclas) });
+        var pc = new Sprite({ x:150, y:150, comportar: porTeclasDirecionais(teclas), props:{tipo:"pc"} });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 460, y: 150, w: 15, va:2, vm:30, color: "red", comportar: persegue2(pc) }));
-        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va:-8, vm:40, color: "red", comportar: persegue2(pc) }));
+        cena1.adicionar(new Sprite({ x: 460, y: 150, w: 15, va:2, vm:30, color: "red", comportar: persegue2(pc), props:{tipo:"npc"} }));
+        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va:-8, vm:40, color: "red", comportar: persegue2(pc) , props:{tipo:"npc"}}));
 
         function persegue(alvo) {
             return function () {
@@ -66,7 +66,8 @@
                     var tiro = new Sprite({
                         x: this.x, y: this.y,
                         a: this.a-0.1+0.2*Math.random(),
-                        vm: 240, color:"green", w:4, h:4
+                        vm: 240, color:"green", w:4, h:4,
+                        props:{tipo: "tiro"}
                     });
                     this.scene.adicionar(tiro);
                     this.cooldown = 0.5;
