@@ -16,3 +16,7 @@ AssetsManager.prototype.loadImage = function (key, url) {
         this.carregadas++;
     });
 }
+
+AssetsManager.prototype.img = function(key){
+    return this.assets[key];
+}

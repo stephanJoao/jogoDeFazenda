@@ -7,17 +7,14 @@
     <title>Semana 05</title>
     <script src="Sprite.js"></script>
     <script src="Scene.js"></script>
+    <script src="AssetsManager.js"></script>
 </head>
 
 <body>
     <canvas></canvas>
     <script>
-        var imgPlayer = new Image();
-        imgPlayer.addEventListener("load", function(){
-            console.log("Imagem player carregada!");
-        });
-        console.log("Carregando imagem player...");
-        imgPlayer.src = "assets/player_ship.png";
+        var assetsMng = new AssetsManager();
+        assetsMng.loadImage("player", "assets/player_ship.png");
 
         var canvas = document.querySelector("canvas");
         canvas.width = 600;
@@ -159,7 +156,7 @@
             cena1.passo(dt);
             
 
-            ctx.drawImage(imgPlayer, cena1.sprites[0].x, cena1.sprites[0].y, 15, 15);
+            ctx.drawImage(assetsMng.img("player"), cena1.sprites[0].x, cena1.sprites[0].y, 15, 15);
             anterior = t;
             ctx.fillText(1/dt, 10,20);
             requestAnimationFrame(passo);
