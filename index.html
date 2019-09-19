@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 04</title>
+    <title>Semana 05</title>
     <script src="Sprite.js"></script>
     <script src="Scene.js"></script>
 </head>
@@ -12,6 +12,13 @@
 <body>
     <canvas></canvas>
     <script>
+        var imgPlayer = new Image();
+        imgPlayer.addEventListener("load", function(){
+            console.log("Imagem player carregada!");
+        });
+        console.log("Carregando imagem player...");
+        imgPlayer.src = "assets/player_ship.png";
+
         var canvas = document.querySelector("canvas");
         canvas.width = 600;
         canvas.height = 480;
@@ -51,7 +58,7 @@
                 var dx = alvo.x - this.x;
                 var dy = alvo.y - this.y;
                 var da = Math.sqrt(dx*dx + dy*dy);
-                var adj = 1.5; 
+                var adj = Math.PI/2; 
                 var prod = (dx/da)*Math.cos(this.a +adj) +
                 (dy/da)*Math.sin(this.a +adj);
 
@@ -150,6 +157,9 @@
         function passo(t) {
             dt = (t - anterior) / 1000;
             cena1.passo(dt);
+            
+
+            ctx.drawImage(imgPlayer, cena1.sprites[0].x, cena1.sprites[0].y, 15, 15);
             anterior = t;
             ctx.fillText(1/dt, 10,20);
             requestAnimationFrame(passo);
