@@ -15,6 +15,7 @@
     <script>
         var assetsMng = new AssetsManager();
         assetsMng.loadImage("player", "assets/player_ship.png");
+        assetsMng.loadImage("enemy_1", "assets/enemy_1.png");
 
         var canvas = document.querySelector("canvas");
         canvas.width = 600;
@@ -28,20 +29,24 @@
             espaco: 0
         }
 
-        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
-        var pc = new Sprite({ x:150, y:150, comportar: porTeclasDirecionais(teclas), props:{tipo:"pc"} });
+        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng });
+
+        var pc = new Sprite({ x: 150, y: 150, w: 32, h: 32, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" }, desenhar: desenhaPC });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 460, y: 150, w: 15, va:2, vm:30, color: "green", comportar: persegueSpawn(pc), props:{tipo:"npc", spawn:0} }));
+        cena1.adicionar(new Sprite({ x: 460, y: 150, w: 32, h: 32, va: 2, vm: 30, color: "green", comportar: persegueSpawn(pc), props: { tipo: "npc", spawn: 0 } }));
         for (var k = 0; k < 10; k++) {
-          
+
             cena1.adicionar(new Sprite({
-                x: 300*Math.random(), 
-                y: 400*Math.random(), 
-                h: 20, 
-                va:2*Math.random(), 
-                vm:40*Math.random(),
-                color: "red", comportar: persegue2(pc) , props:{tipo:"npc"}}));
-            
+                x: 300 * Math.random(),
+                y: 400 * Math.random(),
+                w: 32,
+                h: 32,
+                va: 2 * Math.random(),
+                vm: 40 * Math.random(),
+                color: "red", comportar: persegue2(pc), props: { tipo: "npc" },
+                desenhar: desenhaNPC
+            }));
+
         }
         function persegue(alvo) {
             return function () {
@@ -54,12 +59,12 @@
             return function () {
                 var dx = alvo.x - this.x;
                 var dy = alvo.y - this.y;
-                var da = Math.sqrt(dx*dx + dy*dy);
-                var adj = Math.PI/2; 
-                var prod = (dx/da)*Math.cos(this.a +adj) +
-                (dy/da)*Math.sin(this.a +adj);
+                var da = Math.sqrt(dx * dx + dy * dy);
+                var adj = Math.PI / 2;
+                var prod = (dx / da) * Math.cos(this.a + adj) +
+                    (dy / da) * Math.sin(this.a + adj);
 
-                this.va = 2*(prod-0);
+                this.va = 2 * (prod - 0);
                 //this.vm = 30;
             }
         }
@@ -68,27 +73,56 @@
             return function () {
                 var dx = alvo.x - this.x;
                 var dy = alvo.y - this.y;
-                var da = Math.sqrt(dx*dx + dy*dy);
-                var adj = 1.5; 
-                var prod = (dx/da)*Math.cos(this.a +adj) +
-                (dy/da)*Math.sin(this.a +adj);
+                var da = Math.sqrt(dx * dx + dy * dy);
+                var adj = 1.5;
+                var prod = (dx / da) * Math.cos(this.a + adj) +
+                    (dy / da) * Math.sin(this.a + adj);
 
-                this.va = 2*(prod-0);
-                this.props.spawn -= (1/60);
-                if(this.props.spawn<=0){
+                this.va = 2 * (prod - 0);
+                this.props.spawn -= (1 / 60);
+                if (this.props.spawn <= 0) {
                     this.props.spawn = 2;
                     var novo = new Sprite({
-                        x : this.x, y: this.y,
-                        vm: 100*Math.random(),
-                        props: {tipo: "npc"},
-                        comportar: persegue2(alvo) 
+                        x: this.x, y: this.y,
+                        vm: 100 * Math.random(),
+                        props: { tipo: "npc" },
+                        comportar: persegue2(alvo)
                     });
                     this.scene.adicionar(novo);
                 }
                 //this.vm = 30;
             }
         }
-        
+
+        function desenhaPC() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.a + Math.PI / 2);
+            ctx.drawImage(
+                this.scene.assets.img("player"),
+                -this.w / 2,
+                -this.h / 2,
+                this.w,
+                this.h
+            );
+            ctx.restore();
+        }
+
+        function desenhaNPC() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.a + Math.PI / 2);
+            ctx.drawImage(
+                this.scene.assets.img("enemy_1"),
+                -this.w / 2,
+                -this.h / 2,
+                this.w,
+                this.h
+            );
+            ctx.restore();
+
+        }
+
 
         function porTeclasDirecionais(teclas) {
             return function () {
@@ -100,12 +134,12 @@
                 if (teclas.baixo) { this.vm = -120; }
                 if (teclas.cima === teclas.baixo) { this.vm = 0; }
 
-                if(teclas.espaco && this.cooldown<=0){
+                if (teclas.espaco && this.cooldown <= 0) {
                     var tiro = new Sprite({
                         x: this.x, y: this.y,
-                        a: this.a-0.1+0.2*Math.random(),
-                        vm: 240, color:"green", w:4, h:4,
-                        props:{tipo: "tiro"}
+                        a: this.a - 0.1 + 0.2 * Math.random(),
+                        vm: 240, color: "green", w: 4, h: 4,
+                        props: { tipo: "tiro" }
                     });
                     this.scene.adicionar(tiro);
                     this.cooldown = 0.5;
@@ -154,11 +188,8 @@
         function passo(t) {
             dt = (t - anterior) / 1000;
             cena1.passo(dt);
-            
-
-            ctx.drawImage(assetsMng.img("player"), cena1.sprites[0].x, cena1.sprites[0].y, 15, 15);
             anterior = t;
-            ctx.fillText(1/dt, 10,20);
+            ctx.fillText(1 / dt, 10, 20);
             requestAnimationFrame(passo);
         }
 
