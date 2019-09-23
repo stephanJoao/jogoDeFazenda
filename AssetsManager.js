@@ -9,11 +9,12 @@ AssetsManager.prototype.loadImage = function (key, url) {
 
     this.aCarregar++;
     var imagem = new Image();
-    console.log(`Imagem ${key}: ${url} carregada.`);
     imagem.src = url;
     this.assets[key] = imagem;
+    var that  = this;
     imagem.addEventListener("load", function () {
-        this.carregadas++;
+        that.carregadas++;
+        console.log(`Imagem ${that.carregadas}/${that.aCarregar} ${key}: ${url} carregada.`);
     });
 }
 
