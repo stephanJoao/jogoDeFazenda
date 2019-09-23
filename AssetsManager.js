@@ -11,13 +11,20 @@ AssetsManager.prototype.loadImage = function (key, url) {
     var imagem = new Image();
     imagem.src = url;
     this.assets[key] = imagem;
-    var that  = this;
+    var that = this;
     imagem.addEventListener("load", function () {
         that.carregadas++;
         console.log(`Imagem ${that.carregadas}/${that.aCarregar} ${key}: ${url} carregada.`);
     });
 }
 
-AssetsManager.prototype.img = function(key){
+AssetsManager.prototype.img = function (key) {
     return this.assets[key];
+}
+
+AssetsManager.prototype.progresso = function () {
+    if (this.aCarregar != 0) {
+        return this.carregadas / this.aCarregar * 100.0;
+    } else return 0.0;
+
 }

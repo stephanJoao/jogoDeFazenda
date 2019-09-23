@@ -187,7 +187,9 @@
 
         function passo(t) {
             dt = (t - anterior) / 1000;
-            cena1.passo(dt);
+            if(assetsMng.progresso()===100){
+                cena1.passo(dt);
+            }
             anterior = t;
             ctx.fillText(1 / dt, 10, 20);
             requestAnimationFrame(passo);
