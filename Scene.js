@@ -45,17 +45,22 @@ Scene.prototype.limpar = function(){
 
 Scene.prototype.checaColisao = function(){
     for(var i = 0; i<this.sprites.length; i++){
+        if(this.sprites[i].morto){
+            this.toRemove.push(this.sprites[i]);
+        }
         for(var j = i+1; j<this.sprites.length; j++){
             if(this.sprites[i].colidiuCom(this.sprites[j])){
                 if(this.sprites[i].props.tipo === "pc"
                 && this.sprites[j].props.tipo ==="npc"){
                     this.toRemove.push(this.sprites[j]);
+                    this.adicionar(new Explosion({x: this.sprites[j].x, y:this.sprites[j].y}));
                 }
                 else 
                 if(this.sprites[i].props.tipo === "npc"
                 && this.sprites[j].props.tipo ==="tiro"){
                     this.toRemove.push(this.sprites[i]);
                     this.toRemove.push(this.sprites[j]);
+                    this.adicionar(new Explosion({x: this.sprites[i].x, y:this.sprites[i].y}));
                 }
             }
         }

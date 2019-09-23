@@ -8,6 +8,7 @@
     <script src="Sprite.js"></script>
     <script src="Scene.js"></script>
     <script src="AssetsManager.js"></script>
+    <script src="Explosion.js"></script>
 </head>
 
 <body>
@@ -16,6 +17,7 @@
         var assetsMng = new AssetsManager();
         assetsMng.loadImage("player", "assets/player_ship.png");
         assetsMng.loadImage("enemy_1", "assets/enemy_1.png");
+        assetsMng.loadImage("explosion", "assets/explosion.png");
 
         var canvas = document.querySelector("canvas");
         canvas.width = 600;
@@ -31,8 +33,12 @@
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng });
 
+        var boom = new Explosion({x: 100, y:100, w: 64, h:64});
+        
+
         var pc = new Sprite({ x: 150, y: 150, w: 32, h: 32, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" }, desenhar: desenhaPC });
         cena1.adicionar(pc);
+        cena1.adicionar(boom);
         cena1.adicionar(new Sprite({ x: 460, y: 150, w: 32, h: 32, va: 2, vm: 30, color: "green", comportar: persegueSpawn(pc), props: { tipo: "npc", spawn: 0 } }));
         for (var k = 0; k < 10; k++) {
 
