@@ -54,6 +54,7 @@ Scene.prototype.checaColisao = function(){
                 && this.sprites[j].props.tipo ==="npc"){
                     this.toRemove.push(this.sprites[j]);
                     this.adicionar(new Explosion({x: this.sprites[j].x, y:this.sprites[j].y}));
+                    this.assets.play("explosion");
                 }
                 else 
                 if(this.sprites[i].props.tipo === "npc"
@@ -61,6 +62,7 @@ Scene.prototype.checaColisao = function(){
                     this.toRemove.push(this.sprites[i]);
                     this.toRemove.push(this.sprites[j]);
                     this.adicionar(new Explosion({x: this.sprites[i].x, y:this.sprites[i].y}));
+                    this.assets.play("explosion");
                 }
             }
         }
