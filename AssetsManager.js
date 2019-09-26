@@ -1,7 +1,10 @@
 function AssetsManager() {
     this.aCarregar = 0;
     this.carregadas = 0;
-    this.assets = {};
+    this.images = {};
+    this.audios = {};
+    this.channels = [];
+    this.MAX_CHANNELS = 5;
 }
 
 AssetsManager.prototype.loadImage = function (key, url) {
@@ -10,7 +13,7 @@ AssetsManager.prototype.loadImage = function (key, url) {
     this.aCarregar++;
     var imagem = new Image();
     imagem.src = url;
-    this.assets[key] = imagem;
+    this.images[key] = imagem;
     var that = this;
     imagem.addEventListener("load", function () {
         that.carregadas++;
@@ -19,7 +22,7 @@ AssetsManager.prototype.loadImage = function (key, url) {
 }
 
 AssetsManager.prototype.img = function (key) {
-    return this.assets[key];
+    return this.images[key];
 }
 
 AssetsManager.prototype.progresso = function () {
@@ -27,4 +30,19 @@ AssetsManager.prototype.progresso = function () {
         return this.carregadas / this.aCarregar * 100.0;
     } else return 0.0;
 
+}
+
+
+AssetsManager.prototype.loadAudio = function (key, url) {
+    console.log(`Carregando audio ${key}: ${url}...`);
+    this.aCarregar++;
+    var audio = new Audio();
+    audio.src = url;
+    audio.load();
+    this.audios[key] = audio;
+    var that = this;
+    audio.addEventListener("canplaythrough", function () {
+        that.carregadas++;
+        console.log(`Audio ${that.carregadas}/${that.aCarregar} ${key}: ${url} carregado.`);
+    });
 }
