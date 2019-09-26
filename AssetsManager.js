@@ -35,14 +35,22 @@ AssetsManager.prototype.progresso = function () {
 
 AssetsManager.prototype.loadAudio = function (key, url) {
     console.log(`Carregando audio ${key}: ${url}...`);
-    this.aCarregar++;
+    //this.aCarregar++;
     var audio = new Audio();
     audio.src = url;
     audio.load();
     this.audios[key] = audio;
     var that = this;
-    audio.addEventListener("canplaythrough", function () {
-        that.carregadas++;
+    /*audio.addEventListener("canplay", function () {
+        //that.carregadas++;
         console.log(`Audio ${that.carregadas}/${that.aCarregar} ${key}: ${url} carregado.`);
     });
+    */
+}
+
+AssetsManager.prototype.play = function (key) {
+    if(!this.audios[key]){
+        throw new Error(`Chave de audio inválida: ${key}!`);
+    }
+    this.audios[key].play();
 }
