@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 05</title>
+    <title>Semana 06</title>
     <script src="Sprite.js"></script>
     <script src="Scene.js"></script>
     <script src="AssetsManager.js"></script>
-    <script src="Explosion.js"></script>
 </head>
 
 <body>
@@ -20,11 +19,10 @@
         assetsMng.loadImage("explosion", "assets/explosion.png");
         assetsMng.loadAudio("explosion", "assets/explosion.mp3");
         assetsMng.loadAudio("shot", "assets/shot.mp3");
-        console.log(assetsMng);
 
         var canvas = document.querySelector("canvas");
-        canvas.width = 600;
-        canvas.height = 480;
+        canvas.width = 480;
+        canvas.height = 320;
         var ctx = canvas.getContext("2d");
         var teclas = {
             esquerda: 0,
@@ -35,113 +33,20 @@
         }
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng });
-
-        var boom = new Explosion({x: 100, y:100, w: 64, h:64});
         
 
-        var pc = new Sprite({ x: 150, y: 150, w: 32, h: 32, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" }, desenhar: desenhaPC });
+        var pc = new Sprite({ x: 150, y: 150, w: 12, h: 12, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" }});
         cena1.adicionar(pc);
-        cena1.adicionar(boom);
-        cena1.adicionar(new Sprite({ x: 460, y: 150, w: 32, h: 32, va: 2, vm: 30, color: "green", comportar: persegueSpawn(pc), props: { tipo: "npc", spawn: 0 } }));
-        for (var k = 0; k < 10; k++) {
-
-            cena1.adicionar(new Sprite({
-                x: 300 * Math.random(),
-                y: 400 * Math.random(),
-                w: 32,
-                h: 32,
-                va: 2 * Math.random(),
-                vm: 40 * Math.random(),
-                color: "red", comportar: persegue2(pc), props: { tipo: "npc" },
-                desenhar: desenhaNPC
-            }));
-
-        }
-        function persegue(alvo) {
-            return function () {
-                this.vx = 20 * Math.sign(alvo.x - this.x);
-                this.vy = 20 * Math.sign(alvo.y - this.y);
-            }
-        }
-
-        function persegue2(alvo) {
-            return function () {
-                var dx = alvo.x - this.x;
-                var dy = alvo.y - this.y;
-                var da = Math.sqrt(dx * dx + dy * dy);
-                var adj = Math.PI / 2;
-                var prod = (dx / da) * Math.cos(this.a + adj) +
-                    (dy / da) * Math.sin(this.a + adj);
-
-                this.va = 2 * (prod - 0);
-                //this.vm = 30;
-            }
-        }
-
-        function persegueSpawn(alvo) {
-            return function () {
-                var dx = alvo.x - this.x;
-                var dy = alvo.y - this.y;
-                var da = Math.sqrt(dx * dx + dy * dy);
-                var adj = 1.5;
-                var prod = (dx / da) * Math.cos(this.a + adj) +
-                    (dy / da) * Math.sin(this.a + adj);
-
-                this.va = 2 * (prod - 0);
-                this.props.spawn -= (1 / 60);
-                if (this.props.spawn <= 0) {
-                    this.props.spawn = 2;
-                    var novo = new Sprite({
-                        x: this.x, y: this.y,
-                        vm: 100 * Math.random(),
-                        props: { tipo: "npc" },
-                        comportar: persegue2(alvo)
-                    });
-                    this.scene.adicionar(novo);
-                }
-                //this.vm = 30;
-            }
-        }
-
-        function desenhaPC() {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.rotate(this.a + Math.PI / 2);
-            ctx.drawImage(
-                this.scene.assets.img("player"),
-                -this.w / 2,
-                -this.h / 2,
-                this.w,
-                this.h
-            );
-            ctx.restore();
-        }
-
-        function desenhaNPC() {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.rotate(this.a + Math.PI / 2);
-            ctx.drawImage(
-                this.scene.assets.img("enemy_1"),
-                -this.w / 2,
-                -this.h / 2,
-                this.w,
-                this.h
-            );
-            ctx.restore();
-
-        }
-
 
         function porTeclasDirecionais(teclas) {
             return function () {
-                if (teclas.esquerda) { this.va = -2; }
-                if (teclas.direita) { this.va = +2; }
-                if (teclas.esquerda === teclas.direita) { this.va = 0; }
+                if (teclas.esquerda) { this.vx = -90; }
+                if (teclas.direita) { this.vx = +90; }
+                if (teclas.esquerda === teclas.direita) { this.vx = 0; }
 
-                if (teclas.cima) { this.vm = +120; }
-                if (teclas.baixo) { this.vm = -120; }
-                if (teclas.cima === teclas.baixo) { this.vm = 0; }
+                if (teclas.cima) { this.vy = -90; }
+                if (teclas.baixo) { this.vy = +90; }
+                if (teclas.cima === teclas.baixo) { this.vy = 0; }
 
                 if (teclas.espaco && this.cooldown <= 0) {
                     var tiro = new Sprite({

@@ -28,30 +28,20 @@ Sprite.prototype.desenhar = function(ctx) {
     ctx.translate(this.x, this.y);
     ctx.strokeRect(-this.w/2, -this.h/2, this.w, this.h);
     ctx.rotate(this.a + Math.PI/2);
-    ctx.drawImage(
-        this.scene.assets.img("player"),
-        -this.w/2,
-        -this.h/2,
-        this.w,
-        this.h 
-    );
-    /*
+    
     ctx.fillStyle = this.color;
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(-this.w/2, -this.h/2);
-    ctx.lineTo(-this.w/2, +this.h/2);
-    ctx.lineTo(+this.w/2, 0);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-    */
-
+    ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h);
+    ctx.strokeRect(-this.w/2, -this.h/2, this.w, this.h);
     ctx.restore();
 };
 
 Sprite.prototype.mover = function (dt) {
+    this.moverOrtogonal(dt);
+}
+
+Sprite.prototype.moverCircular = function (dt) {
     this.a = this.a + this.va*dt;
 
     this.vx = this.vm*Math.cos(this.a);
@@ -62,6 +52,19 @@ Sprite.prototype.mover = function (dt) {
 
     this.cooldown = this.cooldown -dt;
 }
+
+Sprite.prototype.moverOrtogonal = function (dt) {
+    //this.a = this.a + this.va*dt;
+
+    //this.vx = this.vm*Math.cos(this.a);
+    //this.vy = this.vm*Math.sin(this.a);
+
+    this.x = this.x + this.vx*dt;
+    this.y = this.y + this.vy*dt;
+
+    this.cooldown = this.cooldown -dt;
+}
+
 
 Sprite.prototype.colidiuCom = function(alvo){
     if(alvo.x+alvo.w/2 < this.x-this.w/2) return false;
