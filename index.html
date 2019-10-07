@@ -8,6 +8,7 @@
     <script src="Sprite.js"></script>
     <script src="Scene.js"></script>
     <script src="AssetsManager.js"></script>
+    <script src="Map.js"></script>
 </head>
 
 <body>
@@ -21,7 +22,7 @@
         assetsMng.loadAudio("shot", "assets/shot.mp3");
 
         var canvas = document.querySelector("canvas");
-        canvas.width = 480;
+        canvas.width = 384;
         canvas.height = 320;
         var ctx = canvas.getContext("2d");
         var teclas = {
@@ -32,7 +33,9 @@
             espaco: 0
         }
 
-        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng });
+        var mapa = new Map({COLUMNS:12, LINES:10});
+
+        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map:mapa });
         
 
         var pc = new Sprite({ x: 150, y: 150, w: 12, h: 12, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" }});
