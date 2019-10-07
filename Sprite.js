@@ -4,6 +4,8 @@ function Sprite(params = {}) {
         y: 0,
         vx: 0,
         vy: 0,
+        ax: 0,
+        ay: 0,
         h: 10,
         w: 10,
         a: 0,
@@ -56,8 +58,8 @@ Sprite.prototype.moverCircular = function (dt) {
 Sprite.prototype.moverOrtogonal = function (dt) {
     //this.a = this.a + this.va*dt;
 
-    //this.vx = this.vm*Math.cos(this.a);
-    //this.vy = this.vm*Math.sin(this.a);
+    this.vx = this.vx + this.ax*dt - this.vx*0.9*dt;
+    this.vy = this.vy + this.ay*dt  + 120*dt;
 
     this.x = this.x + this.vx*dt;
     this.y = this.y + this.vy*dt;

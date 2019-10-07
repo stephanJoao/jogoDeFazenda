@@ -40,13 +40,13 @@
 
         function porTeclasDirecionais(teclas) {
             return function () {
-                if (teclas.esquerda) { this.vx = -90; }
-                if (teclas.direita) { this.vx = +90; }
-                if (teclas.esquerda === teclas.direita) { this.vx = 0; }
+                if (teclas.esquerda) { this.ax = -90; }
+                if (teclas.direita) { this.ax = +90; }
+                if (teclas.esquerda === teclas.direita) { this.ax = 0; }
 
-                if (teclas.cima) { this.vy = -90; }
-                if (teclas.baixo) { this.vy = +90; }
-                if (teclas.cima === teclas.baixo) { this.vy = 0; }
+                if (teclas.cima) { this.ay = -240; }
+                if (teclas.baixo) { this.ay = +90; }
+                if (teclas.cima === teclas.baixo) { this.ay = 0; }
 
                 if (teclas.espaco && this.cooldown <= 0) {
                     var tiro = new Sprite({
