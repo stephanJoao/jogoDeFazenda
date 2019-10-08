@@ -33,8 +33,26 @@
             espaco: 0
         }
 
-        var mapa = new Map({COLUMNS:12, LINES:10});
-
+        var mapa = new Map({COLUMNS:12, LINES:10, m:
+        [
+        [1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,0],
+        [1,0,0,0,0,0,0,0,0,0],
+        [1,0,0,0,0,0,0,0,0,0],
+        [1,0,0,0,0,0,0,0,0,0],
+        [1,0,0,0,0,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1],
+        ]
+        });
+        mapa.cells[6][9].tipo = 1;
+        mapa.cells[2][9].tipo = 1;
+        mapa.cells[4][9].tipo = 1;
+        mapa.cells[4][2].tipo = 1;
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map:mapa });
         
 
@@ -107,6 +125,7 @@
             dt = (t - anterior) / 1000;
             if(assetsMng.progresso()===100){
                 cena1.passo(dt);
+                
             }
             anterior = t;
             ctx.fillText(1 / dt, 10, 20);

@@ -8,7 +8,7 @@ function Map(modelo) {
     for (var c = 0; c < exemplo.COLUMNS; c++) {
         exemplo.cells[c] = [];
         for (var l = 0; l < exemplo.LINES; l++) {
-            exemplo.cells[c][l] = { tipo: 0 };
+            exemplo.cells[c][l] = { tipo: modelo.m[c][l]||0 };
         }
     }
 
@@ -31,6 +31,8 @@ Map.prototype.desenhar = function (ctx) {
                 }
             ctx.fillStyle = cor;
             ctx.fillRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
+            ctx.strokeStyle= "black";
+            ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
         }
     }
 }
