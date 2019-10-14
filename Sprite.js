@@ -54,7 +54,7 @@ Sprite.prototype.desenhar = function (ctx) {
 Sprite.prototype.mover = function (dt) {
     this.moverOrtogonal(dt);
     if(this.vx != 0 || this.vy != 0)
-        this.frame += 6*dt;
+        this.frame += 10*dt;
     else
         this.frame = 0;
     if(this.frame > 9) {

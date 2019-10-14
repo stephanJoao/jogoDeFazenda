@@ -27,9 +27,18 @@ Map.prototype.desenhar = function (ctx) {
         for (var l = 0; l < this.LINES; l++) {
             switch (this.cells[c][l].tipo) {
                 case 0:
-                    cor = "tan";
+                    cor = "lightgreen";
                     break;
                 case 1:
+                    cor = "darkgreen";
+                    break;
+                case 2:
+                    cor = "darkgrey";
+                    break;
+                case 3:
+                    cor = "brown";
+                    break;
+                case 4:
                     cor = "darkgrey";
                     break;
                 default:
