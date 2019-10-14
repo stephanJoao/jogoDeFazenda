@@ -5,7 +5,7 @@ function AssetsManager() {
     this.audios = {};
     this.channels = [];
     this.MAX_CHANNELS = 20;
-    for(var i = 0; i< this.MAX_CHANNELS; i++){
+    for (var i = 0; i < this.MAX_CHANNELS; i++) {
         this.channels[i] = {
             audio: new Audio(),
             fim: -1
@@ -55,14 +55,14 @@ AssetsManager.prototype.loadAudio = function (key, url) {
 }
 
 AssetsManager.prototype.play = function (key) {
-    if(!this.audios[key]){
+    if (!this.audios[key]) {
         throw new Error(`Chave de audio inválida: ${key}!`);
     }
-    for(var i =0; i< this.MAX_CHANNELS; i++){
+    for (var i = 0; i < this.MAX_CHANNELS; i++) {
         var agora = new Date();
-        if(this.channels[i].fim < agora.getTime()){
+        if (this.channels[i].fim < agora.getTime()) {
             this.channels[i].audio.src = this.audios[key].src;
-            this.channels[i].fim = agora.getTime()+this.audios[key].duration*1000;
+            this.channels[i].fim = agora.getTime() + this.audios[key].duration * 1000;
             this.channels[i].audio.play();
             break;
         }

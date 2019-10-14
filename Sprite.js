@@ -11,7 +11,10 @@ function Sprite(params = {}) {
         a: 0,
         va: 0,
         vm: 0,
+        pose: 8,
+        frame: 0,
         props: {},
+        direcao: {},
         cooldown: 0,
         color: "blue",
         imune: 0,
@@ -29,18 +32,34 @@ Sprite.prototype.desenhar = function (ctx) {
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.strokeRect(-this.w / 2, -this.h / 2, this.w, this.h);
-    ctx.rotate(this.a + Math.PI / 2);
-
+    ctx.rotate(this.a);
+    ctx.drawImage(
+        this.scene.assets.img("player"),
+        64*Math.floor(this.frame),
+        64*this.pose,
+        64,
+        64,
+        -64 / 2,
+        -60,
+        64,
+        64
+    );
     ctx.fillStyle = this.color;
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
-    ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
     ctx.strokeRect(-this.w / 2, -this.h / 2, this.w, this.h);
     ctx.restore();
 };
 
 Sprite.prototype.mover = function (dt) {
     this.moverOrtogonal(dt);
+    if(this.vx != 0 || this.vy != 0)
+        this.frame += 6*dt;
+    else
+        this.frame = 0;
+    if(this.frame > 9) {
+        this.frame = 0;
+    }
 }
 
 Sprite.prototype.moverCircular = function (dt) {
@@ -68,6 +87,7 @@ Sprite.prototype.moverOrtogonal = function (dt) {
     this.aplicaRestricoes(dt);
     this.cooldown = this.cooldown - dt;
 }
+
 Sprite.prototype.aplicaRestricoes = function (dt) {
 
     var dnx;

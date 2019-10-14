@@ -38,7 +38,7 @@ Map.prototype.desenhar = function (ctx) {
             ctx.fillStyle = cor;
             ctx.fillRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
             ctx.strokeStyle = "black";
-            ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
+            //ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
         }
     }
 }

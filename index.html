@@ -15,15 +15,15 @@
     <canvas></canvas>
     <script>
         var assetsMng = new AssetsManager();
-        assetsMng.loadImage("player", "assets/player_ship.png");
+        assetsMng.loadImage("player", "assets/player.png");
         assetsMng.loadImage("enemy_1", "assets/enemy_1.png");
         assetsMng.loadImage("explosion", "assets/explosion.png");
         assetsMng.loadAudio("explosion", "assets/explosion.mp3");
         assetsMng.loadAudio("shot", "assets/shot.mp3");
 
         var canvas = document.querySelector("canvas");
-        canvas.width = 384;
-        canvas.height = 320;
+        canvas.width = 600;
+        canvas.height = 600;
         var ctx = canvas.getContext("2d");
         var teclas = {
             esquerda: 0,
@@ -33,39 +33,40 @@
             espaco: 0
         }
 
-        var mapa = new Map({COLUMNS:12, LINES:10, m:
-        [
-        [1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,0,1,0,0,0,0,0,0,0,1],
-        [1,0,1,1,0,1,1,1,0,0,0,1],
-        [1,0,1,1,0,0,0,1,1,1,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,1],
-        [1,0,1,1,0,0,1,1,0,1,1,1],
-        [1,0,0,0,0,1,1,0,0,0,1,1],
-        [1,0,0,0,1,1,1,0,0,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1],
-        ]
+        var mapa = new Map({
+            COLUMNS: 12, LINES: 10, m:
+                [
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+                    [1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1],
+                    [1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1],
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                    [1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1],
+                    [1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+                    [1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                ]
         });
-        mapa.cells[6][9].tipo = 1;
-        mapa.cells[2][9].tipo = 1;
-        mapa.cells[4][9].tipo = 1;
-        mapa.cells[4][2].tipo = 1;
-        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map:mapa });
-        
+        //mapa.cells[6][9].tipo = 1;
+        //mapa.cells[2][9].tipo = 1;
+        //mapa.cells[4][9].tipo = 1;
+        //mapa.cells[4][2].tipo = 1;
+        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map: mapa });
 
-        var pc = new Sprite({ x: 150, y: 150, w: 12, h: 12, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" }});
+
+        var pc = new Sprite({ x: 150, y: 150, w: 12, h: 12, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" } });
         cena1.adicionar(pc);
 
         function porTeclasDirecionais(teclas) {
             return function () {
-                if (teclas.esquerda) { this.ax = -90; }
-                if (teclas.direita) { this.ax = +90; }
-                if (teclas.esquerda === teclas.direita) { this.ax = 0; }
+                if (teclas.esquerda && pc.vy == 0) { this.vx = -90; this.pose = 9; }
+                if (teclas.direita && pc.vy == 0) { this.vx = +90; this.pose = 11; }
+                if (teclas.esquerda === teclas.direita) { this.vx = 0; }
 
-                if (teclas.cima) { this.ay = -240; }
-                if (teclas.baixo) { this.ay = +90; }
-                if (teclas.cima === teclas.baixo) { this.ay = 0; }
+                if (teclas.cima && pc.vx == 0) { this.vy = -90; this.pose = 8; }
+                if (teclas.baixo && pc.vx == 0) { this.vy = +90; this.pose = 10; }
+                if (teclas.cima === teclas.baixo) { this.vy = 0; }
 
                 if (teclas.espaco && this.cooldown <= 0) {
                     var tiro = new Sprite({
@@ -121,9 +122,9 @@
 
         function passo(t) {
             dt = (t - anterior) / 1000;
-            if(assetsMng.progresso()===100){
+            if (assetsMng.progresso() === 100) {
                 cena1.passo(dt);
-                
+
             }
             anterior = t;
             ctx.fillText(1 / dt, 10, 20);
