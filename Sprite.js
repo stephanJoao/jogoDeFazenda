@@ -4,8 +4,6 @@ function Sprite(params = {}) {
         y: 0,
         vx: 0,
         vy: 0,
-        ax: 0,
-        ay: 0,
         h: 10,
         w: 10,
         a: 0,
@@ -35,14 +33,14 @@ Sprite.prototype.desenhar = function (ctx) {
     ctx.rotate(this.a);
     ctx.drawImage(
         this.scene.assets.img("player"),
-        64*Math.floor(this.frame),
-        64*this.pose,
-        64,
-        64,
-        -64 / 2,
-        -60,
-        64,
-        64
+        64*Math.floor(this.frame), //linha
+        64*this.pose,              //coluna
+        64,                        //tamanho na imagem x
+        64,                        //tamanho na imagem y
+        -64 / 2,                   //posicao em x
+        -60,                       //posicao em y
+        64,                        //tamanho no canvas x
+        64                         //tamanho no canvas y
     );
     ctx.fillStyle = this.color;
     ctx.strokeStyle = "black";
@@ -96,19 +94,19 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
     dnx = dx;
     dy = this.vy * dt;
     dny = dy;
-    if (dx > 0 && this.scene.map.cells[this.mc + 1][this.ml].tipo != 0) {
+    if (dx > 0 && (this.scene.map.cells[this.mc + 1][this.ml].tipo != 0 && this.scene.map.cells[this.mc + 1][this.ml].tipo != 1)) {
         dnx = this.scene.map.SIZE * (this.mc + 1) - (this.x + this.w / 2);
         dx = Math.min(dnx, dx);
     }
-    if (dx < 0 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0) {
+    if (dx < 0 && (this.scene.map.cells[this.mc - 1][this.ml].tipo != 0 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 1)) {
         dnx = this.scene.map.SIZE * (this.mc - 1 + 1) - (this.x - this.w / 2);
         dx = Math.max(dnx, dx);
     }
-    if (dy > 0 && this.scene.map.cells[this.mc][this.ml + 1].tipo != 0) {
+    if (dy > 0 && (this.scene.map.cells[this.mc][this.ml + 1].tipo != 0 && this.scene.map.cells[this.mc][this.ml + 1].tipo != 1)) {
         dny = this.scene.map.SIZE * (this.ml + 1) - (this.y + this.h / 2);
         dy = Math.min(dny, dy);
     }
-    if (dy < 0 && this.scene.map.cells[this.mc][this.ml - 1].tipo != 0) {
+    if (dy < 0 && (this.scene.map.cells[this.mc][this.ml - 1].tipo != 0 && this.scene.map.cells[this.mc][this.ml - 1].tipo != 1)) {
         dny = this.scene.map.SIZE * (this.ml - 1 + 1) - (this.y - this.h / 2);
         dy = Math.max(dny, dy);
     }
@@ -138,4 +136,8 @@ Sprite.prototype.colidiuCom = function (alvo) {
     if (alvo.y - alvo.h / 2 > this.y + this.h / 2) return false;
 
     return true;
+}
+
+Sprite.prototype.coordenadas = function (pc) {
+    
 }
