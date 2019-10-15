@@ -62,7 +62,7 @@
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map: mapa });
 
 
-        var pc = new Sprite({ x: 50, y: 150, w: 22, h: 14, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" } });
+        var pc = new Sprite({ x: 250, y: 150, w: 22, h: 14, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" } });
         cena1.adicionar(pc);
 
         function porTeclasDirecionais(teclas) {

@@ -137,7 +137,3 @@ Sprite.prototype.colidiuCom = function (alvo) {
 
     return true;
 }
-
-Sprite.prototype.coordenadas = function (pc) {
-    
-}
