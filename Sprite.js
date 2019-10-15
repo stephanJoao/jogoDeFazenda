@@ -4,6 +4,8 @@ function Sprite(params = {}) {
         y: 0,
         vx: 0,
         vy: 0,
+        ax: 0,
+        ay: 0,
         h: 10,
         w: 10,
         a: 0,
