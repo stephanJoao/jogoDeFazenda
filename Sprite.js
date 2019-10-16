@@ -35,8 +35,8 @@ Sprite.prototype.desenhar = function (ctx) {
     ctx.rotate(this.a);
     ctx.drawImage(
         this.scene.assets.img("player"),
-        64*Math.floor(this.frame), //linha
-        64*this.pose,              //coluna
+        64 * Math.floor(this.frame), //linha
+        64 * this.pose,              //coluna
         64,                        //tamanho na imagem x
         64,                        //tamanho na imagem y
         -64 / 2,                   //posicao em x
@@ -53,12 +53,12 @@ Sprite.prototype.desenhar = function (ctx) {
 
 Sprite.prototype.mover = function (dt) {
     this.moverOrtogonal(dt);
-    if(this.vx != 0 || this.vy != 0)
-        this.frame += 10*dt;
+    if (this.vx != 0 || this.vy != 0)
+        this.frame += 10 * dt;
     else
         this.frame = 0;
-    if(this.frame > 9) {
-        this.frame = 0;
+    if (this.frame > 9) {
+        this.frame = 1;
     }
 }
 
@@ -113,13 +113,17 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
         dy = Math.max(dny, dy);
     }
     this.vy = dy / dt;
+    this.vx = dx / dt;
     this.x = this.x + dx;
     this.y = this.y + dy;
 
     var MAXX = this.scene.map.SIZE * this.scene.map.COLUMNS - this.w / 2;
     var MAXY = this.scene.map.SIZE * this.scene.map.LINES - this.h / 2;
 
-    if (this.x > MAXX) this.x = MAXX;
+    if (this.x > MAXX) {
+        this.x = MAXX;
+        this.vx = 0;
+    }
     if (this.y > MAXY) {
         this.y = MAXY;
         this.vy = 0;
