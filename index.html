@@ -16,23 +16,24 @@
     <script>
         var assetsMng = new AssetsManager();
         assetsMng.loadImage("player", "assets/player.png");
-        assetsMng.loadImage("enemy_1", "assets/enemy_1.png");
-        assetsMng.loadImage("explosion", "assets/explosion.png");
-        assetsMng.loadAudio("explosion", "assets/explosion.mp3");
-        assetsMng.loadAudio("shot", "assets/shot.mp3");
+        //assetsMng.loadImage("enemy_1", "assets/enemy_1.png");
+        //assetsMng.loadImage("explosion", "assets/explosion.png");
+        //assetsMng.loadAudio("explosion", "assets/explosion.mp3");
+        //assetsMng.loadAudio("shot", "assets/shot.mp3");
 
         var canvas = document.querySelector("canvas");
         var ctx = canvas.getContext("2d");
         canvas.width = 32 * 28;
         canvas.height = 32 * 20;
-        
-        
+
+
         var teclas = {
             esquerda: 0,
             cima: 0,
             direita: 0,
             baixo: 0,
-            espaco: 0
+            espaco: 0,
+            e: 0
         }
 
         var mapa = new Map({
@@ -63,46 +64,72 @@
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map: mapa });
 
-        var pc = new Sprite({ 
-            x: 250, 
-            y: 150, 
-            w: 22, 
-            h: 14, 
-            comportar: porTeclasDirecionais(teclas), 
-            props: { tipo: "pc" } 
+        var pc = new Sprite({
+            x: 250,
+            y: 150,
+            w: 22,
+            h: 14,
+            comportar: porTeclasDirecionais(teclas),
+            props: { tipo: "pc" }
         });
-        
+
         cena1.adicionar(pc);
 
         function porTeclasDirecionais(teclas) {
             return function () {
-                if (teclas.esquerda && pc.vy == 0) { 
-                    this.vx = -90; 
-                    this.pose = 9; 
+                if (teclas.esquerda && pc.vy == 0) {
+                    this.vx = -90;
+                    this.pose = 9;
+                    this.direcao = "esquerda";
                 }
-                if (teclas.direita && pc.vy == 0) { 
-                    this.vx = +90; 
-                    this.pose = 11; 
+                if (teclas.direita && pc.vy == 0) {
+                    this.vx = +90;
+                    this.pose = 11;
+                    this.direcao = "direita";
                 }
-                if (teclas.esquerda === teclas.direita) { 
-                    this.vx = 0; 
+                if (teclas.esquerda === teclas.direita) {
+                    this.vx = 0;
+                    if (teclas.esquerda) {
+                        this.pose = 10;
+                    }
                 }
 
-                if (teclas.cima && pc.vx == 0) { 
-                    this.vy = -90; 
-                    this.pose = 8; 
+                if (teclas.cima && pc.vx == 0) {
+                    this.vy = -90;
+                    this.pose = 8;
+                    this.direcao = "cima";
                 }
-                if (teclas.baixo && pc.vx == 0) { 
-                    this.vy = +90; 
-                    this.pose = 10; 
+                if (teclas.baixo && pc.vx == 0) {
+                    this.vy = +90;
+                    this.pose = 10;
+                    this.direcao = "baixo";
                 }
-                if (teclas.cima === teclas.baixo) { 
-                    this.vy = 0; 
+                if (teclas.cima === teclas.baixo) {
+                    this.vy = 0;
+                    if (teclas.cima) {
+                        /*if(this.direcao === "baixo")
+                            this.direcao = "cima";
+                        else 
+                            this.direcao = "baixo";
+                        */
+                       console.log(this.direcao);
+                        if (this.direcao === "baixo")
+                            this.pose = 10;
+                        if (this.direcao === "cima")
+                            this.pose = 8;
+                    }
                 }
 
                 if (teclas.espaco && this.cooldown <= 0) {
                     mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo = 1;
                     mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].dtCells = 0;
+                }
+                if (teclas.e) {
+                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo = 0;
+                    mapa.cells[Math.floor(pc.x / 32) - 1][Math.floor(pc.y / 32)].tipo = 0;
+                    mapa.cells[Math.floor(pc.x / 32) + 1][Math.floor(pc.y / 32)].tipo = 0;
+                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) + 1].tipo = 0;
+                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo = 0;
                 }
             }
         }
@@ -123,6 +150,9 @@
                 case 40:
                     teclas.baixo = 1;
                     break;
+                case 69:
+                    teclas.e = 1;
+                    break;
             }
         });
         addEventListener("keyup", function (e) {
@@ -141,6 +171,9 @@
                     break;
                 case 40:
                     teclas.baixo = 0;
+                    break;
+                case 69:
+                    teclas.e = 0;
                     break;
             }
         });

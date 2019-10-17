@@ -14,7 +14,7 @@ function Sprite(params = {}) {
         pose: 8,
         frame: 0,
         props: {},
-        direcao: {},
+        direcao: 0,
         cooldown: 0,
         color: "blue",
         imune: 0,
