@@ -82,6 +82,7 @@ Scene.prototype.removeSprites = function () {
 
 Scene.prototype.desenharMapa = function () {
     this.map.desenhar(this.ctx);
+    this.map.comportar(dt);
 }
 
 Scene.prototype.passo = function (dt) {

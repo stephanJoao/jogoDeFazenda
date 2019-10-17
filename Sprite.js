@@ -28,7 +28,6 @@ Sprite.prototype = new Sprite();
 Sprite.prototype.constructor = Sprite;
 
 Sprite.prototype.desenhar = function (ctx) {
-
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.strokeRect(-this.w / 2, -this.h / 2, this.w, this.h);
@@ -53,6 +52,8 @@ Sprite.prototype.desenhar = function (ctx) {
 
 Sprite.prototype.mover = function (dt) {
     this.moverOrtogonal(dt);
+    
+    //ANIMACAO
     if (this.vx != 0 || this.vy != 0)
         this.frame += 10 * dt;
     else
@@ -89,7 +90,6 @@ Sprite.prototype.moverOrtogonal = function (dt) {
 }
 
 Sprite.prototype.aplicaRestricoes = function (dt) {
-
     var dnx;
     var dx;
     dx = this.vx * dt;
@@ -135,11 +135,15 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
 
 
 Sprite.prototype.colidiuCom = function (alvo) {
-    if (alvo.x + alvo.w / 2 < this.x - this.w / 2) return false;
-    if (alvo.x - alvo.w / 2 > this.x + this.w / 2) return false;
+    if (alvo.x + alvo.w / 2 < this.x - this.w / 2) 
+        return false;
+    if (alvo.x - alvo.w / 2 > this.x + this.w / 2) 
+        return false;
 
-    if (alvo.y + alvo.h / 2 < this.y - this.h / 2) return false;
-    if (alvo.y - alvo.h / 2 > this.y + this.h / 2) return false;
+    if (alvo.y + alvo.h / 2 < this.y - this.h / 2) 
+        return false;
+    if (alvo.y - alvo.h / 2 > this.y + this.h / 2) 
+        return false;
 
     return true;
 }

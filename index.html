@@ -22,9 +22,11 @@
         assetsMng.loadAudio("shot", "assets/shot.mp3");
 
         var canvas = document.querySelector("canvas");
+        var ctx = canvas.getContext("2d");
         canvas.width = 32 * 28;
         canvas.height = 32 * 20;
-        var ctx = canvas.getContext("2d");
+        
+        
         var teclas = {
             esquerda: 0,
             cima: 0,
@@ -61,22 +63,46 @@
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map: mapa });
 
-
-        var pc = new Sprite({ x: 250, y: 150, w: 22, h: 14, comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" } });
+        var pc = new Sprite({ 
+            x: 250, 
+            y: 150, 
+            w: 22, 
+            h: 14, 
+            comportar: porTeclasDirecionais(teclas), 
+            props: { tipo: "pc" } 
+        });
+        
         cena1.adicionar(pc);
 
         function porTeclasDirecionais(teclas) {
             return function () {
-                if (teclas.esquerda && pc.vy == 0) { this.vx = -90; this.pose = 9; }
-                if (teclas.direita && pc.vy == 0) { this.vx = +90; this.pose = 11; }
-                if (teclas.esquerda === teclas.direita) { this.vx = 0; }
+                if (teclas.esquerda && pc.vy == 0) { 
+                    this.vx = -90; 
+                    this.pose = 9; 
+                }
+                if (teclas.direita && pc.vy == 0) { 
+                    this.vx = +90; 
+                    this.pose = 11; 
+                }
+                if (teclas.esquerda === teclas.direita) { 
+                    this.vx = 0; 
+                }
 
-                if (teclas.cima && pc.vx == 0) { this.vy = -90; this.pose = 8; }
-                if (teclas.baixo && pc.vx == 0) { this.vy = +90; this.pose = 10; }
-                if (teclas.cima === teclas.baixo) { this.vy = 0; }
+                if (teclas.cima && pc.vx == 0) { 
+                    this.vy = -90; 
+                    this.pose = 8; 
+                }
+                if (teclas.baixo && pc.vx == 0) { 
+                    this.vy = +90; 
+                    this.pose = 10; 
+                }
+                if (teclas.cima === teclas.baixo) { 
+                    this.vy = 0; 
+                }
 
                 if (teclas.espaco && this.cooldown <= 0) {
                     mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo = 1;
+                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].dtCells = 0;
                 }
             }
         }
