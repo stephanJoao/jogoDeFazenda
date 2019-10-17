@@ -58,7 +58,7 @@
                     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
                 ]
         });
-        
+
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map: mapa });
 
 
@@ -76,7 +76,7 @@
                 if (teclas.cima === teclas.baixo) { this.vy = 0; }
 
                 if (teclas.espaco && this.cooldown <= 0) {
-                    mapa.cells[Math.floor(pc.x/32)][Math.floor(pc.y/32)].tipo = 1;
+                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo = 1;
                 }
             }
         }
