@@ -90,10 +90,12 @@
                 if (teclas.esquerda === teclas.direita) {
                     this.vx = 0;
                     if (teclas.esquerda) {
-                        this.pose = 10;
+                        if (Math.floor(pc.y / 32) >= mapa.LINES / 2)
+                            this.pose = 8;
+                        else
+                            this.pose = 10;
                     }
                 }
-
                 if (teclas.cima && pc.vx == 0) {
                     this.vy = -90;
                     this.pose = 8;
@@ -107,16 +109,11 @@
                 if (teclas.cima === teclas.baixo) {
                     this.vy = 0;
                     if (teclas.cima) {
-                        /*if(this.direcao === "baixo")
-                            this.direcao = "cima";
-                        else 
-                            this.direcao = "baixo";
-                        */
-                       console.log(this.direcao);
-                        if (this.direcao === "baixo")
-                            this.pose = 10;
-                        if (this.direcao === "cima")
-                            this.pose = 8;
+
+                        if (Math.floor(pc.x / 32) >= mapa.COLUMNS / 2)
+                            this.pose = 9;
+                        else
+                            this.pose = 11;
                     }
                 }
 
