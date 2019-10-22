@@ -73,3 +73,4 @@ Map.prototype.comportar = function (dt) {
 //Chao plantado: 1 
 //Limites do mapa: 2
 //Estruturas: 3
+//Chao plantado: 4
