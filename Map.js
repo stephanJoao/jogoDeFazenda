@@ -30,7 +30,7 @@ Map.prototype.desenhar = function (ctx) {
                     cor = "lightgreen";
                     break;
                 case 1:
-                    cor = "darkgreen";
+                    cor = "rgb(0,190,0)";
                     break;
                 case 2:
                     cor = "darkgrey";
@@ -39,10 +39,20 @@ Map.prototype.desenhar = function (ctx) {
                     cor = "brown";
                     break;
                 case 4:
+                    cor = "rgb(0,150,0)";
+                    break;
+                case 5:
+                    cor = "rgb(0,70,0)";
+                    break;
+                case 6:
+                    cor = "rgb(0,50,0)";
+                    break;
+                case 7:
                     cor = "pink";
                     break;
                 default:
                     cor = "black";
+                    break;
             }
             ctx.fillStyle = cor;
             ctx.fillRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
@@ -57,20 +67,42 @@ Map.prototype.comportar = function (dt) {
         for (var l = 0; l < this.LINES; l++) {
             switch (this.cells[c][l].tipo) {
                 case 1:
-                        this.cells[c][l].dtCells += dt;
-                    if(this.cells[c][l].dtCells > 5) {
+                    this.cells[c][l].dtCells += dt;
+                    if (this.cells[c][l].dtCells > 2) {
                         this.cells[c][l].tipo = 4;
+                        this.cells[c][l].dtCells = 0;
                     }
+                    break;
+                case 4:
+                    this.cells[c][l].dtCells += dt;
+                    if (this.cells[c][l].dtCells > 2) {
+                        this.cells[c][l].tipo = 5;
+                        this.cells[c][l].dtCells = 0;
+                    }
+                    break;
+                case 5:
+                    this.cells[c][l].dtCells += dt;
+                    if (this.cells[c][l].dtCells > 2) {
+                        this.cells[c][l].tipo = 6;
+                        this.cells[c][l].dtCells = 0;
+                    }
+                    break;
                 default:
                     cor = "black";
+                    break;
             }
         }
     }
 }
 
+/////PODE ANDAR EM CIMA
+ //Chao normal: 0
+ //Chao plantado 1: 1 
 
-//Chao normal: 0
-//Chao plantado: 1 
-//Limites do mapa: 2
-//Estruturas: 3
-//Chao plantado: 4
+/////NAO PODE ANDAR EM CIMA
+ //Limites do mapa: 2
+ //Estruturas: 3
+ ///
+ //Chao plantado 2: 4
+ //Chao plantado 3: 5
+ //Chao plantado 4: 6
