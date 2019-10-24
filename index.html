@@ -32,7 +32,9 @@
             direita: 0,
             baixo: 0,
             espaco: 0,
-            e: 0
+            e: 0,
+            setaDir: 0,
+            setaEsq: 0
         }
 
         var mapa = new Map({
@@ -128,10 +130,10 @@
                 if (teclas.espaco && this.cooldown <= 0) {
                     var atual = mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo;
 
-                    if (atual == 0) {
+                    if (atual == 0 && pc.inventario.sementes > 0) {
                         mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo = 1;
                         mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].dtCells = 0;
-                        this.cooldown = 0.5;
+                        //this.cooldown = 0.5;
                         pc.inventario.sementes--;
                     }
                 }
@@ -235,7 +237,7 @@
             dt = (t - anterior) / 1000;
             if (assetsMng.progresso() === 100) {
                 cena1.passo(dt);
-
+                
             }
             anterior = t;
             ctx.fillStyle = "black";
@@ -243,6 +245,7 @@
             ctx.fillText(`Sementes: ${pc.inventario.sementes}`, 40, 50);
             ctx.fillText(`Trigo: ${pc.inventario.trigo}`, 40, 60);
             ctx.fillText(`Pao: ${pc.inventario.pao}`, 40, 70);
+            ctx.fillText(pc.acao, 40, 90);
             requestAnimationFrame(passo);
         }
 

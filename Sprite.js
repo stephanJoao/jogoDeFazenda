@@ -11,6 +11,7 @@ function Sprite(params = {}) {
         frame: 0,
         props: {},
         inventario: {},
+        acao: 0,
         direcao: 0,
         cooldown: 0,
         color: "blue",
