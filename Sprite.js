@@ -76,11 +76,11 @@ Sprite.prototype.moverCircular = function (dt) {
 }
 
 Sprite.prototype.moverOrtogonal = function (dt) {
-    //this.a = this.a + this.va*dt;
-
-    this.vx = this.vx + this.ax * dt - this.vx * 0.9 * dt;
-    this.vy = this.vy + this.ay * dt /*+ 120 * dt*/;
-
+    if(this.vx != 0 && this.vy != 0)
+    {
+        this.vx = 0;
+        this.vy = 0;
+    }
 
     this.mc = Math.floor(this.x / this.scene.map.SIZE);
     this.ml = Math.floor(this.y / this.scene.map.SIZE);
