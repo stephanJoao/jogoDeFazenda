@@ -4,12 +4,8 @@ function Sprite(params = {}) {
         y: 0,
         vx: 0,
         vy: 0,
-        ax: 0,
-        ay: 0,
         h: 10,
         w: 10,
-        a: 0,
-        va: 0,
         vm: 0,
         pose: 8,
         frame: 0,
@@ -61,18 +57,6 @@ Sprite.prototype.mover = function (dt) {
     if (this.frame > 9) {
         this.frame = 1;
     }
-}
-
-Sprite.prototype.moverCircular = function (dt) {
-    this.a = this.a + this.va * dt;
-
-    this.vx = this.vm * Math.cos(this.a);
-    this.vy = this.vm * Math.sin(this.a);
-
-    this.x = this.x + this.vx * dt;
-    this.y = this.y + this.vy * dt;
-
-    this.cooldown = this.cooldown - dt;
 }
 
 Sprite.prototype.moverOrtogonal = function (dt) {
