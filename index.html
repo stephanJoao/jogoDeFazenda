@@ -141,16 +141,16 @@
                     var cima = mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo;
                     var baixo = mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) + 1].tipo;
 
-                    if(this.direcao === "esquerda" && (esq == 1||esq == 4)){
+                    if(this.direcao === "esquerda" && (esq == 1||esq == 4||esq == 5||esq == 6)){
                         mapa.cells[Math.floor(pc.x / 32) - 1][Math.floor(pc.y / 32)].tipo = 0;
                     }
-                    else if(this.direcao === "direita" && (dir == 1||dir == 4)){
+                    else if(this.direcao === "direita" && (dir == 1||dir == 4||dir == 5||dir == 6)){
                         mapa.cells[Math.floor(pc.x / 32) + 1][Math.floor(pc.y / 32)].tipo = 0;
                     }
-                    else if(this.direcao === "cima" && (cima == 1||cima == 4)){
+                    else if(this.direcao === "cima" && (cima == 1||cima == 4||cima == 5||cima == 6)){
                         mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo = 0;
                     }
-                    else if (this.direcao === "baixo" && (baixo == 1||baixo == 4)){
+                    else if (this.direcao === "baixo" && (baixo == 1||baixo == 4||baixo == 5||baixo == 6)){
                         mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) + 1].tipo = 0;
                     }
                 }
