@@ -10,6 +10,7 @@ function Sprite(params = {}) {
         pose: 8,
         frame: 0,
         props: {},
+        inventario: {},
         direcao: 0,
         cooldown: 0,
         color: "blue",
@@ -48,7 +49,7 @@ Sprite.prototype.desenhar = function (ctx) {
 
 Sprite.prototype.mover = function (dt) {
     this.moverOrtogonal(dt);
-    
+
     //ANIMACAO
     if (this.vx != 0 || this.vy != 0)
         this.frame += 10 * dt;
@@ -60,8 +61,7 @@ Sprite.prototype.mover = function (dt) {
 }
 
 Sprite.prototype.moverOrtogonal = function (dt) {
-    if(this.vx != 0 && this.vy != 0)
-    {
+    if (this.vx != 0 && this.vy != 0) {
         this.vx = 0;
         this.vy = 0;
     }
@@ -119,14 +119,14 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
 
 
 Sprite.prototype.colidiuCom = function (alvo) {
-    if (alvo.x + alvo.w / 2 < this.x - this.w / 2) 
+    if (alvo.x + alvo.w / 2 < this.x - this.w / 2)
         return false;
-    if (alvo.x - alvo.w / 2 > this.x + this.w / 2) 
+    if (alvo.x - alvo.w / 2 > this.x + this.w / 2)
         return false;
 
-    if (alvo.y + alvo.h / 2 < this.y - this.h / 2) 
+    if (alvo.y + alvo.h / 2 < this.y - this.h / 2)
         return false;
-    if (alvo.y - alvo.h / 2 > this.y + this.h / 2) 
+    if (alvo.y - alvo.h / 2 > this.y + this.h / 2)
         return false;
 
     return true;

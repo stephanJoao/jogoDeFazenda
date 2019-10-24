@@ -97,7 +97,8 @@ Map.prototype.comportar = function (dt) {
 
 /////PODE ANDAR EM CIMA
  //Chao normal: 0
- //Chao plantado 1: 1 
+ //Chao plantado 1: 1
+ //Chao arado: 7 
 
 /////NAO PODE ANDAR EM CIMA
  //Limites do mapa: 2

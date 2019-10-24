@@ -26,7 +26,6 @@
         canvas.width = 32 * 28;
         canvas.height = 32 * 20;
 
-
         var teclas = {
             esquerda: 0,
             cima: 0,
@@ -70,7 +69,8 @@
             w: 22,
             h: 14,
             comportar: porTeclasDirecionais(teclas),
-            props: { tipo: "pc" }
+            props: { tipo: "pc" },
+            inventario: { sementes: 0, trigo: 0, pao: 0 }
         });
 
         cena1.adicionar(pc);
@@ -93,12 +93,12 @@
                         if (Math.floor(pc.y / 32) >= mapa.LINES / 2) {
                             this.pose = 8;
                             this.direcao = "cima";
-                        }    
+                        }
                         else {
                             this.pose = 10;
                             this.direcao = "baixo";
                         }
-                        
+
                     }
                 }
                 if (teclas.cima && !teclas.esquerda && !teclas.direita) {
@@ -128,30 +128,59 @@
                 if (teclas.espaco && this.cooldown <= 0) {
                     var atual = mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo;
 
-                    if(atual == 0) {
-                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo = 1;
-                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].dtCells = 0;
-                    this.cooldown = 0.5;
+                    if (atual == 0) {
+                        mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo = 1;
+                        mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].dtCells = 0;
+                        this.cooldown = 0.5;
+                        pc.inventario.sementes--;
                     }
                 }
-                
+
                 if (teclas.e) {
                     var esq = mapa.cells[Math.floor(pc.x / 32) - 1][Math.floor(pc.y / 32)].tipo;
                     var dir = mapa.cells[Math.floor(pc.x / 32) + 1][Math.floor(pc.y / 32)].tipo;
                     var cima = mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo;
                     var baixo = mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) + 1].tipo;
 
-                    if(this.direcao === "esquerda" && (esq == 1||esq == 4||esq == 5||esq == 6)){
+                    if (this.direcao === "esquerda" && (esq == 1 || esq == 4 || esq == 5 || esq == 6)) {
                         mapa.cells[Math.floor(pc.x / 32) - 1][Math.floor(pc.y / 32)].tipo = 0;
+                        if (esq == 1 || esq == 4 || esq == 5) {
+                            pc.inventario.sementes += 1;
+                        }
+                        else {
+                            pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
+                            pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                        }
                     }
-                    else if(this.direcao === "direita" && (dir == 1||dir == 4||dir == 5||dir == 6)){
+                    else if (this.direcao === "direita" && (dir == 1 || dir == 4 || dir == 5 || dir == 6)) {
                         mapa.cells[Math.floor(pc.x / 32) + 1][Math.floor(pc.y / 32)].tipo = 0;
+                        if (dir == 1 || dir == 4 || dir == 5) {
+                            pc.inventario.sementes += 1;
+                        }
+                        else {
+                            pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
+                            pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                        }
                     }
-                    else if(this.direcao === "cima" && (cima == 1||cima == 4||cima == 5||cima == 6)){
+                    else if (this.direcao === "cima" && (cima == 1 || cima == 4 || cima == 5 || cima == 6)) {
                         mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo = 0;
+                        if (cima == 1 || cima == 4 || cima == 5) {
+                            pc.inventario.sementes += 1;
+                        }
+                        else {
+                            pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
+                            pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                        }
                     }
-                    else if (this.direcao === "baixo" && (baixo == 1||baixo == 4||baixo == 5||baixo == 6)){
+                    else if (this.direcao === "baixo" && (baixo == 1 || baixo == 4 || baixo == 5 || baixo == 6)) {
                         mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) + 1].tipo = 0;
+                        if (baixo == 1 || baixo == 4 || baixo == 5) {
+                            pc.inventario.sementes += 1;
+                        }
+                        else {
+                            pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
+                            pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                        }
                     }
                 }
             }
@@ -178,6 +207,7 @@
                     break;
             }
         });
+
         addEventListener("keyup", function (e) {
             switch (e.keyCode) {
                 case 32:
@@ -208,13 +238,16 @@
 
             }
             anterior = t;
+            ctx.fillStyle = "black";
             ctx.fillText(1 / dt, 10, 20);
+            ctx.fillText(`Sementes: ${pc.inventario.sementes}`, 40, 50);
+            ctx.fillText(`Trigo: ${pc.inventario.trigo}`, 40, 60);
+            ctx.fillText(`Pao: ${pc.inventario.pao}`, 40, 70);
             requestAnimationFrame(passo);
         }
 
         var dt, anterior = 0;
         requestAnimationFrame(passo);
-
 
     </script>
 </body>
