@@ -73,7 +73,8 @@
             h: 14,
             comportar: porTeclasDirecionais(teclas),
             props: { tipo: "pc" },
-            inventario: { sementes: 0, trigo: 0, pao: 0, opacidade: 1 }
+            inventario: { sementes: 0, trigo: 0, pao: 0, opacidade: 1 },
+            cooldowns: {plantar: 0, arar: 0}
         });
 
         cena1.adicionar(pc);
@@ -132,18 +133,18 @@
                 }
 
                 if (teclas.a) {
-                    pc.inventario.opacidade = 1.2;
+                    pc.inventario.opacidade = 1.5;
                     teclas.a = 0;
                     pc.acao--;
                     if (pc.acao == -1)
-                        pc.acao = 3;
+                        pc.acao = 4;
                 }
 
                 if (teclas.d) {
-                    pc.inventario.opacidade = 1.2;
+                    pc.inventario.opacidade = 1.5;
                     teclas.d = 0;
                     pc.acao++;
-                    if (pc.acao == 4)
+                    if (pc.acao == 5)
                         pc.acao = 0;
                 }
 
@@ -156,10 +157,10 @@
 
                     switch (pc.acao) {
                         case 0:
-                            if (atual == 0 && pc.inventario.sementes > 0 && pc.cooldown <= 0) {
+                            if (atual == 7 && pc.inventario.sementes > 0 && pc.cooldowns.plantar <= 0) {
                                 mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].tipo = 1;
                                 mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32)].dtCells = 0;
-                                this.cooldown = 0.5;
+                                this.cooldowns.plantar = 0.5;
                                 pc.inventario.sementes--;
                             }
                             break;
@@ -171,46 +172,54 @@
                             break;
 
                         case 3:
-                            if (this.direcao === "esquerda" && (esq == 1 || esq == 4 || esq == 5 || esq == 6)) {
-                                mapa.cells[Math.floor(pc.x / 32) - 1][Math.floor(pc.y / 32)].tipo = 0;
-                                if (esq == 1 || esq == 4 || esq == 5) {
-                                    pc.inventario.sementes += 1;
+                            if (pc.cooldowns.arar <= 0) {
+                                if (pc.direcao === "esquerda" && (esq == 1 || esq == 4 || esq == 5 || esq == 6 || esq == 0)) {
+                                    mapa.cells[Math.floor(pc.x / 32) - 1][Math.floor(pc.y / 32)].tipo = 7;
+                                    if (esq == 1 || esq == 4 || esq == 5) {
+                                        pc.inventario.sementes += 1;
+                                    }
+                                    else if (esq == 6) {
+                                        pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
+                                        pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                                    }
+                                    pc.cooldowns.arar = 0.7;
                                 }
-                                else {
-                                    pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
-                                    pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                                else if (pc.direcao === "direita" && (dir == 1 || dir == 4 || dir == 5 || dir == 6 || dir == 0)) {
+                                    mapa.cells[Math.floor(pc.x / 32) + 1][Math.floor(pc.y / 32)].tipo = 7;
+                                    if (dir == 1 || dir == 4 || dir == 5) {
+                                        pc.inventario.sementes += 1;
+                                    }
+                                    else if (dir == 6) {
+                                        pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
+                                        pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                                    }
+                                    pc.cooldowns.arar = 0.7;
+                                }
+                                else if (pc.direcao === "cima" && (cima == 1 || cima == 4 || cima == 5 || cima == 6 || cima == 0)) {
+                                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo = 7;
+                                    if (cima == 1 || cima == 4 || cima == 5) {
+                                        pc.inventario.sementes += 1;
+                                    }
+                                    else if (cima == 6) {
+                                        pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
+                                        pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                                    }
+                                    pc.cooldowns.arar = 0.7;
+                                }
+                                else if (pc.direcao === "baixo" && (baixo == 1 || baixo == 4 || baixo == 5 || baixo == 6 || baixo == 0)) {
+                                    mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) + 1].tipo = 7;
+                                    if (baixo == 1 || baixo == 4 || baixo == 5) {
+                                        pc.inventario.sementes += 1;
+                                    }
+                                    else if (baixo == 6) {
+                                        pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
+                                        pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
+                                    }
+                                    pc.cooldowns.arar = 0.7;
                                 }
                             }
-                            else if (this.direcao === "direita" && (dir == 1 || dir == 4 || dir == 5 || dir == 6)) {
-                                mapa.cells[Math.floor(pc.x / 32) + 1][Math.floor(pc.y / 32)].tipo = 0;
-                                if (dir == 1 || dir == 4 || dir == 5) {
-                                    pc.inventario.sementes += 1;
-                                }
-                                else {
-                                    pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
-                                    pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
-                                }
-                            }
-                            else if (this.direcao === "cima" && (cima == 1 || cima == 4 || cima == 5 || cima == 6)) {
-                                mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo = 0;
-                                if (cima == 1 || cima == 4 || cima == 5) {
-                                    pc.inventario.sementes += 1;
-                                }
-                                else {
-                                    pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
-                                    pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
-                                }
-                            }
-                            else if (this.direcao === "baixo" && (baixo == 1 || baixo == 4 || baixo == 5 || baixo == 6)) {
-                                mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) + 1].tipo = 0;
-                                if (baixo == 1 || baixo == 4 || baixo == 5) {
-                                    pc.inventario.sementes += 1;
-                                }
-                                else {
-                                    pc.inventario.sementes += 1 + Math.floor(Math.random() * 2);
-                                    pc.inventario.trigo += 1 + Math.floor(Math.random() * 2);
-                                }
-                            }
+                            break;
+                        case 4:
                             break;
                     }
                 }
@@ -276,17 +285,17 @@
                 ctx.globalAlpha = 0;
             else
                 ctx.globalAlpha = pc.inventario.opacidade;
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 5; i++) {
                 if (pc.acao === i) {
                     ctx.lineWidth = 5;
                     ctx.drawImage(
-                       cena1.assets.img("inventario"),
+                        cena1.assets.img("inventario"),
                         0, //linha
                         32, //coluna
                         32,                        //tamanho na imagem x
                         32,                        //tamanho na imagem y
-                        pc.x - 32 * 2 + 32 * i,                  //posicao em x
-                        pc.y + 30,                       //posicao em y
+                        pc.x - 80 + 32 * i,                  //posicao em x
+                        pc.y + 20,                       //posicao em y
                         32,                        //tamanho no canvas x
                         32                         //tamanho no canvas y
                     );
@@ -299,8 +308,8 @@
                         0, //coluna
                         32,                        //tamanho na imagem x
                         32,                        //tamanho na imagem y
-                        pc.x - 32 * 2 + 32 * i,                  //posicao em x
-                        pc.y + 30,                       //posicao em y
+                        pc.x - 80 + 32 * i,                  //posicao em x
+                        pc.y + 20,                       //posicao em y
                         32,                        //tamanho no canvas x
                         32                         //tamanho no canvas y
                     );

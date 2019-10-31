@@ -13,7 +13,7 @@ function Sprite(params = {}) {
         inventario: {},
         acao: 0,
         direcao: 0,
-        cooldown: 0,
+        cooldowns: {},
         color: "blue",
         imune: 0,
         atirando: 0,
@@ -70,7 +70,8 @@ Sprite.prototype.moverOrtogonal = function (dt) {
     this.ml = Math.floor(this.y / this.scene.map.SIZE);
 
     this.aplicaRestricoes(dt);
-    this.cooldown = this.cooldown - dt;
+    this.cooldowns.plantar -= dt;
+    this.cooldowns.arar -= dt;
 };
 
 Sprite.prototype.aplicaRestricoes = function (dt) {
@@ -80,19 +81,19 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
     dnx = dx;
     dy = this.vy * dt;
     dny = dy;
-    if (dx > 0 && (this.scene.map.cells[this.mc + 1][this.ml].tipo != 0 && this.scene.map.cells[this.mc + 1][this.ml].tipo != 1)) {
+    if (dx > 0 && (this.scene.map.cells[this.mc + 1][this.ml].tipo != 0 && this.scene.map.cells[this.mc + 1][this.ml].tipo != 1 && this.scene.map.cells[this.mc + 1][this.ml].tipo != 7)) {
         dnx = this.scene.map.SIZE * (this.mc + 1) - (this.x + this.w / 2);
         dx = Math.min(dnx, dx);
     }
-    if (dx < 0 && (this.scene.map.cells[this.mc - 1][this.ml].tipo != 0 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 1)) {
+    if (dx < 0 && (this.scene.map.cells[this.mc - 1][this.ml].tipo != 0 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 1 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 7)) {
         dnx = this.scene.map.SIZE * (this.mc - 1 + 1) - (this.x - this.w / 2);
         dx = Math.max(dnx, dx);
     }
-    if (dy > 0 && (this.scene.map.cells[this.mc][this.ml + 1].tipo != 0 && this.scene.map.cells[this.mc][this.ml + 1].tipo != 1)) {
+    if (dy > 0 && (this.scene.map.cells[this.mc][this.ml + 1].tipo != 0 && this.scene.map.cells[this.mc][this.ml + 1].tipo != 1 && this.scene.map.cells[this.mc][this.ml + 1].tipo != 7)) {
         dny = this.scene.map.SIZE * (this.ml + 1) - (this.y + this.h / 2);
         dy = Math.min(dny, dy);
     }
-    if (dy < 0 && (this.scene.map.cells[this.mc][this.ml - 1].tipo != 0 && this.scene.map.cells[this.mc][this.ml - 1].tipo != 1)) {
+    if (dy < 0 && (this.scene.map.cells[this.mc][this.ml - 1].tipo != 0 && this.scene.map.cells[this.mc][this.ml - 1].tipo != 1 && this.scene.map.cells[this.mc][this.ml - 1].tipo != 7)) {
         dny = this.scene.map.SIZE * (this.ml - 1 + 1) - (this.y - this.h / 2);
         dy = Math.max(dny, dy);
     }

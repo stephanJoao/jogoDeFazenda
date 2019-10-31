@@ -36,7 +36,7 @@ Map.prototype.desenhar = function (ctx) {
                     cor = "darkgrey";
                     break;
                 case 3:
-                    cor = "brown";
+                    cor = "darkred";
                     break;
                 case 4:
                     cor = "rgb(0,150,0)";
@@ -48,7 +48,7 @@ Map.prototype.desenhar = function (ctx) {
                     cor = "rgb(0,50,0)";
                     break;
                 case 7:
-                    cor = "pink";
+                    cor = "brown";
                     break;
                 default:
                     cor = "black";
