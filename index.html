@@ -277,11 +277,35 @@
             else
                 ctx.globalAlpha = pc.inventario.opacidade;
             for (var i = 0; i < 4; i++) {
-                if (pc.acao === i)
+                if (pc.acao === i) {
                     ctx.lineWidth = 5;
-                else
+                    ctx.drawImage(
+                       cena1.assets.img("inventario"),
+                        0, //linha
+                        32, //coluna
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        pc.x - 32 * 2 + 32 * i,                  //posicao em x
+                        pc.y + 30,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                }
+                else {
                     ctx.lineWidth = 2;
-                ctx.strokeRect(pc.x - 32 * 2 + 32 * i, pc.y + 30, 32, 32);
+                    ctx.drawImage(
+                        cena1.assets.img("inventario"),
+                        0, //linha
+                        0, //coluna
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        pc.x - 32 * 2 + 32 * i,                  //posicao em x
+                        pc.y + 30,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                }
+                //ctx.strokeRect(pc.x - 32 * 2 + 32 * i, pc.y + 30, 32, 32);
             }
             ctx.globalAlpha = 1;
         }
