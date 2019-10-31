@@ -39,10 +39,9 @@ Scene.prototype.comportar = function () {
     }
 };
 
-
 Scene.prototype.limpar = function () {
     this.ctx.clearRect(0, 0, this.w, this.h);
-}
+};
 
 Scene.prototype.checaColisao = function () {
     for (var i = 0; i < this.sprites.length; i++) {
@@ -83,7 +82,7 @@ Scene.prototype.removeSprites = function () {
 Scene.prototype.desenharMapa = function () {
     this.map.desenhar(this.ctx);
     this.map.comportar(dt);
-}
+};
 
 Scene.prototype.passo = function (dt) {
     this.limpar();
@@ -93,4 +92,4 @@ Scene.prototype.passo = function (dt) {
     this.desenhar();
     //this.checaColisao();
     this.removeSprites();
-}
+};

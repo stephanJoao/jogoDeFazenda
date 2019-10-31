@@ -16,6 +16,7 @@
     <script>
         var assetsMng = new AssetsManager();
         assetsMng.loadImage("player", "assets/player.png");
+        assetsMng.loadImage("inventario", "assets/inventario.png");
         //assetsMng.loadImage("enemy_1", "assets/enemy_1.png");
         //assetsMng.loadImage("explosion", "assets/explosion.png");
         //assetsMng.loadAudio("explosion", "assets/explosion.mp3");
@@ -72,7 +73,7 @@
             h: 14,
             comportar: porTeclasDirecionais(teclas),
             props: { tipo: "pc" },
-            inventario: { sementes: 0, trigo: 0, pao: 0 }
+            inventario: { sementes: 0, trigo: 0, pao: 0, opacidade: 1 }
         });
 
         cena1.adicionar(pc);
@@ -131,6 +132,7 @@
                 }
 
                 if (teclas.a) {
+                    pc.inventario.opacidade = 1.2;
                     teclas.a = 0;
                     pc.acao--;
                     if (pc.acao == -1)
@@ -138,6 +140,7 @@
                 }
 
                 if (teclas.d) {
+                    pc.inventario.opacidade = 1.2;
                     teclas.d = 0;
                     pc.acao++;
                     if (pc.acao == 4)
@@ -213,6 +216,7 @@
                 }
             }
         }
+
         addEventListener("keydown", function (e) {
             console.log(e.keyCode);
             switch (e.keyCode) {
@@ -266,11 +270,26 @@
             }
         });
 
+        function inventario() {
+            ctx.strokeStyle = "black";
+            if (pc.inventario.opacidade < 0)
+                ctx.globalAlpha = 0;
+            else
+                ctx.globalAlpha = pc.inventario.opacidade;
+            for (var i = 0; i < 4; i++) {
+                if (pc.acao === i)
+                    ctx.lineWidth = 5;
+                else
+                    ctx.lineWidth = 2;
+                ctx.strokeRect(pc.x - 32 * 2 + 32 * i, pc.y + 30, 32, 32);
+            }
+            ctx.globalAlpha = 1;
+        }
+
         function passo(t) {
             dt = (t - anterior) / 1000;
             if (assetsMng.progresso() === 100) {
                 cena1.passo(dt);
-
             }
             anterior = t;
             ctx.fillStyle = "black";
@@ -279,6 +298,7 @@
             ctx.fillText(`Trigo: ${pc.inventario.trigo}`, 40, 60);
             ctx.fillText(`Pao: ${pc.inventario.pao}`, 40, 70);
             ctx.fillText(pc.acao, 40, 90);
+            inventario();
             requestAnimationFrame(passo);
         }
 

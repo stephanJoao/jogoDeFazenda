@@ -28,15 +28,14 @@ Sprite.prototype.constructor = Sprite;
 Sprite.prototype.desenhar = function (ctx) {
     ctx.save();
     ctx.translate(this.x, this.y);
-    ctx.strokeRect(-this.w / 2, -this.h / 2, this.w, this.h);
     ctx.rotate(this.a);
     ctx.drawImage(
         this.scene.assets.img("player"),
         64 * Math.floor(this.frame), //linha
-        64 * this.pose,              //coluna
+        64 * this.pose,                     //coluna
         64,                        //tamanho na imagem x
         64,                        //tamanho na imagem y
-        -64 / 2,                   //posicao em x
+        -64 / 2,                  //posicao em x
         -60,                       //posicao em y
         64,                        //tamanho no canvas x
         64                         //tamanho no canvas y
@@ -50,7 +49,7 @@ Sprite.prototype.desenhar = function (ctx) {
 
 Sprite.prototype.mover = function (dt) {
     this.moverOrtogonal(dt);
-
+    this.inventario.opacidade -= dt * 0.5;
     //ANIMACAO
     if (this.vx != 0 || this.vy != 0)
         this.frame += 10 * dt;
@@ -59,7 +58,7 @@ Sprite.prototype.mover = function (dt) {
     if (this.frame > 9) {
         this.frame = 1;
     }
-}
+};
 
 Sprite.prototype.moverOrtogonal = function (dt) {
     if (this.vx != 0 && this.vy != 0) {
@@ -72,7 +71,7 @@ Sprite.prototype.moverOrtogonal = function (dt) {
 
     this.aplicaRestricoes(dt);
     this.cooldown = this.cooldown - dt;
-}
+};
 
 Sprite.prototype.aplicaRestricoes = function (dt) {
     var dnx;
@@ -116,8 +115,7 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
     if (this.x - this.w / 2 < 0) this.x = 0 + this.w / 2;
     if (this.y - this.h / 2 < 0) this.y = 0 + this.h / 2;
 
-}
-
+};
 
 Sprite.prototype.colidiuCom = function (alvo) {
     if (alvo.x + alvo.w / 2 < this.x - this.w / 2)
@@ -131,4 +129,4 @@ Sprite.prototype.colidiuCom = function (alvo) {
         return false;
 
     return true;
-}
+};
