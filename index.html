@@ -36,6 +36,7 @@
             e: 0,
             a: 0,
             d: 0,
+            shift: 0
         }
 
         var mapa = new Map({
@@ -74,7 +75,7 @@
             comportar: porTeclasDirecionais(teclas),
             props: { tipo: "pc" },
             inventario: { sementes: 0, trigo: 0, pao: 0, opacidade: 1 },
-            cooldowns: {plantar: 0, arar: 0}
+            cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, recuperacao: 0 }
         });
 
         cena1.adicionar(pc);
@@ -129,7 +130,29 @@
                     }
                 }
 
-                if (teclas.e && this.cooldown <= 0) {
+                if (teclas.e) {
+                }
+
+                if (teclas.shift) {
+                    if (pc.cooldowns.stamina < pc.cooldowns.cansado) {
+                        if (pc.vx != 0) {
+                            if (pc.vx > 0)
+                                pc.vx = 240;
+                            else
+                                pc.vx = -240;
+                            pc.cooldowns.stamina += dt;
+                        }
+                        else if (pc.vy != 0) {
+                            if (pc.vy > 0)
+                                pc.vy = 240;
+                            else
+                                pc.vy = -240;
+                            pc.cooldowns.stamina += dt;
+                        }
+                    }
+                    else
+                        pc.stamina
+
                 }
 
                 if (teclas.a) {
@@ -253,6 +276,9 @@
                 case 68:
                     teclas.d = 1;
                     break;
+                case 16:
+                    teclas.shift = 1;
+                    break;
             }
         });
 
@@ -275,6 +301,9 @@
                     break;
                 case 69:
                     teclas.e = 0;
+                    break;
+                case 16:
+                    teclas.shift = 0;
                     break;
             }
         });
