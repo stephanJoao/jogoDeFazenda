@@ -75,7 +75,7 @@
             comportar: porTeclasDirecionais(teclas),
             props: { tipo: "pc" },
             inventario: { sementes: 0, trigo: 0, pao: 0, opacidade: 1 },
-            cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, recuperacao: 0 }
+            cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, recuperacao: 0, cansou: false }
         });
 
         cena1.adicionar(pc);
@@ -134,25 +134,24 @@
                 }
 
                 if (teclas.shift) {
-                    if (pc.cooldowns.stamina < pc.cooldowns.cansado) {
+                    if (!this.cooldowns.cansou) {
                         if (pc.vx != 0) {
                             if (pc.vx > 0)
                                 pc.vx = 240;
                             else
                                 pc.vx = -240;
-                            pc.cooldowns.stamina += dt;
+                            pc.cooldowns.stamina += 5 * dt;
                         }
                         else if (pc.vy != 0) {
                             if (pc.vy > 0)
                                 pc.vy = 240;
                             else
                                 pc.vy = -240;
-                            pc.cooldowns.stamina += dt;
+                            pc.cooldowns.stamina += 5 * dt;
                         }
+                        if (pc.cooldowns.stamina > pc.cooldowns.cansado)
+                            pc.cooldowns.cansou = true;
                     }
-                    else
-                        pc.stamina
-
                 }
 
                 if (teclas.a) {
@@ -360,8 +359,10 @@
             ctx.fillText(`Trigo: ${pc.inventario.trigo}`, 40, 60);
             ctx.fillText(`Pao: ${pc.inventario.pao}`, 40, 70);
             ctx.fillText(pc.acao, 40, 90);
+            ctx.fillText(pc.cooldowns.stamina, 40, 110);
             inventario();
             requestAnimationFrame(passo);
+
         }
 
         var dt, anterior = 0;

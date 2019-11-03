@@ -70,8 +70,15 @@ Sprite.prototype.moverOrtogonal = function (dt) {
     this.ml = Math.floor(this.y / this.scene.map.SIZE);
 
     this.aplicaRestricoes(dt);
+
     this.cooldowns.plantar -= dt;
     this.cooldowns.arar -= dt;
+    if (this.cooldowns.stamina > 0) {
+        this.cooldowns.stamina -= dt;
+    }
+    if (this.cooldowns.stamina < this.cooldowns.cansado / 2) {
+        this.cooldowns.cansou = false;
+    }
 };
 
 Sprite.prototype.aplicaRestricoes = function (dt) {
