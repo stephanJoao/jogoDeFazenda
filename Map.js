@@ -3,7 +3,9 @@ function Map(modelo) {
         cells: [],
         LINES: 32,
         COLUMNS: 32,
-        SIZE: 32
+        SIZE: 32,
+        nunArados: 0,
+        maxArados: 0
     }
     Object.assign(this, exemplo, modelo);
     for (var c = 0; c < this.COLUMNS; c++) {
