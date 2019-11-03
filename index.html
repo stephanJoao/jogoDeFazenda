@@ -17,6 +17,8 @@
         var assetsMng = new AssetsManager();
         assetsMng.loadImage("player", "assets/player.png");
         assetsMng.loadImage("inventario", "assets/inventario.png");
+        assetsMng.loadImage("chao", "assets/chao.png");
+        assetsMng.loadImage("wheat", "assets/wheat.png");
         //assetsMng.loadImage("enemy_1", "assets/enemy_1.png");
         //assetsMng.loadImage("explosion", "assets/explosion.png");
         //assetsMng.loadAudio("explosion", "assets/explosion.mp3");
@@ -42,30 +44,30 @@
         var mapa = new Map({
             COLUMNS: 28, LINES: 20, m:
                 [
-                    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-                    [2, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 7, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 1, 0, 0, 1, 0, 1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 7, 0, 7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 1, 7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-                    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+                    [2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0],
+                    [2.0, 3.0, 3.0, 3.0, 3.0, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 3.0, 3.0, 3.0, 3.0, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 3.0, 3.0, 3.0, 3.0, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.4, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.6, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+                    [2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0],
                 ],
-                numArados: 9,
-                maxArados: 144
-         });
+            numArados: 9,
+            maxArados: 144
+        });
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height, assets: assetsMng, map: mapa });
 
@@ -76,7 +78,7 @@
             h: 14,
             comportar: porTeclasDirecionais(teclas),
             props: { tipo: "pc" },
-            inventario: { sementes: 0, trigo: 0, pao: 0, opacidade: 1 },
+            inventario: { sementes: 3, trigo: 0, pao: 0, opacidade: 1 },
             cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, recuperacao: 0, cansou: false },
             status: { correndo: false }
         });
@@ -159,10 +161,6 @@
                             this.status.correndo = false;
                         }
                     }
-                    if(pc.status.correndo && mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].tipo == 7) {
-                        mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].tipo = 0;
-                        mapa.numArados--;
-                    }
                 }
 
                 if (teclas.a) {
@@ -190,7 +188,7 @@
 
                     switch (this.acao) {
                         case 0:
-                            if (atual == 7 && this.inventario.sementes > 0 && this.cooldowns.plantar <= 0) {
+                            if (atual == 4.1 && this.inventario.sementes > 0 && this.cooldowns.plantar <= 0) {
                                 mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].tipo = 1;
                                 mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].dtCells = 0;
                                 this.cooldowns.plantar = 0.5;
@@ -205,54 +203,50 @@
                             break;
 
                         case 3:
-                            if (this.cooldowns.arar <= 0 && mapa.numArados <= mapa.maxArados) {
-                                if (this.direcao === "esquerda" && (esq == 1 || esq == 4 || esq == 5 || esq == 6 || esq == 0)) {
-                                    mapa.cells[Math.floor(this.x / 32) - 1][Math.floor(this.y / 32)].tipo = 7;
+                            if (this.cooldowns.arar <= 0) {
+                                if (this.direcao === "esquerda" && (esq == 1 || esq == 4 || esq == 5 || esq == 6)) {
+                                    mapa.cells[Math.floor(this.x / 32) - 1][Math.floor(this.y / 32)].tipo = 4.1;
                                     if (esq == 1 || esq == 4 || esq == 5) {
                                         this.inventario.sementes += 1;
                                     }
-                                    else if (esq == 6) {
+                                    else {
                                         this.inventario.sementes += 1 + Math.floor(Math.random() * 2);
                                         this.inventario.trigo += 1 + Math.floor(Math.random() * 2);
                                     }
-                                    this.cooldowns.arar = 0;
-                                    mapa.numArados++;
+                                    this.cooldowns.arar = 0.7;
                                 }
-                                else if (this.direcao === "direita" && (dir == 1 || dir == 4 || dir == 5 || dir == 6 || dir == 0)) {
-                                    mapa.cells[Math.floor(this.x / 32) + 1][Math.floor(this.y / 32)].tipo = 7;
+                                else if (this.direcao === "direita" && (dir == 1 || dir == 4 || dir == 5 || dir == 6)) {
+                                    mapa.cells[Math.floor(this.x / 32) + 1][Math.floor(this.y / 32)].tipo = 4.1;
                                     if (dir == 1 || dir == 4 || dir == 5) {
                                         this.inventario.sementes += 1;
                                     }
-                                    else if (dir == 6) {
+                                    else {
                                         this.inventario.sementes += 1 + Math.floor(Math.random() * 2);
                                         this.inventario.trigo += 1 + Math.floor(Math.random() * 2);
                                     }
-                                    this.cooldowns.arar = 0;
-                                    mapa.numArados++;
+                                    this.cooldowns.arar = 0.7;
                                 }
-                                else if (this.direcao === "cima" && (cima == 1 || cima == 4 || cima == 5 || cima == 6 || cima == 0)) {
-                                    mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32) - 1].tipo = 7;
+                                else if (this.direcao === "cima" && (cima == 1 || cima == 4 || cima == 5 || cima == 6)) {
+                                    mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32) - 1].tipo = 4.1;
                                     if (cima == 1 || cima == 4 || cima == 5) {
                                         this.inventario.sementes += 1;
                                     }
-                                    else if (cima == 6) {
+                                    else {
                                         this.inventario.sementes += 1 + Math.floor(Math.random() * 2);
                                         this.inventario.trigo += 1 + Math.floor(Math.random() * 2);
                                     }
-                                    this.cooldowns.arar = 0;
-                                    mapa.numArados++;
+                                    this.cooldowns.arar = 0.7;
                                 }
-                                else if (this.direcao === "baixo" && (baixo == 1 || baixo == 4 || baixo == 5 || baixo == 6 || baixo == 0)) {
-                                    mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32) + 1].tipo = 7;
+                                else if (this.direcao === "baixo" && (baixo == 1 || baixo == 4 || baixo == 5 || baixo == 6)) {
+                                    mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32) + 1].tipo = 4.1;
                                     if (baixo == 1 || baixo == 4 || baixo == 5) {
                                         this.inventario.sementes += 1;
                                     }
-                                    else if (baixo == 6) {
+                                    else {
                                         this.inventario.sementes += 1 + Math.floor(Math.random() * 2);
                                         this.inventario.trigo += 1 + Math.floor(Math.random() * 2);
                                     }
-                                   this.cooldowns.arar = 0;
-                                    mapa.numArados++;
+                                    this.cooldowns.arar = 0.7;
                                 }
                             }
                             break;
