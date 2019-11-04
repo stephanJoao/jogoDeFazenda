@@ -58,9 +58,31 @@ Map.prototype.desenhar = function (ctx) {
     var cor = "black";
     for (var c = 0; c < this.COLUMNS; c++) {
         for (var l = 0; l < this.LINES; l++) {
+            ctx.drawImage(
+                cena1.assets.img("mapa"),
+                32 * 0, //coluna
+                32 * 0,                     //linha
+                32,                        //tamanho na imagem x
+                32,                        //tamanho na imagem y
+                c * 32,                       //posicao em x
+                l * 32,                       //posicao em y
+                32,                        //tamanho no canvas x
+                32                         //tamanho no canvas y
+            );
             switch (this.cells[c][l].tipo) {
                 case 0:
                     cor = "rgb(47, 129, 54)";
+                    ctx.drawImage(
+                        cena1.assets.img("mapa"),
+                        32 * 0, //coluna
+                        32 * 0,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
                     break;
                 case 0.1:
                     ctx.drawImage(
@@ -190,94 +212,182 @@ Map.prototype.desenhar = function (ctx) {
                         32                         //tamanho no canvas y
                     );
                     break;
-                case 2:
+                case 2.0:
                     cor = "darkgrey";
+                    ctx.drawImage(
+                        cena1.assets.img("mapa"),
+                        32 * 0, //coluna
+                        32 * 10,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    break;
+                case 2.1:
+                    cor = "darkgrey";
+                    ctx.drawImage(
+                        cena1.assets.img("mapa"),
+                        32 * 0, //coluna
+                        32 * 11,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    break;
+                case 2.2:
+                    ctx.drawImage(
+                        cena1.assets.img("mapa"),
+                        32 * 0, //coluna
+                        32 * 0,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    ctx.drawImage(
+                        cena1.assets.img("mapa"),
+                        32 * 1, //coluna
+                        32 * 9,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    break;
+                case 2.3:
+                    ctx.drawImage(
+                        cena1.assets.img("mapa"),
+                        32 * 1, //coluna
+                        32 * 8,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    break;
+                case 2.4:
+                    ctx.drawImage(
+                        cena1.assets.img("mapa"),
+                        32 * 0, //coluna
+                        32 * 8,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    break;
+                case 2.5:
+                    ctx.drawImage(
+                        cena1.assets.img("mapa"),
+                        32 * 0, //coluna
+                        32 * 9,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
                     break;
                 case 3:
                     cor = "darkred";
                     break;
                 case 4:
-                        ctx.drawImage(
-                            cena1.assets.img("chao"),
-                            32 * 1, //coluna
-                            32 * 3,                     //linha
-                            32,                        //tamanho na imagem x
-                            32,                        //tamanho na imagem y
-                            c * 32,                       //posicao em x
-                            l * 32,                       //posicao em y
-                            32,                        //tamanho no canvas x
-                            32                         //tamanho no canvas y
-                        );
-                        ctx.drawImage(
-                            cena1.assets.img("wheat"),
-                            32 * 1, //coluna
-                            32 * 5,                     //linha
-                            32,                        //tamanho na imagem x
-                            32,                        //tamanho na imagem y
-                            c * 32,                       //posicao em x
-                            l * 32,                       //posicao em y
-                            32,                        //tamanho no canvas x
-                            32                         //tamanho no canvas y
-                        );
+                    ctx.drawImage(
+                        cena1.assets.img("chao"),
+                        32 * 1, //coluna
+                        32 * 3,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    ctx.drawImage(
+                        cena1.assets.img("wheat"),
+                        32 * 1, //coluna
+                        32 * 5,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
                     break;
                 case 5:
-                        ctx.drawImage(
-                            cena1.assets.img("chao"),
-                            32 * 1, //coluna
-                            32 * 3,                     //linha
-                            32,                        //tamanho na imagem x
-                            32,                        //tamanho na imagem y
-                            c * 32,                       //posicao em x
-                            l * 32,                       //posicao em y
-                            32,                        //tamanho no canvas x
-                            32                         //tamanho no canvas y
-                        );
-                        ctx.drawImage(
-                            cena1.assets.img("wheat"),
-                            32 * 2, //coluna
-                            32 * 5,                     //linha
-                            32,                        //tamanho na imagem x
-                            32,                        //tamanho na imagem y
-                            c * 32,                       //posicao em x
-                            l * 32,                       //posicao em y
-                            32,                        //tamanho no canvas x
-                            32                         //tamanho no canvas y
-                        );
+                    ctx.drawImage(
+                        cena1.assets.img("chao"),
+                        32 * 1, //coluna
+                        32 * 3,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    ctx.drawImage(
+                        cena1.assets.img("wheat"),
+                        32 * 2, //coluna
+                        32 * 5,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
                     break;
                 case 6:
-                        ctx.drawImage(
-                            cena1.assets.img("chao"),
-                            32 * 1, //coluna
-                            32 * 3,                     //linha
-                            32,                        //tamanho na imagem x
-                            32,                        //tamanho na imagem y
-                            c * 32,                       //posicao em x
-                            l * 32,                       //posicao em y
-                            32,                        //tamanho no canvas x
-                            32                         //tamanho no canvas y
-                        );
-                        ctx.drawImage(
-                            cena1.assets.img("wheat"),
-                            32 * 0, //coluna
-                            32 * 1,                     //linha
-                            32,                        //tamanho na imagem x
-                            32,                        //tamanho na imagem y
-                            c * 32,                       //posicao em x
-                            l * 32,                       //posicao em y
-                            32,                        //tamanho no canvas x
-                            32                         //tamanho no canvas y
-                        );
-                        ctx.drawImage(
-                            cena1.assets.img("wheat"),
-                            32 * 0, //coluna
-                            32 * 0,                     //linha
-                            32,                        //tamanho na imagem x
-                            32,                        //tamanho na imagem y
-                            c * 32,                       //posicao em x
-                            (l - 1) * 32,                       //posicao em y
-                            32,                        //tamanho no canvas x
-                            32                         //tamanho no canvas y
-                        );
+                    ctx.drawImage(
+                        cena1.assets.img("chao"),
+                        32 * 1, //coluna
+                        32 * 3,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    ctx.drawImage(
+                        cena1.assets.img("wheat"),
+                        32 * 0, //coluna
+                        32 * 1,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        l * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
+                    ctx.drawImage(
+                        cena1.assets.img("wheat"),
+                        32 * 0, //coluna
+                        32 * 0,                     //linha
+                        32,                        //tamanho na imagem x
+                        32,                        //tamanho na imagem y
+                        c * 32,                       //posicao em x
+                        (l - 1) * 32,                       //posicao em y
+                        32,                        //tamanho no canvas x
+                        32                         //tamanho no canvas y
+                    );
                     break;
                 case 4.1:
                     ctx.drawImage(
@@ -297,9 +407,9 @@ Map.prototype.desenhar = function (ctx) {
                     break;
             }
             ctx.fillStyle = cor;
-            if (this.cells[c][l].tipo != 0.1 && this.cells[c][l].tipo != 0.2 && this.cells[c][l].tipo != 0.3 && this.cells[c][l].tipo != 0.4 && this.cells[c][l].tipo != 0.5 && this.cells[c][l].tipo != 0.6 && this.cells[c][l].tipo != 0.7 && this.cells[c][l].tipo != 0.8 && this.cells[c][l].tipo != 4.1 && this.cells[c][l].tipo != 1 && this.cells[c][l].tipo != 4 && this.cells[c][l].tipo != 5 && this.cells[c][l].tipo != 6)
-                ctx.fillRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
-            ctx.strokeStyle = "black";
+            if (this.cells[c][l].tipo != 0 && this.cells[c][l].tipo != 0.1 && this.cells[c][l].tipo != 0.2 && this.cells[c][l].tipo != 0.3 && this.cells[c][l].tipo != 0.4 && this.cells[c][l].tipo != 0.5 && this.cells[c][l].tipo != 0.6 && this.cells[c][l].tipo != 0.7 && this.cells[c][l].tipo != 0.8 && this.cells[c][l].tipo != 4.1 && this.cells[c][l].tipo != 1 && this.cells[c][l].tipo != 4 && this.cells[c][l].tipo != 5 && this.cells[c][l].tipo != 6)
+                //ctx.fillRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
+                ctx.strokeStyle = "black";
             // ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
         }
     }
