@@ -9,6 +9,7 @@ function Sprite(params = {}) {
         color: "blue",
         pose: 8,
         frame: 0,
+        frameLimit: 0,
         props: {},
         inventario: {},
         cooldowns: {},
@@ -51,12 +52,21 @@ Sprite.prototype.mover = function (dt) {
     this.moverOrtogonal(dt);
     this.inventario.opacidade -= dt * 0.5;
     //ANIMACAO
-    if (this.vx != 0 || this.vy != 0)
-        this.frame += 10 * dt;
-    else
-        this.frame = 0;
-    if (this.frame > 9) {
-        this.frame = 1;
+    if (this.frameLimit == 9) {
+        if (this.vx != 0 || this.vy != 0)
+            this.frame += 16 * dt;
+        else
+            this.frame = 0;
+        if (this.frame > this.frameLimit) {
+            this.frame = 1;
+        }
+    }
+    else {
+        this.frame -= 10 * dt;
+        if(this.frame <= 0) {
+            this.frame = 0;
+            this.frameLimit = 9;
+        }
     }
 };
 
@@ -73,6 +83,11 @@ Sprite.prototype.moverOrtogonal = function (dt) {
 
     this.cooldowns.plantar -= dt;
     this.cooldowns.arar -= dt;
+    if (this.cooldowns.acoes > 0) {
+        this.cooldowns.acoes -= dt;
+        this.vx = 0;
+        this.vy = 0;
+    }
     if (this.cooldowns.stamina > 0) {
         this.cooldowns.stamina -= dt;
     }
@@ -92,7 +107,7 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
         dnx = this.scene.map.SIZE * (this.mc + 1) - (this.x + this.w / 2);
         dx = Math.min(dnx, dx);
     }
-    if (dx < 0 && (this.scene.map.cells[this.mc - 1][this.ml].tipo != 0 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 1 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 4.1  && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.1 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.2 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.3 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.4 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.5 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.6 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.7 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.8)) {
+    if (dx < 0 && (this.scene.map.cells[this.mc - 1][this.ml].tipo != 0 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 1 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 4.1 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.1 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.2 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.3 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.4 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.5 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.6 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.7 && this.scene.map.cells[this.mc - 1][this.ml].tipo != 0.8)) {
         dnx = this.scene.map.SIZE * (this.mc - 1 + 1) - (this.x - this.w / 2);
         dx = Math.max(dnx, dx);
     }
