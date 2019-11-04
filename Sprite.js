@@ -41,6 +41,19 @@ Sprite.prototype.desenhar = function (ctx) {
         64,                        //tamanho no canvas x
         64                         //tamanho no canvas y
     );
+    if (this.frameLimit == 6) {
+        ctx.drawImage(
+            this.scene.assets.img("espada"),
+            128 * Math.floor(this.frame), //linha
+            128,                     //coluna
+            128,                        //tamanho na imagem x
+            128,                        //tamanho na imagem y
+            -64 / 2,                  //posicao em x
+            -60,                       //posicao em y
+            64,                        //tamanho no canvas x
+            64                         //tamanho no canvas y
+        );
+    }
     ctx.fillStyle = this.color;
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
@@ -62,8 +75,8 @@ Sprite.prototype.mover = function (dt) {
         }
     }
     else {
-        this.frame -= 10 * dt;
-        if(this.frame <= 0) {
+        this.frame -= 1 * dt;
+        if (this.frame <= 0) {
             this.frame = 0;
             this.frameLimit = 9;
         }
