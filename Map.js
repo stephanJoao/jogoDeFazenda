@@ -26,7 +26,8 @@ Map.prototype.comportar = function (dt) {
         for (var l = 0; l < this.LINES; l++) {
             switch (this.cells[c][l].tipo) {
                 case 1:
-                    this.cells[c][l].dtCells += dt;
+                    if(Math.floor(pc.x / 32) != c || Math.floor(pc.y / 32) != l)    
+                        this.cells[c][l].dtCells += dt;
                     if (this.cells[c][l].dtCells > 2) {
                         this.cells[c][l].tipo = 4;
                         this.cells[c][l].dtCells = 0;
@@ -58,249 +59,247 @@ Map.prototype.desenhar = function (ctx) {
     var cor = "black";
     for (var c = 0; c < this.COLUMNS; c++) {
         for (var l = 0; l < this.LINES; l++) {
-            ctx.drawImage(
-                cena1.assets.img("mapa"),
-                32 * 0, //coluna
-                32 * 0,                     //linha
-                32,                        //tamanho na imagem x
-                32,                        //tamanho na imagem y
-                c * 32,                       //posicao em x
-                l * 32,                       //posicao em y
-                32,                        //tamanho no canvas x
-                32                         //tamanho no canvas y
+            ctx.drawImage( cena1.assets.img("mapa"),
+                32 * 0,  
+                32 * 0,  
+                32,      
+                32,      
+                c * 32,  
+                l * 32,  
+                32,         
+                32          
             );
             switch (this.cells[c][l].tipo) {
                 case 0:
-                    cor = "rgb(47, 129, 54)";
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
-                        32 * 0, //coluna
-                        32 * 0,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 0,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 0.1:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 0, //coluna
-                        32 * 2,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 2,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 0.2:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 1, //coluna
-                        32 * 2,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 2,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 0.3:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 2, //coluna
-                        32 * 2,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 2, 
+                        32 * 2,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 0.4:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 0, //coluna
-                        32 * 3,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 3,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 0.5:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 2, //coluna
-                        32 * 3,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 2, 
+                        32 * 3,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 0.6:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 0, //coluna
-                        32 * 4,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 4,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 0.7:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 1, //coluna
-                        32 * 4,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 4,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 0.8:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 2, //coluna
-                        32 * 4,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 2, 
+                        32 * 4,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 1:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 1, //coluna
-                        32 * 3,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 3,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     ctx.drawImage(
                         cena1.assets.img("wheat"),
-                        32 * 0, //coluna
-                        32 * 5,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 5,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 2.0:
                     cor = "darkgrey";
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
-                        32 * 0, //coluna
-                        32 * 10,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 10,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 2.1:
                     cor = "darkgrey";
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
-                        32 * 0, //coluna
-                        32 * 11,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 11,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 2.2:
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
-                        32 * 0, //coluna
-                        32 * 0,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 0,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
-                        32 * 1, //coluna
-                        32 * 9,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 9,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 2.3:
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
-                        32 * 1, //coluna
-                        32 * 8,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 8,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 2.4:
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
-                        32 * 0, //coluna
-                        32 * 8,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 8,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 2.5:
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
-                        32 * 0, //coluna
-                        32 * 9,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 9,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 3:
@@ -309,107 +308,104 @@ Map.prototype.desenhar = function (ctx) {
                 case 4:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 1, //coluna
-                        32 * 3,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 3,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     ctx.drawImage(
                         cena1.assets.img("wheat"),
-                        32 * 1, //coluna
-                        32 * 5,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 5,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 5:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 1, //coluna
-                        32 * 3,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 3,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     ctx.drawImage(
                         cena1.assets.img("wheat"),
-                        32 * 2, //coluna
-                        32 * 5,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 2, 
+                        32 * 5,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 6:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 1, //coluna
-                        32 * 3,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 3,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     ctx.drawImage(
                         cena1.assets.img("wheat"),
-                        32 * 0, //coluna
-                        32 * 1,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 1,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     ctx.drawImage(
                         cena1.assets.img("wheat"),
-                        32 * 0, //coluna
-                        32 * 0,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        (l - 1) * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 0, 
+                        32 * 0,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        (l - 1) * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 case 4.1:
                     ctx.drawImage(
                         cena1.assets.img("chao"),
-                        32 * 1, //coluna
-                        32 * 3,                     //linha
-                        32,                        //tamanho na imagem x
-                        32,                        //tamanho na imagem y
-                        c * 32,                       //posicao em x
-                        l * 32,                       //posicao em y
-                        32,                        //tamanho no canvas x
-                        32                         //tamanho no canvas y
+                        32 * 1, 
+                        32 * 3,                     
+                        32,                       
+                        32,                       
+                        c * 32,                       
+                        l * 32,                       
+                        32,                        
+                        32                         
                     );
                     break;
                 default:
                     cor = "black";
                     break;
             }
-            ctx.fillStyle = cor;
-            if (this.cells[c][l].tipo != 0 && this.cells[c][l].tipo != 0.1 && this.cells[c][l].tipo != 0.2 && this.cells[c][l].tipo != 0.3 && this.cells[c][l].tipo != 0.4 && this.cells[c][l].tipo != 0.5 && this.cells[c][l].tipo != 0.6 && this.cells[c][l].tipo != 0.7 && this.cells[c][l].tipo != 0.8 && this.cells[c][l].tipo != 4.1 && this.cells[c][l].tipo != 1 && this.cells[c][l].tipo != 4 && this.cells[c][l].tipo != 5 && this.cells[c][l].tipo != 6)
-                //ctx.fillRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
-                ctx.strokeStyle = "black";
+            ctx.strokeStyle = "black";
             // ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
         }
     }
