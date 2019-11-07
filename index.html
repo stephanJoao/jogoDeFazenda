@@ -47,6 +47,12 @@
             shift: 0
         }
 
+        var menu = {
+            aparece: false,
+            opacidade: 0
+        }
+
+
         var mapa = new Map({
             COLUMNS: 28, LINES: 20, m:
                 [
@@ -92,17 +98,17 @@
 
         function porTeclasDirecionais(teclas) {
             return function () {
-                if (teclas.esquerda && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0) {
+                if (teclas.esquerda && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0 && menu.aparece == false) {
                     this.vx = -90;
                     this.pose = 9;
                     this.direcao = "esquerda";
                 }
-                if (teclas.direita && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0) {
+                if (teclas.direita && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0 && menu.aparece == false) {
                     this.vx = +90;
                     this.pose = 11;
                     this.direcao = "direita";
                 }
-                if (teclas.esquerda === teclas.direita && this.vy == 0 && this.cooldowns.acoes <= 0) {
+                if (teclas.esquerda === teclas.direita && this.vy == 0 && this.cooldowns.acoes <= 0 && menu.aparece == false) {
                     this.vx = 0;
                     if (teclas.esquerda) {
                         if (Math.floor(this.y / 32) >= mapa.LINES / 2) {
@@ -116,17 +122,17 @@
 
                     }
                 }
-                if (teclas.cima && !teclas.esquerda && !teclas.direita && this.cooldowns.acoes <= 0) {
+                if (teclas.cima && !teclas.esquerda && !teclas.direita && this.cooldowns.acoes <= 0 && menu.aparece == false) {
                     this.vy = -90;
                     this.pose = 8;
                     this.direcao = "cima";
                 }
-                if (teclas.baixo && !teclas.esquerda && !teclas.direita && this.cooldowns.acoes <= 0) {
+                if (teclas.baixo && !teclas.esquerda && !teclas.direita && this.cooldowns.acoes <= 0 && menu.aparece == false) {
                     this.vy = +90;
                     this.pose = 10;
                     this.direcao = "baixo";
                 }
-                if (teclas.cima === teclas.baixo && this.vx == 0 && this.cooldowns.acoes <= 0) {
+                if (teclas.cima === teclas.baixo && this.vx == 0 && this.cooldowns.acoes <= 0 && menu.aparece == false) {
                     this.vy = 0;
                     if (teclas.cima) {
                         if (Math.floor(this.x / 32) >= mapa.COLUMNS / 2) {
@@ -140,8 +146,14 @@
                     }
                 }
 
-                if (teclas.e) {
-
+                if (teclas.e && mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32) - 1].tipo == 3.9) {
+                    teclas.e = 0;
+                    this.vx = 0;
+                    this.vy = 0;
+                    if (menu.aparece)
+                        menu.aparece = false;
+                    else
+                        menu.aparece = true;
                 }
 
                 if (teclas.shift && this.cooldowns.acoes <= 0) {
@@ -169,7 +181,7 @@
                     }
                 }
 
-                if (teclas.a) {
+                if (teclas.a && menu.aparece == false) {
                     this.inventario.opacidade = 1.3;
                     teclas.a = 0;
                     this.acao--;
@@ -177,7 +189,7 @@
                         this.acao = 4;
                 }
 
-                if (teclas.d) {
+                if (teclas.d && menu.aparece == false) {
                     this.inventario.opacidade = 1.3;
                     teclas.d = 0;
                     this.acao++;
@@ -211,7 +223,7 @@
 
                         case 3:
                             if (this.cooldowns.arar <= 0) {
-                                if (this.direcao === "esquerda" && (esq == 4.1 || esq == 4.2 || esq == 4.3  || esq == 4.4)) {
+                                if (this.direcao === "esquerda" && (esq == 4.1 || esq == 4.2 || esq == 4.3 || esq == 4.4)) {
                                     mapa.cells[Math.floor(this.x / 32) - 1][Math.floor(this.y / 32)].tipo = 4.0;
                                     if (esq == 4.1 || esq == 4.2 || esq == 4.3) {
                                         this.inventario.sementes += 1;
@@ -299,7 +311,8 @@
                     teclas.baixo = 1;
                     break;
                 case 69:
-                    teclas.e = 1;
+                    if (mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo == 3.9)
+                        teclas.e = 1;
                     break;
                 case 65:
                     teclas.a = 1;
@@ -329,9 +342,6 @@
                     break;
                 case 40:
                     teclas.baixo = 0;
-                    break;
-                case 69:
-                    teclas.e = 0;
                     break;
                 case 16:
                     teclas.shift = 0;
@@ -374,67 +384,42 @@
                         32
                     );
                 }
-                ctx.drawImage(
-                    cena1.assets.img("seed"),
-                    0,
-                    0,
-                    32,
-                    32,
-                    pc.x - 75,
-                    pc.y + 27,
-                    22,
-                    22
-                );
-                ctx.drawImage(
-                    cena1.assets.img("trigo"),
-                    0,
-                    0,
-                    150,
-                    150,
-                    pc.x + 32 - 74,
-                    pc.y + 25,
-                    22,
-                    22
-                );
-                ctx.drawImage(
-                    cena1.assets.img("pao"),
-                    0,
-                    0,
-                    150,
-                    150,
-                    pc.x + 64 - 75,
-                    pc.y + 25,
-                    22,
-                    22
-                );
-                ctx.drawImage(
-                    cena1.assets.img("foice"),
-                    0,
-                    0,
-                    64,
-                    58,
-                    pc.x + 96 - 76,
-                    pc.y + 25,
-                    23,
-                    23
-                );
-                ctx.drawImage(
-                    cena1.assets.img("martelo"),
-                    0,
-                    0,
-                    64,
-                    56,
-                    pc.x + 129 - 77,
-                    pc.y + 25,
-                    22,
-                    22
-                );
+                ctx.drawImage(cena1.assets.img("seed"), 0, 0, 32, 32, pc.x - 75, pc.y + 27, 22, 22);
+                ctx.drawImage(cena1.assets.img("trigo"), 0, 0, 150, 150, pc.x + 32 - 74, pc.y + 25, 22, 22);
+                ctx.drawImage(cena1.assets.img("pao"), 0, 0, 150, 150, pc.x + 64 - 75, pc.y + 25, 22, 22);
+                ctx.drawImage(cena1.assets.img("foice"), 0, 0, 64, 58, pc.x + 96 - 76, pc.y + 25, 23, 23);
+                ctx.drawImage(cena1.assets.img("martelo"), 0, 0, 64, 56, pc.x + 129 - 77, pc.y + 25, 22, 22);
+
                 ctx.fillStyle = "white";
                 ctx.fillText(pc.inventario.sementes, pc.x - 67, pc.y + 46);
                 ctx.fillText(pc.inventario.trigo, pc.x - 67 + 32, pc.y + 46);
                 ctx.fillText(pc.inventario.pao, pc.x - 67 + 64, pc.y + 46);
             }
             ctx.globalAlpha = 1;
+            if (menu.aparece) {
+                for (var l = 0; l < 10; l++) {
+                    for (var c = 0; c < 10; c++) {
+                        if (l == 0 && c == 0)
+                            ctx.drawImage(cena1.assets.img("inventario"), 11 * 32, 1 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                        else if (l == 0 && c != 0 && c != 9)
+                            ctx.drawImage(cena1.assets.img("inventario"), 12 * 32, 1 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                        else if (l != 0 && c == 0 && l != 9)
+                            ctx.drawImage(cena1.assets.img("inventario"), 11 * 32, 2 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                        else if (l == 9 && c == 9)
+                            ctx.drawImage(cena1.assets.img("inventario"), 13 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                        else if (l == 9 && c != 9 && c != 0)
+                            ctx.drawImage(cena1.assets.img("inventario"), 12 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                        else if (l == 9 && c == 0)
+                            ctx.drawImage(cena1.assets.img("inventario"), 11 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                        else if (c == 9 && l != 9 && l != 0)
+                            ctx.drawImage(cena1.assets.img("inventario"), 13 * 32, 2 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                        else if (c == 9 && l == 0)
+                            ctx.drawImage(cena1.assets.img("inventario"), 13 * 32, 1 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                        else
+                            ctx.drawImage(cena1.assets.img("inventario"), 12 * 32, 2 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
+                    }
+                }
+            }
         }
 
         function passo(t) {
@@ -450,7 +435,7 @@
             ctx.fillText(`Pao: ${pc.inventario.pao}`, 40, 70);
             ctx.fillText(pc.acao, 40, 90);
             ctx.fillText(pc.cooldowns.stamina, 40, 110);
-            ctx.fillText(pc.cooldowns.acoes, 40, 120);
+            ctx.fillText(menu.aparece, 40, 120);
             inventario();
             requestAnimationFrame(passo);
 
