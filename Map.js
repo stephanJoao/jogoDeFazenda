@@ -202,7 +202,6 @@ Map.prototype.desenhar = function (ctx) {
                     break;
                 //DESENHANDO ARVORES
                 case 2.0:
-                    cor = "darkgrey";
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
                         32 * 0,
@@ -216,7 +215,6 @@ Map.prototype.desenhar = function (ctx) {
                     );
                     break;
                 case 2.1:
-                    cor = "darkgrey";
                     ctx.drawImage(
                         cena1.assets.img("mapa"),
                         32 * 0,
@@ -293,8 +291,122 @@ Map.prototype.desenhar = function (ctx) {
                     );
                     break;
                 //DESENHANDO ESTRUTURAS
-                case 3:
-                    cor = "darkred";
+                case 3.0:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 1,
+                        32 * 1,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
+                    break;
+                case 3.1:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 0,
+                        32 * 0,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
+                    break;
+                case 3.2:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 1,
+                        32 * 0,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
+                    break;
+                case 3.3:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 2,
+                        32 * 0,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
+                    break;
+                case 3.4:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 0,
+                        32 * 1,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
+                    break;
+                case 3.5:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 2,
+                        32 * 1,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
+                    break;
+                case 3.6:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 0,
+                        32 * 2,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
+                    break;
+                case 3.7:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 1,
+                        32 * 2,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
+                    break;
+                case 3.8:
+                    ctx.drawImage(
+                        cena1.assets.img("house"),
+                        32 * 2,
+                        32 * 2,
+                        32,
+                        32,
+                        c * 32,
+                        l * 32,
+                        32,
+                        32
+                    );
                     break;
                 //DESENHANDO PLANTACAO
                 case 4.0:
@@ -419,13 +531,30 @@ Map.prototype.desenhar = function (ctx) {
                     break;
 
                 default:
-                    cor = "black";
                     break;
             }
             ctx.strokeStyle = "black";
             // ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
         }
     }
+    //DESENHANDO RESTO DA CASA
+    ctx.drawImage(cena1.assets.img("mapa"), 32 * 0, 32 * 10, 32, 32, 2 * 32, 0 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("mapa"), 32 * 0, 32 * 11, 32, 32, 5 * 32, 0 * 32, 32, 32);
+    
+    ctx.drawImage(cena1.assets.img("house"), 32 * 0, 32 * 5, 32, 32, 2 * 32, 2 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 0, 32 * 4, 32, 32, 2 * 32, 1 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 0, 32 * 3, 32, 32, 2 * 32, 0 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 1, 32 * 5, 32, 32, 3 * 32, 2 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 1, 32 * 5, 32, 32, 4 * 32, 2 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 2, 32 * 5, 32, 32, 5 * 32, 2 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 0, 32 * 5, 32, 32, 3 * 32, 1 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 2, 32 * 5, 32, 32, 4 * 32, 1 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 2, 32 * 4, 32, 32, 5 * 32, 1 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 2, 32 * 3, 32, 32, 5 * 32, 0 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 0, 32 * 4, 32, 32, 3 * 32, 0 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 2, 32 * 4, 32, 32, 4 * 32, 0 * 32, 32, 32);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 5, 32 * 0, 32, 64, 3 * 32, 4 * 32, 32, 64);
+    ctx.drawImage(cena1.assets.img("house"), 32 * 4, 32 * 0, 32, 64, 3 * 32, 5 * 32, 32, 64);
 };
 
 
