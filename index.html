@@ -42,9 +42,11 @@
             baixo: 0,
             espaco: 0,
             e: 0,
+            esc: 0,
             a: 0,
             d: 0,
-            shift: 0
+            shift: 0,
+            num1: 0,
         }
 
         var menu = {
@@ -146,14 +148,15 @@
                     }
                 }
 
+                if (teclas.esc && mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32) - 1].tipo == 3.9) {
+                    menu.aparece = false;
+                }
+
                 if (teclas.e && mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32) - 1].tipo == 3.9) {
                     teclas.e = 0;
                     this.vx = 0;
                     this.vy = 0;
-                    if (menu.aparece)
-                        menu.aparece = false;
-                    else
-                        menu.aparece = true;
+                    menu.aparece = true;
                 }
 
                 if (teclas.shift && this.cooldowns.acoes <= 0) {
@@ -311,7 +314,7 @@
                     teclas.baixo = 1;
                     break;
                 case 69:
-                    if (mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo == 3.9)
+                    if (mapa.cells[Math.floor(pc.x / 32)][Math.floor(pc.y / 32) - 1].tipo == 3.9 && teclas.e == 0)
                         teclas.e = 1;
                     break;
                 case 65:
@@ -322,6 +325,9 @@
                     break;
                 case 16:
                     teclas.shift = 1;
+                    break;
+                case 27:
+                    teclas.esc = 1;
                     break;
             }
         });
@@ -346,6 +352,9 @@
                 case 16:
                     teclas.shift = 0;
                     pc.status.correndo = false;
+                    break;
+                case 27:
+                    teclas.esc = 0;
                     break;
             }
         });
