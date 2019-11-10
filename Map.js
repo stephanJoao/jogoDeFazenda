@@ -535,7 +535,7 @@ Map.prototype.desenhar = function (ctx) {
             }
             ctx.strokeStyle = "black";
             ctx.lineWidth = 1;
-            ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
+            //ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
         }
     }
     //DESENHANDO RESTO DA CASA

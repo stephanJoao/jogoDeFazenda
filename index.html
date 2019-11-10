@@ -50,10 +50,20 @@
         }
 
         var menu = {
-            aparece: false,
-            opacidade: 0
+            aparece: true,
+            opacidade: 1,
+            upgrades: {
+                stamina: 0,
+                staminaMax: 5,
+                terreno: 0,
+                terrenoMax: 2
+            },
+            dinheiroPlayer: 0,
+            precoVenda: 0,
+            precoTerreno: 0,
+            precoStamina: 0
         }
-
+        var tempo = 0;
 
         var mapa = new Map({
             COLUMNS: 28, LINES: 20, m:
@@ -163,17 +173,17 @@
                     if (!this.cooldowns.cansou) {
                         if (this.vx != 0) {
                             if (this.vx > 0)
-                                this.vx = 240;
+                                this.vx = 120;
                             else
-                                this.vx = -240;
+                                this.vx = -120;
                             this.status.correndo = true;
                             this.cooldowns.stamina += 5 * dt;
                         }
                         else if (this.vy != 0) {
                             if (this.vy > 0)
-                                this.vy = 240;
+                                this.vy = 120;
                             else
-                                this.vy = -240;
+                                this.vy = -120;
                             this.status.correndo = true;
                             this.cooldowns.stamina += 5 * dt;
                         }
@@ -402,31 +412,62 @@
                 ctx.fillText(pc.inventario.pao, pc.x - 67 + 64, pc.y + 46);
             }
             ctx.globalAlpha = 1;
+            var col = 13;
+            var lin = 8;
             if (menu.aparece) {
-                for (var l = 0; l < 10; l++) {
-                    for (var c = 0; c < 10; c++) {
+                for (var l = 0; l < lin; l++) {
+                    for (var c = 0; c < col; c++) {
                         if (l == 0 && c == 0)
                             ctx.drawImage(cena1.assets.img("inventario"), 11 * 32, 1 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
-                        else if (l == 0 && c != 0 && c != 9)
+                        else if (l == 0 && c != 0 && c != col - 1)
                             ctx.drawImage(cena1.assets.img("inventario"), 12 * 32, 1 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
-                        else if (l != 0 && c == 0 && l != 9)
+                        else if (l != 0 && c == 0 && l != lin - 1)
                             ctx.drawImage(cena1.assets.img("inventario"), 11 * 32, 2 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
-                        else if (l == 9 && c == 9)
+                        else if (l == lin - 1 && c == col - 1)
                             ctx.drawImage(cena1.assets.img("inventario"), 13 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
-                        else if (l == 9 && c != 9 && c != 0)
+                        else if (l == lin -1 && c != col - 1 && c != 0)
                             ctx.drawImage(cena1.assets.img("inventario"), 12 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
-                        else if (l == 9 && c == 0)
+                        else if (l == lin - 1 && c == 0)
                             ctx.drawImage(cena1.assets.img("inventario"), 11 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
-                        else if (c == 9 && l != 9 && l != 0)
+                        else if (c == col - 1 && l != lin - 1 && l != 0)
                             ctx.drawImage(cena1.assets.img("inventario"), 13 * 32, 2 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
-                        else if (c == 9 && l == 0)
+                        else if (c == col - 1 && l == 0)
                             ctx.drawImage(cena1.assets.img("inventario"), 13 * 32, 1 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
                         else
                             ctx.drawImage(cena1.assets.img("inventario"), 12 * 32, 2 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
                     }
                 }
-                ctx.font = "100px Courier";
-                ctx.fillText("Aow train",200,200);
+
+                for (var c = 0; c < mapa.COLUMNS; c++) {
+                    for (var l = 0; l < mapa.LINES; l++) {
+                        ctx.strokeStyle = "black";
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(c * mapa.SIZE, l * mapa.SIZE, mapa.SIZE, mapa.SIZE);
+                    }
+                }
+
+                ctx.fillStyle = "black";
+                //VENDER TRIGO
+                ctx.font = "bold 22px Courier";
+                ctx.fillText("1 - Vender trigo", 32 * 6, (32 * 7) - 7);
+                ctx.font = "bold 12px Courier";
+                ctx.fillText(`     (preço de venda R$${menu.precoVenda})`, 32 * 6, (32 * 8) - 16);
+                //NOVOS TERRENOS
+                ctx.font = "bold 22px Courier";
+                ctx.fillText(`2 - Novo terreno (R$${menu.precoTerreno})`, 32 * 6, (32 * 9) - 7);
+                ctx.lineWidth = 2;
+                ctx.fillStyle = "green";
+                ctx.strokeRect(32 * 6 + 20, 32 * 9 + 5, 300, 22);
+                for(var i = 0; i < menu.upgrades.terreno; i ++)
+                    ctx.fillRect(32 * 6 + 24 + i * 150, 32 * 9 + 9, 142, 14);
+                //MAIS STAMINA
+                ctx.fillStyle = "black";
+                ctx.fillText(`3 - Stamina (R$${menu.precoStamina})`, 32 * 6, (32 * 11) - 7);
+                ctx.lineWidth = 2;
+                ctx.fillStyle = "green";
+                ctx.strokeRect(32 * 6 + 20, 32 * 11 + 5, 300, 22);
+                for(var i = 0; i < menu.upgrades.stamina; i ++)
+                    ctx.fillRect(32 * 6 + 24 + i * 100, 32 * 11 + 9, 92, 14);
             }
         }
 
@@ -436,18 +477,22 @@
                 cena1.passo(dt);
             }
             anterior = t;
+            tempo += dt;
+            menu.precoVenda = (Math.round((Math.sin(Math.round(tempo) / 50) + 1.1) * 10000)) / 100;
+            menu.precoTerreno = 1000 + (1000 * menu.upgrades.terreno);
+            menu.precoStamina = 200 + (200 * menu.upgrades.stamina);
+
             ctx.fillStyle = "black";
             ctx.font = "15px Courier";
             ctx.fillText(1 / dt, 10, 20);
-            ctx.fillText(`Sementes: ${pc.inventario.sementes}`, 40, 50);
-            ctx.fillText(`Trigo: ${pc.inventario.trigo}`, 40, 60);
-            ctx.fillText(`Pao: ${pc.inventario.pao}`, 40, 70);
+            ctx.fillText(menu.precoVenda, 10, 35);
+
             ctx.fillText(pc.acao, 40, 90);
             ctx.fillText(pc.cooldowns.stamina, 40, 110);
             ctx.fillText(menu.aparece, 40, 120);
+
             inventario();
             requestAnimationFrame(passo);
-
         }
 
         var dt, anterior = 0;
