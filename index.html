@@ -360,14 +360,12 @@
         });
 
         function inventario() {
-            ctx.strokeStyle = "black";
             if (pc.inventario.opacidade < 0)
                 ctx.globalAlpha = 0;
             else
                 ctx.globalAlpha = pc.inventario.opacidade;
             for (var i = 0; i < 5; i++) {
                 if (pc.acao === i) {
-                    ctx.lineWidth = 5;
                     ctx.drawImage(
                         cena1.assets.img("inventario"),
                         0,
@@ -380,7 +378,6 @@
                         32
                     );
                 } else {
-                    ctx.lineWidth = 2;
                     ctx.drawImage(
                         cena1.assets.img("inventario"),
                         0,
@@ -428,6 +425,8 @@
                             ctx.drawImage(cena1.assets.img("inventario"), 12 * 32, 2 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
                     }
                 }
+                ctx.font = "100px Courier";
+                ctx.fillText("Aow train",200,200);
             }
         }
 
@@ -438,6 +437,7 @@
             }
             anterior = t;
             ctx.fillStyle = "black";
+            ctx.font = "15px Courier";
             ctx.fillText(1 / dt, 10, 20);
             ctx.fillText(`Sementes: ${pc.inventario.sementes}`, 40, 50);
             ctx.fillText(`Trigo: ${pc.inventario.trigo}`, 40, 60);
