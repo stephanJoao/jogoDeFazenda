@@ -60,9 +60,9 @@
                 terreno: 0,
                 terrenoMax: 2
             },
-            dinheiroPlayer: 0,
+            dinheiroPlayer: 3000,
             precoVenda: 0,
-            precoTerreno: 0,
+            precoTerreno: 1000,
             precoStamina: 0
         }
         var tempo = 0;
@@ -311,10 +311,54 @@
                 }
 
                 //ACOES DO MENU
-                if(teclas.num1 && menu.aparece && this.inventario.trigo >= 1) {
+                if (teclas.num1 && menu.aparece && (this.inventario.trigo >= 1)) {
                     teclas.num1 = 0;
                     menu.dinheiroPlayer += menu.precoVenda;
                     this.inventario.trigo--;
+                }
+
+                if (teclas.num2 && menu.aparece && (menu.dinheiroPlayer >= menu.precoTerreno) && (menu.upgrades.terreno < 2)) {
+                    teclas.num2 = 0;
+                    menu.dinheiroPlayer -= menu.precoTerreno;
+                    menu.upgrades.terreno++;
+                    if (menu.upgrades.terreno == 1) {
+                        mapa.cells[14][4].tipo = 0.1;
+                        mapa.cells[14][9].tipo = 0.6;
+                        mapa.cells[22][4].tipo = 0.3;
+                        mapa.cells[22][9].tipo = 0.8;
+                        for (var i = 0; i < 7; i++) {
+                            mapa.cells[i + 15][4].tipo = 0.2;
+                            mapa.cells[i + 15][9].tipo = 0.7;
+                        }
+                        for (var i = 0; i < 4; i++) {
+                            mapa.cells[14][i + 5].tipo = 0.4;
+                            mapa.cells[22][i + 5].tipo = 0.5;
+                        }
+                        for (var i = 0; i < 7; i++) {
+                            for (var j = 0; j < 4; j++)
+                                mapa.cells[i + 15][j + 5].tipo = 4.0;
+                        }
+                        menu.precoTerreno = 2000;
+                    }
+                    if (menu.upgrades.terreno == 2) {
+                        mapa.cells[14][11].tipo = 0.1;
+                        mapa.cells[14][16].tipo = 0.6;
+                        mapa.cells[22][11].tipo = 0.3;
+                        mapa.cells[22][16].tipo = 0.8;
+                        for (var i = 0; i < 7; i++) {
+                            mapa.cells[i + 15][11].tipo = 0.2;
+                            mapa.cells[i + 15][16].tipo = 0.7;
+                        }
+                        for (var i = 0; i < 4; i++) {
+                            mapa.cells[14][i + 12].tipo = 0.4;
+                            mapa.cells[22][i + 12].tipo = 0.5;
+                        }
+                        for (var i = 0; i < 7; i++) {
+                            for (var j = 0; j < 4; j++)
+                                mapa.cells[i + 15][j + 12].tipo = 4.0;
+                        }
+                        menu.precoTerreno = "indisponível";
+                    }
                 }
             }
         }
@@ -444,7 +488,7 @@
                 ctx.fillText(pc.inventario.pao, pc.x - 67 + 64, pc.y + 46);
             }
             ctx.globalAlpha = 1;
-            var col = 13;
+            var col = 15;
             var lin = 8;
             if (menu.aparece) {
                 for (var l = 0; l < lin; l++) {
@@ -470,16 +514,6 @@
                     }
                 }
 
-                /*
-                for (var c = 0; c < mapa.COLUMNS; c++) {
-                    for (var l = 0; l < mapa.LINES; l++) {
-                        ctx.strokeStyle = "black";
-                        ctx.lineWidth = 1;
-                        ctx.strokeRect(c * mapa.SIZE, l * mapa.SIZE, mapa.SIZE, mapa.SIZE);
-                    }
-                }
-                */
-
                 //VENDER TRIGO
                 ctx.fillStyle = "black";
                 ctx.font = "bold 22px Courier";
@@ -488,7 +522,10 @@
                 ctx.fillText(`     (preço de venda R$${menu.precoVenda})`, 32 * 6, (32 * 8) - 16);
                 //NOVOS TERRENOS
                 ctx.font = "bold 22px Courier";
-                ctx.fillText(`2 - Novo terreno (R$${menu.precoTerreno})`, 32 * 6, (32 * 9) - 7);
+                if(menu.upgrades.terreno != 2)
+                    ctx.fillText(`2 - Novo terreno (R$${menu.precoTerreno})`, 32 * 6, (32 * 9) - 7);
+                else
+                    ctx.fillText("2 - Novo terreno (indisponível)", 32 * 6, (32 * 9) - 7);
                 ctx.lineWidth = 2;
                 ctx.fillStyle = "green";
                 ctx.strokeRect(32 * 6 + 20, 32 * 9 + 5, 300, 22);
@@ -502,7 +539,7 @@
                 ctx.strokeRect(32 * 6 + 20, 32 * 11 + 5, 300, 22);
                 for (var i = 0; i < menu.upgrades.stamina; i++)
                     ctx.fillRect(32 * 6 + 24 + i * 100, 32 * 11 + 9, 92, 14);
-                    
+
             }
         }
 
@@ -513,8 +550,7 @@
             }
             anterior = t;
             tempo += dt;
-            menu.precoVenda = (Math.round((Math.sin(Math.round(tempo) / 50) + 1.1) * 10000)) / 100;
-            menu.precoTerreno = 1000 + (1000 * menu.upgrades.terreno);
+            menu.precoVenda = ((Math.sin(Math.round(tempo) / 50) + 1.1) * 100).toFixed(2);
             menu.precoStamina = 200 + (200 * menu.upgrades.stamina);
 
             ctx.fillStyle = "black";
