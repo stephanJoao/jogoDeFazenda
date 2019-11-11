@@ -47,10 +47,12 @@
             d: 0,
             shift: 0,
             num1: 0,
+            num2: 0,
+            num3: 0
         }
 
         var menu = {
-            aparece: true,
+            aparece: false,
             opacidade: 1,
             upgrades: {
                 stamina: 0,
@@ -74,8 +76,8 @@
                     [2.1, 2.3, 3.1, 3.2, 3.2, 3.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.4, 2.0],
                     [2.0, 2.2, 3.4, 3.0, 3.0, 3.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0.0, 2.5, 2.1],
                     [2.1, 2.3, 3.6, 3.9, 3.7, 3.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.9, 0.9, 0.9, 0.0, 0.0, 0.0, 2.4, 2.0],
-                    [2.0, 2.2, 0.0, 0.0, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0.0, 0.0, 2.5, 2.1],
-                    [2.1, 2.3, 0.0, 0.0, 0.4, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.4, 2.0],
+                    [2.0, 2.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.5, 2.1],
+                    [2.1, 2.3, 0.0, 0.0, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.4, 2.0],
                     [2.0, 2.2, 0.0, 0.0, 0.4, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.5, 2.1],
                     [2.1, 2.3, 0.0, 0.0, 0.4, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.4, 2.0],
                     [2.0, 2.2, 0.0, 0.0, 0.4, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.5, 2.1],
@@ -110,6 +112,7 @@
 
         function porTeclasDirecionais(teclas) {
             return function () {
+                //MOVIMENTACAO
                 if (teclas.esquerda && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0 && menu.aparece == false) {
                     this.vx = -90;
                     this.pose = 9;
@@ -158,6 +161,7 @@
                     }
                 }
 
+                //MENU
                 if (teclas.esc && mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32) - 1].tipo == 3.9) {
                     menu.aparece = false;
                 }
@@ -169,6 +173,7 @@
                     menu.aparece = true;
                 }
 
+                //CORRER
                 if (teclas.shift && this.cooldowns.acoes <= 0) {
                     if (!this.cooldowns.cansou) {
                         if (this.vx != 0) {
@@ -194,6 +199,7 @@
                     }
                 }
 
+                //TROCA DO INVENTARIO
                 if (teclas.a && menu.aparece == false) {
                     this.inventario.opacidade = 1.3;
                     teclas.a = 0;
@@ -210,6 +216,7 @@
                         this.acao = 0;
                 }
 
+                //ACOES DO INVENTARIO
                 if (teclas.espaco && this.cooldowns.acoes <= 0) {
                     var esq = mapa.cells[Math.floor(this.x / 32) - 1][Math.floor(this.y / 32)].tipo;
                     var dir = mapa.cells[Math.floor(this.x / 32) + 1][Math.floor(this.y / 32)].tipo;
@@ -302,6 +309,13 @@
                             break;
                     }
                 }
+
+                //ACOES DO MENU
+                if(teclas.num1 && menu.aparece && this.inventario.trigo >= 1) {
+                    teclas.num1 = 0;
+                    menu.dinheiroPlayer += menu.precoVenda;
+                    this.inventario.trigo--;
+                }
             }
         }
 
@@ -339,6 +353,15 @@
                 case 27:
                     teclas.esc = 1;
                     break;
+                case 49:
+                    teclas.num1 = 1;
+                    break;
+                case 50:
+                    teclas.num2 = 1;
+                    break;
+                case 51:
+                    teclas.num2 = 1;
+                    break;
             }
         });
 
@@ -365,6 +388,15 @@
                     break;
                 case 27:
                     teclas.esc = 0;
+                    break;
+                case 49:
+                    teclas.num1 = 0;
+                    break;
+                case 50:
+                    teclas.num2 = 0;
+                    break;
+                case 51:
+                    teclas.num2 = 0;
                     break;
             }
         });
@@ -425,7 +457,7 @@
                             ctx.drawImage(cena1.assets.img("inventario"), 11 * 32, 2 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
                         else if (l == lin - 1 && c == col - 1)
                             ctx.drawImage(cena1.assets.img("inventario"), 13 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
-                        else if (l == lin -1 && c != col - 1 && c != 0)
+                        else if (l == lin - 1 && c != col - 1 && c != 0)
                             ctx.drawImage(cena1.assets.img("inventario"), 12 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
                         else if (l == lin - 1 && c == 0)
                             ctx.drawImage(cena1.assets.img("inventario"), 11 * 32, 3 * 32, 32, 32, (c + 5) * 32, (l + 5) * 32, 32, 32);
@@ -438,6 +470,7 @@
                     }
                 }
 
+                /*
                 for (var c = 0; c < mapa.COLUMNS; c++) {
                     for (var l = 0; l < mapa.LINES; l++) {
                         ctx.strokeStyle = "black";
@@ -445,9 +478,10 @@
                         ctx.strokeRect(c * mapa.SIZE, l * mapa.SIZE, mapa.SIZE, mapa.SIZE);
                     }
                 }
+                */
 
-                ctx.fillStyle = "black";
                 //VENDER TRIGO
+                ctx.fillStyle = "black";
                 ctx.font = "bold 22px Courier";
                 ctx.fillText("1 - Vender trigo", 32 * 6, (32 * 7) - 7);
                 ctx.font = "bold 12px Courier";
@@ -458,7 +492,7 @@
                 ctx.lineWidth = 2;
                 ctx.fillStyle = "green";
                 ctx.strokeRect(32 * 6 + 20, 32 * 9 + 5, 300, 22);
-                for(var i = 0; i < menu.upgrades.terreno; i ++)
+                for (var i = 0; i < menu.upgrades.terreno; i++)
                     ctx.fillRect(32 * 6 + 24 + i * 150, 32 * 9 + 9, 142, 14);
                 //MAIS STAMINA
                 ctx.fillStyle = "black";
@@ -466,8 +500,9 @@
                 ctx.lineWidth = 2;
                 ctx.fillStyle = "green";
                 ctx.strokeRect(32 * 6 + 20, 32 * 11 + 5, 300, 22);
-                for(var i = 0; i < menu.upgrades.stamina; i ++)
+                for (var i = 0; i < menu.upgrades.stamina; i++)
                     ctx.fillRect(32 * 6 + 24 + i * 100, 32 * 11 + 9, 92, 14);
+                    
             }
         }
 
@@ -483,13 +518,10 @@
             menu.precoStamina = 200 + (200 * menu.upgrades.stamina);
 
             ctx.fillStyle = "black";
-            ctx.font = "15px Courier";
+            ctx.font = "bold 15px Courier";
             ctx.fillText(1 / dt, 10, 20);
-            ctx.fillText(menu.precoVenda, 10, 35);
-
-            ctx.fillText(pc.acao, 40, 90);
             ctx.fillText(pc.cooldowns.stamina, 40, 110);
-            ctx.fillText(menu.aparece, 40, 120);
+            ctx.fillText(menu.dinheiroPlayer, 80, 120);
 
             inventario();
             requestAnimationFrame(passo);
