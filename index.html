@@ -56,14 +56,14 @@
             opacidade: 1,
             upgrades: {
                 stamina: 0,
-                staminaMax: 5,
+                staminaMax: 3,
                 terreno: 0,
                 terrenoMax: 2
             },
             dinheiroPlayer: 3000,
             precoVenda: 0,
             precoTerreno: 1000,
-            precoStamina: 0
+            precoStamina: 200
         }
         var tempo = 0;
 
@@ -102,7 +102,7 @@
             h: 14,
             comportar: porTeclasDirecionais(teclas),
             frameLimit: 9,
-            frameSpeed:16,
+            frameSpeed: 16,
             props: { tipo: "pc" },
             inventario: { sementes: 3, trigo: 0, pao: 0, opacidade: 1 },
             cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, recuperacao: 0, cansou: false, acoes: 0 },
@@ -179,23 +179,27 @@
                     if (!this.cooldowns.cansou) {
                         if (this.vx != 0) {
                             if (this.vx > 0)
-                                this.vx = 120;
+                                this.vx = 160;
                             else
-                                this.vx = -120;
+                                this.vx = -160;
                             this.status.correndo = true;
                             this.cooldowns.stamina += 5 * dt;
                         }
                         else if (this.vy != 0) {
                             if (this.vy > 0)
-                                this.vy = 120;
+                                this.vy = 160;
                             else
-                                this.vy = -120;
+                                this.vy = -160;
                             this.status.correndo = true;
                             this.cooldowns.stamina += 5 * dt;
                         }
                         if (this.cooldowns.stamina > this.cooldowns.cansado) {
                             this.cooldowns.cansou = true;
                             this.status.correndo = false;
+                        }
+                        if (this.status.correndo && mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].tipo == 4.1) {
+                            mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].tipo = 4.0;
+                            this.inventario.sementes = 1;
                         }
                     }
                 }
@@ -322,7 +326,7 @@
                     this.inventario.trigo--;
                 }
 
-                if (teclas.num2 && menu.aparece && (menu.dinheiroPlayer >= menu.precoTerreno) && (menu.upgrades.terreno < 2)) {
+                if (teclas.num2 && menu.aparece && (menu.dinheiroPlayer >= menu.precoTerreno) && (menu.upgrades.terreno < menu.upgrades.terrenoMax)) {
                     teclas.num2 = 0;
                     menu.dinheiroPlayer -= menu.precoTerreno;
                     menu.upgrades.terreno++;
@@ -362,7 +366,23 @@
                             for (var j = 0; j < 4; j++)
                                 mapa.cells[i + 15][j + 12].tipo = 4.0;
                         }
-                        menu.precoTerreno = "indisponível";
+                    }
+                }
+
+                if (teclas.num3 && menu.aparece && (menu.dinheiroPlayer >= menu.precoStamina) && (menu.upgrades.stamina < menu.upgrades.staminaMax)) {
+                    teclas.num3 = 0;
+                    menu.dinheiroPlayer -= menu.precoStamina;
+                    menu.upgrades.stamina++;
+                    if (menu.upgrades.stamina == 1) {
+                        pc.cooldowns.cansado += 2;
+                        menu.precoStamina += 200;
+                    }
+                    if (menu.upgrades.stamina == 2) {
+                        pc.cooldowns.cansado += 2;
+                        menu.precoStamina += 200;
+                    }
+                    if (menu.upgrades.stamina == 3) {
+                        pc.cooldowns.cansado += 2;
                     }
                 }
             }
@@ -409,7 +429,7 @@
                     teclas.num2 = 1;
                     break;
                 case 51:
-                    teclas.num2 = 1;
+                    teclas.num3 = 1;
                     break;
             }
         });
@@ -445,7 +465,7 @@
                     teclas.num2 = 0;
                     break;
                 case 51:
-                    teclas.num2 = 0;
+                    teclas.num3 = 0;
                     break;
             }
         });
@@ -527,7 +547,7 @@
                 ctx.fillText(`     (preço de venda R$${menu.precoVenda})`, 32 * 6, (32 * 8) - 16);
                 //NOVOS TERRENOS
                 ctx.font = "bold 22px Courier";
-                if(menu.upgrades.terreno != 2)
+                if (menu.upgrades.terreno != 2)
                     ctx.fillText(`2 - Novo terreno (R$${menu.precoTerreno})`, 32 * 6, (32 * 9) - 7);
                 else
                     ctx.fillText("2 - Novo terreno (indisponível)", 32 * 6, (32 * 9) - 7);
@@ -538,7 +558,10 @@
                     ctx.fillRect(32 * 6 + 24 + i * 150, 32 * 9 + 9, 142, 14);
                 //MAIS STAMINA
                 ctx.fillStyle = "black";
-                ctx.fillText(`3 - Stamina (R$${menu.precoStamina})`, 32 * 6, (32 * 11) - 7);
+                if (menu.upgrades.stamina != 3)
+                    ctx.fillText(`3 - Stamina (R$${menu.precoStamina})`, 32 * 6, (32 * 11) - 7);
+                else
+                    ctx.fillText("3 - Stamina (indisponível)", 32 * 6, (32 * 11) - 7);
                 ctx.lineWidth = 2;
                 ctx.fillStyle = "green";
                 ctx.strokeRect(32 * 6 + 20, 32 * 11 + 5, 300, 22);
@@ -556,13 +579,13 @@
             anterior = t;
             tempo += dt;
             menu.precoVenda = ((Math.sin(Math.round(tempo) / 50) + 1.1) * 100).toFixed(2);
-            menu.precoStamina = 200 + (200 * menu.upgrades.stamina);
 
             ctx.fillStyle = "black";
             ctx.font = "bold 15px Courier";
             ctx.fillText(1 / dt, 10, 20);
             ctx.fillText(pc.cooldowns.stamina, 40, 110);
             ctx.fillText(menu.dinheiroPlayer, 80, 120);
+            ctx.fillText(teclas.num3, 100, 140);
 
             inventario();
             requestAnimationFrame(passo);
