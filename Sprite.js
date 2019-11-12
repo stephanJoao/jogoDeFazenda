@@ -9,6 +9,7 @@ function Sprite(params = {}) {
         color: "blue",
         pose: 8,
         frame: 0,
+        frameSpeed: 0,
         frameLimit: 0,
         props: {},
         inventario: {},
@@ -52,9 +53,13 @@ Sprite.prototype.mover = function (dt) {
     this.moverOrtogonal(dt);
     this.inventario.opacidade -= dt * 0.5;
     //ANIMACAO
+    if (this.status.correndo)
+        this.frameSpeed = 25;
+    else
+        this.frameSpeed = 16;
     if (this.frameLimit == 9) {
         if (this.vx != 0 || this.vy != 0)
-            this.frame += 16 * dt;
+            this.frame += this.frameSpeed * dt;
         else
             this.frame = 0;
         if (this.frame > this.frameLimit) {
@@ -62,10 +67,11 @@ Sprite.prototype.mover = function (dt) {
         }
     }
     else {
-        this.frame -= 12 * dt;
+        this.frame -= this.frameSpeed * dt;
         if (this.frame <= 0) {
             this.frame = 0;
             this.frameLimit = 9;
+            this.frameSpeed = 16;
         }
     }
 };
