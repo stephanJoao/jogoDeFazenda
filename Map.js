@@ -27,28 +27,27 @@ Map.prototype.comportar = function (dt) {
             switch (this.cells[c][l].tipo) {
                 case 4.1:
                     if (Math.floor(pc.x / 32) != c || Math.floor(pc.y / 32) != l)
-                        this.cells[c][l].dtCells += dt;
-                    if (this.cells[c][l].dtCells > 2) {
+                        this.cells[c][l].dtCells -= dt;
+                    if (this.cells[c][l].dtCells <= 0) {
                         this.cells[c][l].tipo = 4.2;
-                        this.cells[c][l].dtCells = 0;
+                        this.cells[c][l].dtCells = 10 + Math.random() * 5;
                     }
                     break;
                 case 4.2:
-                    this.cells[c][l].dtCells += dt;
-                    if (this.cells[c][l].dtCells > 2) {
+                    this.cells[c][l].dtCells -= dt;
+                    if (this.cells[c][l].dtCells <= 0) {
                         this.cells[c][l].tipo = 4.3;
-                        this.cells[c][l].dtCells = 0;
+                        this.cells[c][l].dtCells = 10 + Math.random() * 5;
                     }
                     break;
                 case 4.3:
-                    this.cells[c][l].dtCells += dt;
-                    if (this.cells[c][l].dtCells > 2) {
+                    this.cells[c][l].dtCells -= dt;
+                    if (this.cells[c][l].dtCells <= 0) {
                         this.cells[c][l].tipo = 4.4;
-                        this.cells[c][l].dtCells = 0;
+                        this.cells[c][l].dtCells = 10 + Math.random() * 5;
                     }
                     break;
                 default:
-                    cor = "black";
                     break;
             }
         }

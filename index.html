@@ -48,8 +48,11 @@
             shift: 0,
             num1: 0,
             num2: 0,
-            num3: 0
+            num3: 0,
+            info: 0
         }
+
+        var opacidadeInfo = 2;
 
         var menu = {
             aparece: false,
@@ -60,11 +63,12 @@
                 terreno: 0,
                 terrenoMax: 2
             },
-            dinheiroPlayer: 3000,
+            dinheiroPlayer: 0,
             precoVenda: 0,
             precoTerreno: 1000,
             precoStamina: 200
         }
+
         var tempo = 0;
 
         var mapa = new Map({
@@ -97,7 +101,7 @@
 
         var pc = new Sprite({
             x: 250,
-            y: 150,
+            y: 200,
             w: 22,
             h: 14,
             comportar: porTeclasDirecionais(teclas),
@@ -106,7 +110,7 @@
             props: { tipo: "pc" },
             inventario: { sementes: 3, trigo: 0, pao: 0, opacidade: 1 },
             cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, recuperacao: 0, cansou: false, acoes: 0 },
-            status: { correndo: false }
+            status: { correndo: false },
         });
 
         cena1.adicionar(pc);
@@ -233,7 +237,7 @@
                         case 0:
                             if (atual == 4.0 && this.inventario.sementes > 0 && this.cooldowns.plantar <= 0) {
                                 mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].tipo = 4.1;
-                                mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].dtCells = 0;
+                                mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].dtCells = 10 + Math.random() * 5;
                                 this.cooldowns.acoes = 0.6;
                                 this.cooldowns.plantar = 0.5;
                                 this.inventario.sementes--;
@@ -385,6 +389,10 @@
                         pc.cooldowns.cansado += 2;
                     }
                 }
+
+                if (teclas.info) {
+                    opacidadeInfo = 1.5;
+                }
             }
         }
 
@@ -431,6 +439,9 @@
                 case 51:
                     teclas.num3 = 1;
                     break;
+                case 73:
+                    teclas.info = 1;
+                    break;
             }
         });
 
@@ -466,6 +477,9 @@
                     break;
                 case 51:
                     teclas.num3 = 0;
+                    break;
+                case 73:
+                    teclas.info = 0;
                     break;
             }
         });
@@ -578,14 +592,29 @@
             }
             anterior = t;
             tempo += dt;
-            menu.precoVenda = ((Math.sin(Math.round(tempo) / 50) + 1.1) * 100).toFixed(2);
+
+            menu.precoVenda = ((Math.sin(Math.round(tempo) / 50) + 1.1) * 10).toFixed(2);
+
+            if (opacidadeInfo > 0.1)
+                opacidadeInfo -= dt * 0.5;
+            else
+                opacidadeInfo = 0;
+            ctx.globalAlpha = opacidadeInfo;
+            ctx.fillText("CONTROLES: ", 6 * 32 + 5, 2 * 32 + 5);
+            ctx.fillText("Aperte I para ver esse menu", 6 * 32 + 5, 2 * 32 + 20);
+            ctx.fillText("Teclas movem o personagem", 6 * 32 + 5, 2 * 32 + 34);
+            ctx.fillText("SHIFT corre", 6 * 32 + 5, 2 * 32 + 48);
+            ctx.fillText("A e D alternam no inventário", 6 * 32 + 5, 2 * 32 + 62);
+            ctx.fillText("ESPAÇO realiza a ação selecionada no inventário", 6 * 32 + 5, 2 * 32 + 76);
+            ctx.fillText("E interage com a porta da casa", 6 * 32 + 5, 2 * 32 + 90);
+            ctx.globalAlpha = 1;
+
 
             ctx.fillStyle = "black";
             ctx.font = "bold 15px Courier";
             ctx.fillText(1 / dt, 10, 20);
-            ctx.fillText(pc.cooldowns.stamina, 40, 110);
-            ctx.fillText(menu.dinheiroPlayer, 80, 120);
-            ctx.fillText(teclas.num3, 100, 140);
+            ctx.fillStyle = "white";
+            ctx.fillText(`R$${menu.dinheiroPlayer}`, 81, 120);
 
             inventario();
             requestAnimationFrame(passo);

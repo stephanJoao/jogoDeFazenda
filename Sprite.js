@@ -45,7 +45,7 @@ Sprite.prototype.desenhar = function (ctx) {
     ctx.fillStyle = this.color;
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
-    ctx.strokeRect(-this.w / 2, -this.h / 2, this.w, this.h);
+    //ctx.strokeRect(-this.w / 2, -this.h / 2, this.w, this.h);
     ctx.restore();
 };
 
