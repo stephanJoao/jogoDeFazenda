@@ -593,7 +593,7 @@
             anterior = t;
             tempo += dt;
 
-            menu.precoVenda = ((Math.sin(Math.round(tempo) / 50) + 1.1) * 10).toFixed(2);
+            menu.precoVenda = (Math.round((Math.sin(Math.round(tempo) / 50) + 1.1) * 1000)) / 100;
 
             if (opacidadeInfo > 0.1)
                 opacidadeInfo -= dt * 0.5;
@@ -614,6 +614,7 @@
             ctx.font = "bold 15px Courier";
             ctx.fillText(1 / dt, 10, 20);
             ctx.fillStyle = "white";
+            menu.dinheiroPlayer = Math.round(menu.dinheiroPlayer * 100) / 100;
             ctx.fillText(`R$${menu.dinheiroPlayer}`, 81, 120);
 
             inventario();
