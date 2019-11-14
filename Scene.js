@@ -41,6 +41,8 @@ Scene.prototype.comportar = function () {
 
 Scene.prototype.limpar = function () {
     this.ctx.clearRect(0, 0, this.w, this.h);
+    this.ctx.fillStyle = "tan";
+    this.ctx.fillRect(0, 0, 32 * 28 + 100, 32 * 20);
 };
 
 Scene.prototype.checaColisao = function () {

@@ -32,8 +32,8 @@
 
         var canvas = document.querySelector("canvas");
         var ctx = canvas.getContext("2d");
-        canvas.width = 32 * 28;
-        canvas.height = 32 * 20;
+        canvas.width = (32 * 28) + (32 * 3);
+        canvas.height = (32 * 20);
 
         var teclas = {
             esquerda: 0,
@@ -583,6 +583,23 @@
                     ctx.fillRect(32 * 6 + 24 + i * 100, 32 * 11 + 9, 92, 14);
 
             }
+            //IMPRIME STATUS LATERAIS
+            for (var i = 0; i < mapa.LINES; i++) {
+                if (i == 0)
+                    ctx.drawImage(cena1.assets.img("inventario"), 0 * 32, 4 * 32, 96, 32, mapa.SIZE * mapa.COLUMNS, i * 32, 96, 32);
+                else if (i == mapa.LINES - 1)
+                    ctx.drawImage(cena1.assets.img("inventario"), 0 * 32, 6 * 32, 96, 32, mapa.SIZE * mapa.COLUMNS, i * 32, 96, 32);
+                else
+                    ctx.drawImage(cena1.assets.img("inventario"), 0 * 32, 5 * 32, 96, 32, mapa.SIZE * mapa.COLUMNS, i * 32, 96, 32);
+            }
+            //ctx.fillStyle = "black";
+            //ctx.globalAlpha = 0.1;
+            //ctx.fillRect(mapa.SIZE * mapa.COLUMNS, 0, mapa.SIZE * 3, mapa.SIZE * mapa.LINES);
+            //ctx.globalAlpha = 1;
+            ctx.lineWidth = 1;
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 6, mapa.SIZE * mapa.LINES - 7, 20, -((pc.cooldowns.cansado - pc.cooldowns.stamina)/pc.cooldowns.cansado) * 300);
+            ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 6, mapa.SIZE * mapa.LINES - 7, 20, -((pc.cooldowns.cansado - pc.cooldowns.stamina)/pc.cooldowns.cansado) * 300);
         }
 
         function passo(t) {
@@ -600,6 +617,7 @@
             else
                 opacidadeInfo = 0;
             ctx.globalAlpha = opacidadeInfo;
+            ctx.fillStyle = "white";
             ctx.fillText("CONTROLES: ", 6 * 32 + 5, 2 * 32 + 5);
             ctx.fillText("Aperte I para ver esse menu", 6 * 32 + 5, 2 * 32 + 20);
             ctx.fillText("Teclas movem o personagem", 6 * 32 + 5, 2 * 32 + 34);
