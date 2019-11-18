@@ -598,14 +598,14 @@
             //ctx.globalAlpha = 1;
             ctx.lineWidth = 2;
             ctx.fillStyle = "green";
-            ctx.fillRect(  mapa.SIZE * mapa.COLUMNS + 32 * 0 + 6,  mapa.SIZE * mapa.LINES - 7,   20,  -((pc.status.vida) / pc.status.vidaTotal) * 300);
-            ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 0 + 4,  mapa.SIZE * mapa.LINES - 5,   24,  -((pc.cooldowns.cansado) / pc.cooldowns.cansado) * 300 - 4);
+            ctx.fillRect(mapa.SIZE * mapa.COLUMNS + 32 * 0 + 6, mapa.SIZE * mapa.LINES - 7, 20, -((pc.status.vida) / pc.status.vidaTotal) * 300);
+            ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 0 + 4, mapa.SIZE * mapa.LINES - 5, 24, -((pc.cooldowns.cansado) / pc.cooldowns.cansado) * 300 - 4);
             ctx.fillStyle = "orange";
-            ctx.fillRect(  mapa.SIZE * mapa.COLUMNS + 32 * 1 + 6,  mapa.SIZE * mapa.LINES - 7,   20,  -((pc.status.comida) / pc.status.comidaTotal) * 300);
-            ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 1 + 4,  mapa.SIZE * mapa.LINES - 5,   24,  -((pc.cooldowns.cansado) / pc.cooldowns.cansado) * 300 - 4);
+            ctx.fillRect(mapa.SIZE * mapa.COLUMNS + 32 * 1 + 6, mapa.SIZE * mapa.LINES - 7, 20, -((pc.status.comida) / pc.status.comidaTotal) * 300);
+            ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 1 + 4, mapa.SIZE * mapa.LINES - 5, 24, -((pc.cooldowns.cansado) / pc.cooldowns.cansado) * 300 - 4);
             ctx.fillStyle = "lightblue";
-            ctx.fillRect(  mapa.SIZE * mapa.COLUMNS + 32 * 2 + 6,  mapa.SIZE * mapa.LINES - 7,   20,  -((pc.cooldowns.cansado - pc.cooldowns.stamina) / pc.cooldowns.cansado) * 300);
-            ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 4,  mapa.SIZE * mapa.LINES - 5,   24,  -((pc.cooldowns.cansado) / pc.cooldowns.cansado) * 300 - 4);
+            ctx.fillRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 6, mapa.SIZE * mapa.LINES - 7, 20, -((pc.cooldowns.cansado - pc.cooldowns.stamina) / pc.cooldowns.cansado) * 300);
+            ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 4, mapa.SIZE * mapa.LINES - 5, 24, -((pc.cooldowns.cansado) / pc.cooldowns.cansado) * 300 - 4);
         }
 
         function passo(t) {
@@ -615,21 +615,21 @@
             }
             anterior = t;
             tempo += dt;
-            
-            if(pc.status.comida > 0) {
-                pc.status.comida -= 10*dt;
+
+            if (pc.status.comida > 0) {
+                pc.status.comida -= 10 * dt;
             }
             else {
                 pc.status.comida = 0;
             }
-            if(pc.status.comida == 0 && pc.status.vida > 0) {
-                pc.status.vida -= 10*dt;
+            if (pc.status.comida == 0 && pc.status.vida > 0) {
+                pc.status.vida -= 10 * dt;
             }
-            else if(pc.comida == 0) {
+            else if (pc.comida == 0) {
                 pc.status.vida = 0;
             }
 
-            menu.precoVenda = (Math.round((Math.sin(Math.round(tempo) / 50) + 1.1) * 1000)) / 100;
+            menu.precoVenda = (Math.round((Math.sin(Math.round(tempo) / 17) + 1.1) * 1300)) / 100 + (Math.round((Math.sin(Math.round(tempo) / 13) + 1.1) * 1700)) / 100;
 
             if (opacidadeInfo > 0.1)
                 opacidadeInfo -= dt * 0.5;
