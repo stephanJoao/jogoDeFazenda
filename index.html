@@ -13,6 +13,7 @@
 
 <body>
     <canvas></canvas>
+    <style> canvas{image-rendering: pixelated} </style>
     <script>
         var assetsMng = new AssetsManager();
         assetsMng.loadImage("player", "assets/player.png");
@@ -609,6 +610,7 @@
         }
 
         function passo(t) {
+            ctx.imageSmoothingEnabled = false;
             dt = (t - anterior) / 1000;
             if (assetsMng.progresso() === 100) {
                 cena1.passo(dt);
