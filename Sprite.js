@@ -74,6 +74,46 @@ Sprite.prototype.mover = function (dt) {
             this.frameSpeed = 16;
         }
     }
+
+    ////////COOLDOWNS////////
+    this.cooldowns.plantar -= dt;
+
+    this.cooldowns.arar -= dt;
+    ////Ações
+    if (this.cooldowns.acoes > 0) {
+        this.cooldowns.acoes -= dt;
+        this.vx = 0;
+        this.vy = 0;
+    }
+    ////Stamina
+    if(this.status.comida < 10)
+        this.cooldowns.velStamina = 0.2;
+    else
+        this.cooldowns.velStamina = 2;
+
+    if (this.status.correndo) {
+        this.cooldowns.stamina += 3 * dt;
+    }
+    if (this.cooldowns.stamina > 0 && !this.status.correndo) {
+        this.cooldowns.stamina -= this.cooldowns.velStamina * dt;
+    }
+    if (this.cooldowns.stamina < this.cooldowns.cansado / 2) {
+        this.cooldowns.cansou = false;
+    }
+    ////Fome
+    if (this.status.comida > 0) {
+        this.status.comida -= this.status.velComida * dt;
+    }
+    else {
+        this.status.comida = 0;
+    }
+    ////Vida
+    if (this.status.comida == 0 && this.status.vida > 0) {
+        this.status.vida -= 1 * dt;
+    }
+    else if (this.comida == 0) {
+        this.status.vida = 0;
+    }
 };
 
 Sprite.prototype.moverOrtogonal = function (dt) {
@@ -86,20 +126,6 @@ Sprite.prototype.moverOrtogonal = function (dt) {
     this.ml = Math.floor(this.y / this.scene.map.SIZE);
 
     this.aplicaRestricoes(dt);
-
-    this.cooldowns.plantar -= dt;
-    this.cooldowns.arar -= dt;
-    if (this.cooldowns.acoes > 0) {
-        this.cooldowns.acoes -= dt;
-        this.vx = 0;
-        this.vy = 0;
-    }
-    if (this.cooldowns.stamina > 0) {
-        this.cooldowns.stamina -= dt;
-    }
-    if (this.cooldowns.stamina < this.cooldowns.cansado / 2) {
-        this.cooldowns.cansou = false;
-    }
 };
 
 Sprite.prototype.aplicaRestricoes = function (dt) {

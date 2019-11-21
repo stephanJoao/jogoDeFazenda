@@ -13,7 +13,11 @@
 
 <body>
     <canvas></canvas>
-    <style> canvas{image-rendering: pixelated} </style>
+    <style>
+        canvas {
+            image-rendering: pixelated;
+        }
+    </style>
     <script>
         var assetsMng = new AssetsManager();
         assetsMng.loadImage("player", "assets/player.png");
@@ -53,7 +57,7 @@
             info: 0
         }
 
-        var opacidadeInfo = 2;
+        var opacidadeInfo = 4;
 
         var menu = {
             aparece: false,
@@ -109,9 +113,9 @@
             frameLimit: 9,
             frameSpeed: 16,
             props: { tipo: "pc" },
-            inventario: { sementes: 3, trigo: 0, pao: 0, opacidade: 1 },
-            cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, recuperacao: 0, cansou: false, acoes: 0 },
-            status: { correndo: false, vidaTotal: 100, vida: 100, comidaTotal: 100, comida: 100 },
+            inventario: { sementes: 3, trigo: 0, pao: 6, opacidade: 1 },
+            cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, cansou: false, velStamina: 1, acoes: 0 },
+            status: { correndo: false, vidaTotal: 100, vida: 100, velVida:0.5, comidaTotal: 100, comida: 100, velComida: 0.3 },
         });
 
         cena1.adicionar(pc);
@@ -188,7 +192,8 @@
                             else
                                 this.vx = -160;
                             this.status.correndo = true;
-                            this.cooldowns.stamina += 5 * dt;
+                            this.status.velComida = 1.8;
+                            this.status.velVida = 2;
                         }
                         else if (this.vy != 0) {
                             if (this.vy > 0)
@@ -196,10 +201,13 @@
                             else
                                 this.vy = -160;
                             this.status.correndo = true;
-                            this.cooldowns.stamina += 5 * dt;
+                            this.status.velComida = 1.8;
+                            this.status.velVida = 2;
                         }
                         if (this.cooldowns.stamina > this.cooldowns.cansado) {
                             this.cooldowns.cansou = true;
+                            this.status.velComida = 0.3;
+                            this.status.velVida = 0.5;
                             this.status.correndo = false;
                         }
                         if (this.status.correndo && mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].tipo == 4.1) {
@@ -246,9 +254,22 @@
                             break;
 
                         case 1:
+                            if (this.inventario.trigo >= 2) {
+                                this.inventario.trigo -= 2;
+                                this.inventario.pao++;
+                                teclas.espaco = 0;
+                            }
                             break;
 
                         case 2:
+                            if (this.inventario.pao >= 1) {
+                                this.inventario.pao--;
+                                if (this.status.comida + 5 > 100)
+                                    this.status.comida = 100;
+                                else
+                                    this.status.comida += 5;
+                                teclas.espaco = 0;
+                            }
                             break;
 
                         case 3:
@@ -466,6 +487,8 @@
                 case 16:
                     teclas.shift = 0;
                     pc.status.correndo = false;
+                    pc.status.velComida = 0.3;
+                    pc.status.velVida = 0.3;
                     break;
                 case 27:
                     teclas.esc = 0;
@@ -617,19 +640,6 @@
             }
             anterior = t;
             tempo += dt;
-
-            if (pc.status.comida > 0) {
-                pc.status.comida -= 10 * dt;
-            }
-            else {
-                pc.status.comida = 0;
-            }
-            if (pc.status.comida == 0 && pc.status.vida > 0) {
-                pc.status.vida -= 10 * dt;
-            }
-            else if (pc.comida == 0) {
-                pc.status.vida = 0;
-            }
 
             menu.precoVenda = (Math.round((Math.sin(Math.round(tempo) / 17) + 1.1) * 1300)) / 100 + (Math.round((Math.sin(Math.round(tempo) / 13) + 1.1) * 1700)) / 100;
 
