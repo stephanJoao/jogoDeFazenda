@@ -631,6 +631,25 @@
             ctx.font = "bold 15px Courier";
             ctx.fillStyle = "white";
             //ctx.fillText(`R${menu.dinheiroPlayer}`)
+
+            //BORDA
+            ctx.lineWidth = 1;
+            ctx.fillStyle = "black";
+            for(var i = 0; i < 32; i++){
+                ctx.globalAlpha = (32 - i) / 32;
+                ctx.fillRect(i, 0, 1, canvas.height);
+                ctx.globalAlpha = 1;
+            }
+            for(var i = 0; i < 32; i++){
+                ctx.globalAlpha = (32 - i) / 32;
+                ctx.fillRect(0, i, canvas.width, 1);
+                ctx.globalAlpha = 1;
+            }
+            for(var i = 0; i < 32; i++){
+                ctx.globalAlpha = (32 - i) / 32;
+                ctx.fillRect(0, canvas.height - i, canvas.width, 1);
+                ctx.globalAlpha = 1;
+            }
         }
 
         function passo(t) {
