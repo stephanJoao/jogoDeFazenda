@@ -1,0 +1,18 @@
+*{
+	
+	margin:0 auto; 
+	padding:0;
+	border:0;
+	width:996px; 
+  	height:640px;
+  	position: relative;
+}
+body{
+	background-color: rgb(0, 0, 0);
+}
+
+.hidden{
+	font-family: emulogic;
+	visibility: hidden;
+	position: absolute;
+}

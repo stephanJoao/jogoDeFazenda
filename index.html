@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semana 06</title>
+    <link rel="stylesheet" type="text/css" href="css/estilo.css" />
     <script src="Sprite.js"></script>
     <script src="Scene.js"></script>
     <script src="AssetsManager.js"></script>
@@ -616,10 +617,6 @@
                 else
                     ctx.drawImage(cena1.assets.img("inventario"), 0 * 32, 5 * 32, 96, 32, mapa.SIZE * mapa.COLUMNS, i * 32, 96, 32);
             }
-            //ctx.fillStyle = "black";
-            //ctx.globalAlpha = 0.1;
-            //ctx.fillRect(mapa.SIZE * mapa.COLUMNS, 0, mapa.SIZE * 3, mapa.SIZE * mapa.LINES);
-            //ctx.globalAlpha = 1;
             ctx.lineWidth = 2;
             ctx.fillStyle = "green";
             ctx.fillRect(mapa.SIZE * mapa.COLUMNS + 32 * 0 + 6, mapa.SIZE * mapa.LINES - 7, 20, -((pc.status.vida) / pc.status.vidaTotal) * 300);
@@ -630,6 +627,10 @@
             ctx.fillStyle = "lightblue";
             ctx.fillRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 6, mapa.SIZE * mapa.LINES - 7, 20, -((pc.cooldowns.cansado - pc.cooldowns.stamina) / pc.cooldowns.cansado) * 300);
             ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 4, mapa.SIZE * mapa.LINES - 5, 24, -((pc.cooldowns.cansado) / pc.cooldowns.cansado) * 300 - 4);
+            
+            ctx.font = "bold 15px Courier";
+            ctx.fillStyle = "white";
+            //ctx.fillText(`R${menu.dinheiroPlayer}`)
         }
 
         function passo(t) {
@@ -657,7 +658,6 @@
             ctx.fillText("ESPAÇO realiza a ação selecionada no inventário", 6 * 32 + 5, 2 * 32 + 76);
             ctx.fillText("E interage com a porta da casa", 6 * 32 + 5, 2 * 32 + 90);
             ctx.globalAlpha = 1;
-
 
             ctx.fillStyle = "black";
             ctx.font = "bold 15px Courier";
