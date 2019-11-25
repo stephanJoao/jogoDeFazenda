@@ -20,6 +20,7 @@
         }
     </style>
     <script>
+        var xpto = 0.0;
         var assetsMng = new AssetsManager();
         assetsMng.loadImage("player", "assets/player.png");
         assetsMng.loadImage("inventario", "assets/inventario.png");
@@ -69,7 +70,7 @@
                 terreno: 0,
                 terrenoMax: 2
             },
-            dinheiroPlayer: 1000,
+            dinheiroPlayer: 1000.01,
             precoVenda: 0,
             precoTerreno: 1000,
             precoStamina: 200
@@ -628,9 +629,26 @@
             ctx.fillRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 6, mapa.SIZE * mapa.LINES - 7, 20, -((pc.cooldowns.cansado - pc.cooldowns.stamina) / pc.cooldowns.cansado) * 300);
             ctx.strokeRect(mapa.SIZE * mapa.COLUMNS + 32 * 2 + 4, mapa.SIZE * mapa.LINES - 5, 24, -((pc.cooldowns.cansado) / pc.cooldowns.cansado) * 300 - 4);
             
-            ctx.font = "bold 15px Courier";
+            ctx.font = "bold 16px Courier";
             ctx.fillStyle = "white";
-            //ctx.fillText(`R${menu.dinheiroPlayer}`)
+            ctx.fillText(`R$${menu.dinheiroPlayer}`,canvas.width - 92, 32 * 7);
+            ctx.font = "bold 15px Courier";
+            ctx.fillStyle = "black";
+            ctx.save();
+            ctx.translate(mapa.SIZE * mapa.COLUMNS + 11,mapa.SIZE * 10 + 20);
+            ctx.rotate(0.5*Math.PI);
+            ctx.fillText("Vida",0, 0);
+            ctx.restore();
+            ctx.save();
+            ctx.translate(mapa.SIZE * mapa.COLUMNS + 43,mapa.SIZE * 10 + 20);
+            ctx.rotate(0.5*Math.PI);
+            ctx.fillText("Fome",0, 0);
+            ctx.restore();
+            ctx.save();
+            ctx.translate(mapa.SIZE * mapa.COLUMNS + 75,mapa.SIZE * 10 + 20);
+            ctx.rotate(0.5*Math.PI);
+            ctx.fillText("Stamina",0, 0);
+            ctx.restore();
 
             //BORDA
             ctx.lineWidth = 1;
@@ -651,7 +669,7 @@
                 ctx.globalAlpha = 1;
             }
         }
-
+        
         function passo(t) {
             ctx.imageSmoothingEnabled = false;
             dt = (t - anterior) / 1000;
@@ -669,13 +687,14 @@
                 opacidadeInfo = 0;
             ctx.globalAlpha = opacidadeInfo;
             ctx.fillStyle = "white";
+            ctx.font = "bold 15px Courier";
             ctx.fillText("CONTROLES: ", 6 * 32 + 5, 2 * 32 + 5);
-            ctx.fillText("Aperte I para ver esse menu", 6 * 32 + 5, 2 * 32 + 20);
-            ctx.fillText("Teclas movem o personagem", 6 * 32 + 5, 2 * 32 + 34);
-            ctx.fillText("SHIFT corre", 6 * 32 + 5, 2 * 32 + 48);
-            ctx.fillText("A e D alternam no inventário", 6 * 32 + 5, 2 * 32 + 62);
-            ctx.fillText("ESPAÇO realiza a ação selecionada no inventário", 6 * 32 + 5, 2 * 32 + 76);
-            ctx.fillText("E interage com a porta da casa", 6 * 32 + 5, 2 * 32 + 90);
+            ctx.fillText("-> Aperte I para ver esse menu", 6 * 32 + 5, 2 * 32 + 20);
+            ctx.fillText("-> Teclas movem o personagem", 6 * 32 + 5, 2 * 32 + 34);
+            ctx.fillText("-> SHIFT corre", 6 * 32 + 5, 2 * 32 + 48);
+            ctx.fillText("-> A e D alternam no inventário", 6 * 32 + 5, 2 * 32 + 62);
+            ctx.fillText("-> ESPAÇO realiza a ação selecionada no inventário", 6 * 32 + 5, 2 * 32 + 76);
+            ctx.fillText("-> E interage com a porta da casa", 6 * 32 + 5, 2 * 32 + 90);
             ctx.globalAlpha = 1;
 
             ctx.fillStyle = "black";
@@ -683,7 +702,7 @@
             ctx.fillText(1 / dt, 10, 20);
             ctx.fillStyle = "white";
             menu.dinheiroPlayer = Math.round(menu.dinheiroPlayer * 100) / 100;
-            ctx.fillText(`R$${menu.dinheiroPlayer}`, 81, 120);
+            ctx.fillText(pc.cooldowns.stamina, 81, 120);
 
             inventario();
             requestAnimationFrame(passo);
