@@ -220,7 +220,7 @@
                 }
 
                 //TROCA DO INVENTARIO
-                if (teclas.a && menu.aparece == false) {
+                if (teclas.a && menu.aparece == false && this.status.vivo) {
                     this.inventario.opacidade = 1.3;
                     teclas.a = 0;
                     this.acao--;
@@ -228,7 +228,7 @@
                         this.acao = 4;
                 }
 
-                if (teclas.d && menu.aparece == false) {
+                if (teclas.d && menu.aparece == false && this.status.vivo) {
                     this.inventario.opacidade = 1.3;
                     teclas.d = 0;
                     this.acao++;
@@ -246,7 +246,7 @@
 
                     switch (this.acao) {
                         case 0:
-                            if (atual == 4.0 && this.inventario.sementes > 0 && this.cooldowns.plantar <= 0) {
+                            if (atual == 4.0 && this.inventario.sementes > 0 && this.cooldowns.plantar <= 0 && this.status.vivo) {
                                 mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].tipo = 4.1;
                                 mapa.cells[Math.floor(this.x / 32)][Math.floor(this.y / 32)].dtCells = 10 + Math.random() * 5;
                                 this.cooldowns.acoes = 0.6;
@@ -256,7 +256,7 @@
                             break;
 
                         case 1:
-                            if (this.inventario.trigo >= 2) {
+                            if (this.inventario.trigo >= 2 && this.status.vivo) {
                                 this.inventario.trigo -= 2;
                                 this.inventario.pao++;
                                 teclas.espaco = 0;
@@ -264,7 +264,7 @@
                             break;
 
                         case 2:
-                            if (this.inventario.pao >= 1) {
+                            if (this.inventario.pao >= 1 && this.status.vivo) {
                                 this.inventario.pao--;
                                 if (this.status.comida + 5 > 100)
                                     this.status.comida = 100;
@@ -275,7 +275,7 @@
                             break;
 
                         case 3:
-                            if (this.cooldowns.arar <= 0) {
+                            if (this.cooldowns.arar <= 0 && this.status.vivo) {
                                 if (this.direcao === "esquerda" && (esq == 4.1 || esq == 4.2 || esq == 4.3 || esq == 4.4)) {
                                     mapa.cells[Math.floor(this.x / 32) - 1][Math.floor(this.y / 32)].tipo = 4.0;
                                     if (esq == 4.1 || esq == 4.2 || esq == 4.3) {
@@ -414,7 +414,7 @@
                     }
                 }
 
-                if (teclas.info) {
+                if (teclas.info && this.status.vivo) {
                     opacidadeInfo = 1.5;
                 }
             }
