@@ -671,7 +671,10 @@
         }
         
         function preco(tempo) {
-            
+            var f1 = ((Math.sin(Math.round(tempo) / 17) + 1.1) * 13);
+            var f2 = ((Math.sin(Math.round(tempo) / 13) + 1.1) * 17);
+            var f3 = ((Math.sin(Math.round(tempo) / 51) + 1.1) * 51);
+            return (Math.round((f1 + f2 + f3) * 100)) / 100;
         }
 
         function passo(t) {
@@ -683,7 +686,7 @@
             anterior = t;
             tempo += dt;
 
-            menu.precoVenda = (Math.round((Math.sin(Math.round(tempo) / 17) + 1.1) * 1300)) / 100 + (Math.round((Math.sin(Math.round(tempo) / 13) + 1.1) * 1700)) / 100;
+            menu.precoVenda = preco(tempo);
 
             if (opacidadeInfo > 0.1)
                 opacidadeInfo -= dt * 0.5;
