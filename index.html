@@ -70,7 +70,7 @@
                 terreno: 0,
                 terrenoMax: 2
             },
-            dinheiroPlayer: 1000.01,
+            dinheiroPlayer: 0,
             precoVenda: 0,
             precoTerreno: 1000,
             precoStamina: 200
@@ -117,7 +117,7 @@
             props: { tipo: "pc" },
             inventario: { sementes: 3, trigo: 0, pao: 6, opacidade: 1 },
             cooldowns: { plantar: 0, arar: 0, cansado: 4, stamina: 0, cansou: false, velStamina: 1, acoes: 0 },
-            status: { correndo: false, vidaTotal: 100, vida: 100, velVida:0.5, comidaTotal: 100, comida: 100, velComida: 0.3 },
+            status: { correndo: false, vidaTotal: 100, vida: 100, velVida:0.5, comidaTotal: 100, comida: 100, velComida: 0.3, vivo: true },
         });
 
         cena1.adicionar(pc);
@@ -125,17 +125,17 @@
         function porTeclasDirecionais(teclas) {
             return function () {
                 //MOVIMENTACAO
-                if (teclas.esquerda && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0 && menu.aparece == false) {
+                if (teclas.esquerda && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0 && menu.aparece == false && this.status.vivo) {
                     this.vx = -90;
                     this.pose = 9;
                     this.direcao = "esquerda";
                 }
-                if (teclas.direita && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0 && menu.aparece == false) {
+                if (teclas.direita && !teclas.cima && !teclas.baixo && this.cooldowns.acoes <= 0 && menu.aparece == false && this.status.vivo) {
                     this.vx = +90;
                     this.pose = 11;
                     this.direcao = "direita";
                 }
-                if (teclas.esquerda === teclas.direita && this.vy == 0 && this.cooldowns.acoes <= 0 && menu.aparece == false) {
+                if (teclas.esquerda === teclas.direita && this.vy == 0 && this.cooldowns.acoes <= 0 && menu.aparece == false && this.status.vivo) {
                     this.vx = 0;
                     if (teclas.esquerda) {
                         if (Math.floor(this.y / 32) >= mapa.LINES / 2) {
@@ -149,17 +149,17 @@
 
                     }
                 }
-                if (teclas.cima && !teclas.esquerda && !teclas.direita && this.cooldowns.acoes <= 0 && menu.aparece == false) {
+                if (teclas.cima && !teclas.esquerda && !teclas.direita && this.cooldowns.acoes <= 0 && menu.aparece == false && this.status.vivo) {
                     this.vy = -90;
                     this.pose = 8;
                     this.direcao = "cima";
                 }
-                if (teclas.baixo && !teclas.esquerda && !teclas.direita && this.cooldowns.acoes <= 0 && menu.aparece == false) {
+                if (teclas.baixo && !teclas.esquerda && !teclas.direita && this.cooldowns.acoes <= 0 && menu.aparece == false && this.status.vivo) {
                     this.vy = +90;
                     this.pose = 10;
                     this.direcao = "baixo";
                 }
-                if (teclas.cima === teclas.baixo && this.vx == 0 && this.cooldowns.acoes <= 0 && menu.aparece == false) {
+                if (teclas.cima === teclas.baixo && this.vx == 0 && this.cooldowns.acoes <= 0 && menu.aparece == false && this.status.vivo) {
                     this.vy = 0;
                     if (teclas.cima) {
                         if (Math.floor(this.x / 32) >= mapa.COLUMNS / 2) {
@@ -706,10 +706,10 @@
 
             ctx.fillStyle = "black";
             ctx.font = "bold 15px Courier";
-            ctx.fillText(1 / dt, 10, 20);
+            //ctx.fillText(1 / dt, 10, 20);
             ctx.fillStyle = "white";
             menu.dinheiroPlayer = Math.round(menu.dinheiroPlayer * 100) / 100;
-            ctx.fillText(pc.cooldowns.stamina, 81, 120);
+            //ctx.fillText(pc.cooldowns.stamina, 81, 120);
 
             inventario();
             requestAnimationFrame(passo);

@@ -25,9 +25,9 @@ Scene.prototype.desenhar = function () {
     }
 };
 
-Scene.prototype.mover = function (dt) {
+Scene.prototype.atualiza = function (dt) {
     for (var i = 0; i < this.sprites.length; i++) {
-        this.sprites[i].mover(dt);
+        this.sprites[i].atualiza(dt);
     }
 };
 
@@ -90,7 +90,7 @@ Scene.prototype.passo = function (dt) {
     this.limpar();
     this.desenharMapa();
     this.comportar();
-    this.mover(dt);
+    this.atualiza(dt);
     this.desenhar();
     //this.checaColisao();
     this.removeSprites();

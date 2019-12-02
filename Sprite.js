@@ -49,32 +49,46 @@ Sprite.prototype.desenhar = function (ctx) {
     ctx.restore();
 };
 
-Sprite.prototype.mover = function (dt) {
-    this.moverOrtogonal(dt);
-    this.inventario.opacidade -= dt * 0.5;
-    //ANIMACAO
-    if (this.status.correndo)
-        this.frameSpeed = 25;
+Sprite.prototype.atualiza = function (dt) {
+    if(this.status.vida <= 0)
+        this.status.vivo = false;
+    
+    if (this.status.vivo)
+        this.moverOrtogonal(dt);
     else
-        this.frameSpeed = 16;
-    if (this.frameLimit == 9) {
-        if (this.vx != 0 || this.vy != 0)
+        this.pose = 20;
+    this.inventario.opacidade -= dt * 0.5;
+    ////////ANIMACAO////////
+    if(this.pose == 20) {
+        this.frameSpeed = 9;
+        if(this.frame < 5)
             this.frame += this.frameSpeed * dt;
-        else
-            this.frame = 0;
-        if (this.frame > this.frameLimit) {
-            this.frame = 1;
-        }
+        else 
+            this.frame = 5;
     }
     else {
-        this.frame -= this.frameSpeed * dt;
-        if (this.frame <= 0) {
-            this.frame = 0;
-            this.frameLimit = 9;
+        if (this.status.correndo)
+            this.frameSpeed = 25;
+        else
             this.frameSpeed = 16;
+        if (this.frameLimit == 9) {
+            if (this.vx != 0 || this.vy != 0)
+                this.frame += this.frameSpeed * dt;
+            else
+                this.frame = 0;
+            if (this.frame > this.frameLimit) {
+                this.frame = 1;
+            }
+        }
+        else {
+            this.frame -= this.frameSpeed * dt;
+            if (this.frame <= 0) {
+                this.frame = 0;
+                this.frameLimit = 9;
+                this.frameSpeed = 16;
+            }
         }
     }
-
     ////////COOLDOWNS////////
     this.cooldowns.plantar -= dt;
 
@@ -86,7 +100,7 @@ Sprite.prototype.mover = function (dt) {
         this.vy = 0;
     }
     ////Stamina
-    if(this.status.comida < 10)
+    if (this.status.comida < 10)
         this.cooldowns.velStamina = 0.2;
     else
         this.cooldowns.velStamina = 2;
@@ -96,7 +110,7 @@ Sprite.prototype.mover = function (dt) {
     }
     if (this.cooldowns.stamina > 0 && !this.status.correndo) {
         this.cooldowns.stamina -= this.cooldowns.velStamina * dt;
-        if(this.cooldowns.stamina <= 0)
+        if (this.cooldowns.stamina <= 0)
             this.cooldowns.stamina = 0;
     }
     if (this.cooldowns.stamina < this.cooldowns.cansado / 2) {
