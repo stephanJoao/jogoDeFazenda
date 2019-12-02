@@ -660,12 +660,17 @@
             }
             for(var i = 0; i < 32; i++){
                 ctx.globalAlpha = (32 - i) / 32;
-                ctx.fillRect(0, i, canvas.width, 1);
+                ctx.fillRect(0, i, mapa.SIZE * mapa.COLUMNS, 1);
                 ctx.globalAlpha = 1;
             }
             for(var i = 0; i < 32; i++){
                 ctx.globalAlpha = (32 - i) / 32;
-                ctx.fillRect(0, canvas.height - i, canvas.width, 1);
+                ctx.fillRect(0, canvas.height - i, mapa.SIZE * mapa.COLUMNS, 1);
+                ctx.globalAlpha = 1;
+            }
+            for(var i = 0; i < 32; i++){
+                ctx.globalAlpha = (32 - i) / 32;
+                ctx.fillRect(mapa.SIZE * mapa.COLUMNS - i, 0, 1, canvas.height);
                 ctx.globalAlpha = 1;
             }
         }
